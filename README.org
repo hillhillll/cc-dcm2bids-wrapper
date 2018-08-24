@@ -311,6 +311,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_B:    44
      :END:
 
+     #+BEGIN_EXAMPLE
+     :NUM:      6
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    1
+     :VIS_B:    44
+     #+END_EXAMPLE
+
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
  |            6 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
@@ -370,6 +378,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_T:    1
      :VIS_B:    44
      :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      7
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    1
+     :VIS_B:    44
+     #+END_EXAMPLE
 
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
@@ -431,6 +447,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_B:    1
      :END:
 
+     #+BEGIN_EXAMPLE
+     :NUM:      7
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+     #+END_EXAMPLE
+
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
  |            8 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
@@ -490,6 +514,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_T:    44
      :VIS_B:    1
      :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      9
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+     #+END_EXAMPLE
 
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
@@ -551,6 +583,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_B:    44
      :END:
 
+     #+BEGIN_EXAMPLE
+     :NUM:      10
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
+     #+END_EXAMPLE
+
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
  |           10 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
@@ -610,6 +650,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_T:    1
      :VIS_B:    44
      :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      11
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
+     #+END_EXAMPLE
 
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
@@ -671,6 +719,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_B:    1
      :END:
 
+     #+BEGIN_EXAMPLE
+     :NUM:      12
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     #+END_EXAMPLE
+
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
  |           12 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
@@ -730,6 +786,14 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :VIS_T:    44
      :VIS_B:    1
      :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      13
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     #+END_EXAMPLE
 
  | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
  |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
