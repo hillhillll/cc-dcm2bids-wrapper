@@ -799,10 +799,3 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
     | FloatSlopRTIATimer | (0021,105E) |      | =RTIA_timer=                                  |
 
 
-* SeriesNumber
-* ImagesInAcquisition
-* InStackPositionNumber
-* InstanceNumber
-* SliceLocation
-* TriggerTime
-* FloatSlopRTIATimer
