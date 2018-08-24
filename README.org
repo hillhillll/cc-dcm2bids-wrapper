@@ -863,7 +863,5 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
 
     | Attribute Name     | Tag         | Type | Notes                                       |
     |--------------------+-------------+------+---------------------------------------------|
-    | Trigger Time       | (0018,1060) | 2C   | Always Sent. (even if value is zero length) |
-    | FloatSlopRTIATimer | (0021,105E) |      | =RTIA_timer=                                  |
-
-
+    | =Trigger Time=       | (0018,1060) | 2C   | Always Sent. (even if value is zero length) |
+    | =FloatSlopRTIATimer= | (0021,105E) |      | =RTIA_timer=                                  |

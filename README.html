@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-24 Fri 19:34 -->
+<!-- 2018-08-24 Fri 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>cc-dcm2bids.py</title>
@@ -240,44 +240,37 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga48180f">1. <span class="todo TODO">TODO</span> TODOs</a></li>
-<li><a href="#orgfd25ec7">2. Info</a></li>
-<li><a href="#orgbf6cffc">3. Dependencies</a></li>
-<li><a href="#org3f7eab8">4. Help</a></li>
-<li><a href="#org62a3019">5. Example of functional sequences inspection (GE MR750)</a>
+<li><a href="#org86b8b4e">1. <span class="todo TODO">TODO</span> TODOs</a></li>
+<li><a href="#orgdec8cfa">2. Info</a></li>
+<li><a href="#org7b4ec12">3. Dependencies</a></li>
+<li><a href="#org50db635">4. Help</a></li>
+<li><a href="#orgb26b069">5. Example of functional sequences inspection (GE MR750)</a>
 <ul>
-<li><a href="#org552ee18">5.1. Overview</a>
+<li><a href="#orgad85907">5.1. Overview</a>
 <ul>
-<li><a href="#org4464cab">5.1.1. Code</a></li>
-<li><a href="#org512e3f6">5.1.2. Info</a></li>
-<li><a href="#orga7587b1">5.1.3. Standard tree</a></li>
-<li><a href="#orgae1d7a4">5.1.4. Detailed tree</a></li>
-<li><a href="#orgdaf5f65">5.1.5. Table</a></li>
-<li><a href="#org8519872">5.1.6. fMRI geometry</a></li>
+<li><a href="#orgd2d5439">5.1.1. Code</a></li>
+<li><a href="#org5c46414">5.1.2. Info</a></li>
+<li><a href="#orga961d3e">5.1.3. Standard tree</a></li>
+<li><a href="#orgcf52518">5.1.4. Detailed tree</a></li>
+<li><a href="#org61edb0b">5.1.5. Table</a></li>
+<li><a href="#org68883af">5.1.6. fMRI geometry</a></li>
 </ul>
 </li>
-<li><a href="#orgc8136b3">5.2. fMRI geometry</a>
+<li><a href="#org7d7a9a0">5.2. fMRI geometry</a>
 <ul>
-<li><a href="#org8a12cc0">5.2.1. Script</a></li>
-<li><a href="#org2da06e4">5.2.2. Results</a></li>
-<li><a href="#orgb67fdf9">5.2.3. Links and notes</a></li>
+<li><a href="#orga299f1f">5.2.1. Script</a></li>
+<li><a href="#org8611d0f">5.2.2. Results</a></li>
+<li><a href="#org8ab3fa1">5.2.3. Links and notes</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org56694ee">6. SeriesNumber</a></li>
-<li><a href="#org77513d4">7. ImagesInAcquisition</a></li>
-<li><a href="#org4ea6dfa">8. InStackPositionNumber</a></li>
-<li><a href="#orgd74cdb1">9. InstanceNumber</a></li>
-<li><a href="#org1e2f54f">10. SliceLocation</a></li>
-<li><a href="#orged185db">11. TriggerTime</a></li>
-<li><a href="#orga4a2644">12. FloatSlopRTIATimer</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga48180f" class="outline-2">
-<h2 id="orga48180f"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> TODOs</h2>
+<div id="outline-container-org86b8b4e" class="outline-2">
+<h2 id="org86b8b4e"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> TODOs</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li class="off"><code>[&#xa0;]</code> add <b>slice timing estimation</b> functionality based on <code>TR</code> and slice position/time</li>
@@ -301,8 +294,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfd25ec7" class="outline-2">
-<h2 id="orgfd25ec7"><span class="section-number-2">2</span> Info</h2>
+<div id="outline-container-orgdec8cfa" class="outline-2">
+<h2 id="orgdec8cfa"><span class="section-number-2">2</span> Info</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Convert DICOM to NIFTI (BIDS). With or w/o defacing.
@@ -324,8 +317,8 @@ The directory for the output defaults to:
 </div>
 </div>
 
-<div id="outline-container-orgbf6cffc" class="outline-2">
-<h2 id="orgbf6cffc"><span class="section-number-2">3</span> Dependencies</h2>
+<div id="outline-container-org7b4ec12" class="outline-2">
+<h2 id="org7b4ec12"><span class="section-number-2">3</span> Dependencies</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Dependencies include:
@@ -356,26 +349,27 @@ Conversion dependencies:
 </div>
 </div>
 
-<div id="outline-container-org3f7eab8" class="outline-2">
-<h2 id="org3f7eab8"><span class="section-number-2">4</span> Help</h2>
+<div id="outline-container-org50db635" class="outline-2">
+<h2 id="org50db635"><span class="section-number-2">4</span> Help</h2>
 <div class="outline-text-2" id="text-4">
 <pre class="example">
 
-usage: cc-dcm2bids.py [-O PATH] [-D DIRECTORY] [-N DIRECTORY] [-p]
-                              [-P PATTERN] [-e] [-E PATTERN] [-s] [-S PATTERN]
-                              [-f] [-F PATTERN [PATTERN ...]] [-l] [-L FILE]
-                              [-r] [-w] [-W FILE] [-k] [-i] [-t] [-u] [-c]
-                              [-C] [-J FILE] [-n] [-g] [-b] [-d] [-m] [-q]
-                              [-v] [-h]
+usage: cc-dcm2bids-wrapper.py [-O PATH] [-D DIRECTORY] [-N DIRECTORY]
+                                      [-p] [-P PATTERN] [-e] [-E PATTERN] [-s]
+                                      [-S PATTERN] [-f]
+                                      [-F PATTERN [PATTERN ...]] [-l]
+                                      [-L FILE] [-t] [-w] [-W FILE] [-k] [-i]
+                                      [-m] [-r] [-c] [-C] [-J FILE] [-n] [-g]
+                                      [-b] [-q] [-v] [-d] [--version] [-h]
 
-cc-dcm2bids.py:
+cc-dcm2bids-wrapper.py:
  - explore DICOM directories,
  - display summaries for the data discovered,
  - optionally convert to NIFTI (BIDS) data format.
 
 Tested on GE Discovery 750 MR scanner.
 
-cc-dcm2bids.py is free software licensed under GPL 3.0.  Assembled from
+cc-dcm2bids-wrapper.py is free software licensed under GPL 3.0.  Assembled from
 various code snippets found on the web by Jan Nikadon (nikadon &lt;at&gt;
 gmail &lt;dot&gt; com).
 
@@ -386,8 +380,8 @@ optional arguments:
                         Start directory, e.g.,
                         /home/username/study/dicom. The default is
                         &lt;current directory&gt; e.g.,
-                        /home/cybercraft/cc/dev/mri-hacks/cc-custom-dcm-
-                        tools/cc-dcm2bids
+                        /home/cybercraft/cc/dev/mri/cc-custom-dcm-
+                        tools
   -D DIRECTORY, --dicom-dir DIRECTORY
                         DICOM (source) directory. The default is
                         dicom
@@ -417,11 +411,13 @@ optional arguments:
   -l, --log             Save log to file.
   -L FILE, --log-file FILE
                         Log output filename. The default is based on filename
-                        executed, hostname, date and time, i.e., z
-                        ---&lt;executable-filename&gt;---&lt;hostname&gt;---&lt;YYYYmmdd-HH-
-                        MM-SS-sss&gt;---log.org e.g., z---cc-dcm2bids.py
-                        ---false---20180820-113634-815---log.org.
-  -r, --report          Produce detailed report on DICOM files found. The
+                        executed, hostname, date and time, i.e.,
+                        z---&lt;executable-
+                        filename&gt;---&lt;hostname&gt;---&lt;YYYYmmdd-HH-MM-SS-
+                        sss&gt;---log.org e.g., z---cc-dcm2bids-
+                        wrapper.py---false---20180824-180437-768---
+                        log.org.
+  -t, --table           Produce detailed table on DICOM files found. The
                         default is False.
   -w, --write-csv       Write DICOM information to CSV file. Implies
                         -r.
@@ -429,16 +425,14 @@ optional arguments:
                         File name for DICOM information to CSV. The default is
                         basename oflog-file with '.csv' extension.
   -k, --keep-sequence-information
-                        Keep series information in the report. The default is
+                        Keep series information in the table. The default is
                         False
   -i, --include-stacked-screen-saves
                         Include series containing stacked screen saves in the
-                        report. The default is False
-  -t, --tell-slice-time
-                        Display slice timing related information. Implies
-                        -k.
-  -u, --utterly-informative-mode
-                        Display more information derrived from DICOM files.
+                        table. The default is False
+  -m, --more-info       Display more information derrived from DICOM files.
+  -r, --report-files    Display slice timing related information. Implies
+                        -tkm.
   -c, --convert-demo    Show commands used to convert discovered series
                         (sequences) from DICOM to NIFTI format. The default is
                         False.
@@ -450,8 +444,8 @@ optional arguments:
                         e.g., study-specific.json. If none provided
                         session-specific JSON file(s) are expected to be
                         located in &lt;current directory&gt; with names
-                        corresponding to session(s) E.g., ses-
-                        01pre.json, ses-02post.json ETC.
+                        corresponding to session(s) E.g.,
+                        ses-01pre.json, ses-02post.json ETC.
   -n, --no-defaceing    Turn off defacing during conversion. The default is
                         False
   -g, --GE              Same as -P "p*" -E "e*" -S "s*"  (patterns
@@ -459,32 +453,35 @@ optional arguments:
                         running DV 2.4)
   -b, --BIDS            Same as -P "sub-*" -E "ses-*" -S "*"
                         (patterns tailored to BIDS data structure)
-  -d, --debug           Enable printing of debug messages to console
-  -m, --messages        Enable printing of summary messages to console.
   -q, --quiet           Be (quite) quiet.
-  -v, --version         show program's version number and exit
+  -v, --verbose         Verbose (use multiple times to increase verbbosity up
+                        to -vvvv).
+  -d, --debug           Debug mode (use multiple times to increase debugging
+                        level up to -ddd).
+  --version             show program's version number and exit
   -h, --help            Show this help message and exit
 
 Examples:
 
-cc-dcm2bids.py --help
-cc-dcm2bids.py -dm -pes -lrw -cn
-cc-dcm2bids.py -pes
-cc-dcm2bids.py -lr
+cc-dcm2bids-wrapper.py --help
+cc-dcm2bids-wrapper.py -dm -pes -lrw -cn
+cc-dcm2bids-wrapper.py -pes
+cc-dcm2bids-wrapper.py -lr
 
 </pre>
 </div>
 </div>
-<div id="outline-container-org62a3019" class="outline-2">
-<h2 id="org62a3019"><span class="section-number-2">5</span> Example of functional sequences inspection (GE MR750)</h2>
+
+<div id="outline-container-orgb26b069" class="outline-2">
+<h2 id="orgb26b069"><span class="section-number-2">5</span> Example of functional sequences inspection (GE MR750)</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org552ee18" class="outline-3">
-<h3 id="org552ee18"><span class="section-number-3">5.1</span> Overview</h3>
+<div id="outline-container-orgad85907" class="outline-3">
+<h3 id="orgad85907"><span class="section-number-3">5.1</span> Overview</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-org4464cab" class="outline-4">
-<h4 id="org4464cab"><span class="section-number-4">5.1.1</span> Code</h4>
+<div id="outline-container-orgd2d5439" class="outline-4">
+<h4 id="orgd2d5439"><span class="section-number-4">5.1.1</span> Code</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
 <pre class="src src-sh">
@@ -495,8 +492,8 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 </div>
 </div>
 
-<div id="outline-container-org512e3f6" class="outline-4">
-<h4 id="org512e3f6"><span class="section-number-4">5.1.2</span> Info</h4>
+<div id="outline-container-org5c46414" class="outline-4">
+<h4 id="org5c46414"><span class="section-number-4">5.1.2</span> Info</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <ul class="org-ul">
 <li>O: <code>/home/cybercraft/cc/dat/varia/2018/q03/agar-testing-settings</code></li>
@@ -509,30 +506,30 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 </ul>
 </div>
 </div>
-<div id="outline-container-orga7587b1" class="outline-4">
-<h4 id="orga7587b1"><span class="section-number-4">5.1.3</span> Standard tree</h4>
+<div id="outline-container-orga961d3e" class="outline-4">
+<h4 id="orga961d3e"><span class="section-number-4">5.1.3</span> Standard tree</h4>
 <div class="outline-text-4" id="text-5-1-3">
 </div>
 <ol class="org-ol">
-<li><a id="orgd85f9b0"></a>dicom/ (1 of 1)<br />
+<li><a id="org74ef418"></a>dicom/ (1 of 1)<br />
 <ol class="org-ol">
-<li><a id="org4089682"></a>dicom/sub-agar/ (1 of 1)<br />
+<li><a id="org9bdbdb0"></a>dicom/sub-agar/ (1 of 1)<br />
 <ol class="org-ol">
-<li><a id="orge0e0323"></a>dicom/sub-agar/ses-fmriGeometry/ (1 of 1)<br />
+<li><a id="orgdedeca9"></a>dicom/sub-agar/ses-fmriGeometry/ (1 of 1)<br />
 <ol class="org-ol">
-<li><a id="org755bce4"></a>dicom/sub-agar/ses-fmriGeometry/s726/ (1 of 13)<br /></li>
-<li><a id="org022d85b"></a>dicom/sub-agar/ses-fmriGeometry/s734/ (2 of 13)<br /></li>
-<li><a id="org4237bc7"></a>dicom/sub-agar/ses-fmriGeometry/s732/ (3 of 13)<br /></li>
-<li><a id="org3ca97c6"></a>dicom/sub-agar/ses-fmriGeometry/s733/ (4 of 13)<br /></li>
-<li><a id="org0aa6b0f"></a>dicom/sub-agar/ses-fmriGeometry/s725/ (5 of 13)<br /></li>
-<li><a id="orgbf36da3"></a>dicom/sub-agar/ses-fmriGeometry/s729/ (6 of 13)<br /></li>
-<li><a id="org87a5b94"></a>dicom/sub-agar/ses-fmriGeometry/s731/ (7 of 13)<br /></li>
-<li><a id="org5317406"></a>dicom/sub-agar/ses-fmriGeometry/s723/ (8 of 13)<br /></li>
-<li><a id="orgcd1d99d"></a>dicom/sub-agar/ses-fmriGeometry/s727/ (9 of 13)<br /></li>
-<li><a id="orgdad1a3d"></a>dicom/sub-agar/ses-fmriGeometry/s724/ (10 of 13)<br /></li>
-<li><a id="orgc2f77b5"></a>dicom/sub-agar/ses-fmriGeometry/s722/ (11 of 13)<br /></li>
-<li><a id="org9b08c50"></a>dicom/sub-agar/ses-fmriGeometry/s730/ (12 of 13)<br /></li>
-<li><a id="org986790c"></a>dicom/sub-agar/ses-fmriGeometry/s728/ (13 of 13)<br /></li>
+<li><a id="org63471b8"></a>dicom/sub-agar/ses-fmriGeometry/s726/ (1 of 13)<br /></li>
+<li><a id="org8ff2945"></a>dicom/sub-agar/ses-fmriGeometry/s734/ (2 of 13)<br /></li>
+<li><a id="org42e9dd4"></a>dicom/sub-agar/ses-fmriGeometry/s732/ (3 of 13)<br /></li>
+<li><a id="orgb7ad316"></a>dicom/sub-agar/ses-fmriGeometry/s733/ (4 of 13)<br /></li>
+<li><a id="orgf9e1bfe"></a>dicom/sub-agar/ses-fmriGeometry/s725/ (5 of 13)<br /></li>
+<li><a id="org486ebf9"></a>dicom/sub-agar/ses-fmriGeometry/s729/ (6 of 13)<br /></li>
+<li><a id="org48cc43c"></a>dicom/sub-agar/ses-fmriGeometry/s731/ (7 of 13)<br /></li>
+<li><a id="org681595f"></a>dicom/sub-agar/ses-fmriGeometry/s723/ (8 of 13)<br /></li>
+<li><a id="orgd5d3b99"></a>dicom/sub-agar/ses-fmriGeometry/s727/ (9 of 13)<br /></li>
+<li><a id="org30f86f1"></a>dicom/sub-agar/ses-fmriGeometry/s724/ (10 of 13)<br /></li>
+<li><a id="orgf7bc52d"></a>dicom/sub-agar/ses-fmriGeometry/s722/ (11 of 13)<br /></li>
+<li><a id="org65f7173"></a>dicom/sub-agar/ses-fmriGeometry/s730/ (12 of 13)<br /></li>
+<li><a id="orgaa5b466"></a>dicom/sub-agar/ses-fmriGeometry/s728/ (13 of 13)<br /></li>
 </ol>
 </li>
 </ol>
@@ -541,8 +538,8 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 </li>
 </ol>
 </div>
-<div id="outline-container-orgae1d7a4" class="outline-4">
-<h4 id="orgae1d7a4"><span class="section-number-4">5.1.4</span> Detailed tree</h4>
+<div id="outline-container-orgcf52518" class="outline-4">
+<h4 id="orgcf52518"><span class="section-number-4">5.1.4</span> Detailed tree</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <ul class="org-ul">
 <li>dicom [dicom/]
@@ -609,8 +606,8 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdaf5f65" class="outline-4">
-<h4 id="orgdaf5f65"><span class="section-number-4">5.1.5</span> Table</h4>
+<div id="outline-container-org61edb0b" class="outline-4">
+<h4 id="org61edb0b"><span class="section-number-4">5.1.5</span> Table</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -760,8 +757,8 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 </div>
 </div>
 
-<div id="outline-container-org8519872" class="outline-4">
-<h4 id="org8519872"><span class="section-number-4">5.1.6</span> fMRI geometry</h4>
+<div id="outline-container-org68883af" class="outline-4">
+<h4 id="org68883af"><span class="section-number-4">5.1.6</span> fMRI geometry</h4>
 <div class="outline-text-4" id="text-5-1-6">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -819,7 +816,7 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 
 <tr>
 <td class="org-left">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;s08</td>
-<td class="org-right">7</td>
+<td class="org-right">8</td>
 <td class="org-left">TD</td>
 <td class="org-left">Sequential</td>
 <td class="org-right">44</td>
@@ -876,12 +873,12 @@ cc-dcm2bids.py -pes -v -tkim -E <span style="color: #50a14f;">"ses-*fmriGeometry
 </div>
 </div>
 
-<div id="outline-container-orgc8136b3" class="outline-3">
-<h3 id="orgc8136b3"><span class="section-number-3">5.2</span> fMRI geometry</h3>
+<div id="outline-container-org7d7a9a0" class="outline-3">
+<h3 id="org7d7a9a0"><span class="section-number-3">5.2</span> fMRI geometry</h3>
 <div class="outline-text-3" id="text-5-2">
 </div>
-<div id="outline-container-org8a12cc0" class="outline-4">
-<h4 id="org8a12cc0"><span class="section-number-4">5.2.1</span> Script</h4>
+<div id="outline-container-orga299f1f" class="outline-4">
+<h4 id="orga299f1f"><span class="section-number-4">5.2.1</span> Script</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <div class="org-src-container">
 <pre class="src src-sh">
@@ -915,8 +912,8 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
 </div>
 </div>
 
-<div id="outline-container-org2da06e4" class="outline-4">
-<h4 id="org2da06e4"><a id="ID-dc72ab10-b551-4438-9ed8-85670fcabbaa"></a><span class="section-number-4">5.2.2</span> Results</h4>
+<div id="outline-container-org8611d0f" class="outline-4">
+<h4 id="org8611d0f"><a id="ID-dc72ab10-b551-4438-9ed8-85670fcabbaa"></a><span class="section-number-4">5.2.2</span> Results</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <pre class="example">
 COLUMNS: %25ITEM(Item) %NUM %ORDER %ACQ %VIS_T %VIS_B
@@ -924,7 +921,7 @@ ID: dc72ab10-b551-4438-9ed8-85670fcabbaa
 </pre>
 </div>
 <ol class="org-ol">
-<li><a id="org566c73f"></a>s06<br />
+<li><a id="org4f466b3"></a>s06<br />
 <div class="outline-text-5" id="text-5-2-2-1">
 <pre class="example">
 NUM: 6
@@ -934,6 +931,14 @@ VIS_T: 1
 VIS_B: 44
 </pre>
 
+<pre class="example">
+     :NUM:      6
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    1
+     :VIS_B:    44
+</pre>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1448,7 +1453,7 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="orgb893990"></a>s07<br />
+<li><a id="org7b90099"></a>s07<br />
 <div class="outline-text-5" id="text-5-2-2-2">
 <pre class="example">
 NUM: 7
@@ -1458,6 +1463,14 @@ VIS_T: 1
 VIS_B: 44
 </pre>
 
+<pre class="example">
+     :NUM:      7
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    1
+     :VIS_B:    44
+</pre>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -1972,14 +1985,22 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="orgd739c34"></a>s08<br />
+<li><a id="org6f71835"></a>s08<br />
 <div class="outline-text-5" id="text-5-2-2-3">
 <pre class="example">
-NUM: 7
+NUM: 8
 ORDER: TD
 ACQ: Sequential
 VIS_T: 44
 VIS_B: 1
+</pre>
+
+<pre class="example">
+     :NUM:      8
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
 </pre>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2496,7 +2517,7 @@ VIS_B: 1
 </div>
 </li>
 
-<li><a id="org0877fcc"></a>s09<br />
+<li><a id="org7ae7836"></a>s09<br />
 <div class="outline-text-5" id="text-5-2-2-4">
 <pre class="example">
 NUM: 9
@@ -2506,6 +2527,14 @@ VIS_T: 44
 VIS_B: 1
 </pre>
 
+<pre class="example">
+     :NUM:      9
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+</pre>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -3020,7 +3049,7 @@ VIS_B: 1
 </div>
 </li>
 
-<li><a id="org8e7a354"></a>s10<br />
+<li><a id="org2b28135"></a>s10<br />
 <div class="outline-text-5" id="text-5-2-2-5">
 <pre class="example">
 NUM: 10
@@ -3030,6 +3059,14 @@ VIS_T: 1
 VIS_B: 44
 </pre>
 
+<pre class="example">
+     :NUM:      10
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
+</pre>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -3544,7 +3581,7 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="org6dbbcb1"></a>s11<br />
+<li><a id="orgfb797ca"></a>s11<br />
 <div class="outline-text-5" id="text-5-2-2-6">
 <pre class="example">
 NUM: 11
@@ -3552,6 +3589,14 @@ ORDER: BU
 ACQ: Interleaved
 VIS_T: 1
 VIS_B: 44
+</pre>
+
+<pre class="example">
+     :NUM:      11
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
 </pre>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4068,7 +4113,7 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="orgc076de6"></a>s12<br />
+<li><a id="orgf522148"></a>s12<br />
 <div class="outline-text-5" id="text-5-2-2-7">
 <pre class="example">
 NUM: 12
@@ -4076,6 +4121,14 @@ ORDER: TD
 ACQ: Interleaved
 VIS_T: 44
 VIS_B: 1
+</pre>
+
+<pre class="example">
+     :NUM:      12
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
 </pre>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4592,7 +4645,7 @@ VIS_B: 1
 </div>
 </li>
 
-<li><a id="orgeefab7a"></a>s13<br />
+<li><a id="org0333e36"></a>s13<br />
 <div class="outline-text-5" id="text-5-2-2-8">
 <pre class="example">
 NUM: 13
@@ -4600,6 +4653,14 @@ ORDER: BU
 ACQ: Interleaved
 VIS_T: 44
 VIS_B: 1
+</pre>
+
+<pre class="example">
+     :NUM:      13
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
 </pre>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5128,8 +5189,8 @@ VIS_B: 1
 </ol>
 </div>
 
-<div id="outline-container-orgb67fdf9" class="outline-4">
-<h4 id="orgb67fdf9"><span class="section-number-4">5.2.3</span> Links and notes</h4>
+<div id="outline-container-org8ab3fa1" class="outline-4">
+<h4 id="org8ab3fa1"><span class="section-number-4">5.2.3</span> Links and notes</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <ul class="org-ul">
 <li><a href="https://github.com/rordenlab/dcm2niix/issues/163">https://github.com/rordenlab/dcm2niix/issues/163</a></li>
@@ -5163,14 +5224,14 @@ VIS_B: 1
 </thead>
 <tbody>
 <tr>
-<td class="org-left">Trigger Time</td>
+<td class="org-left"><code>Trigger Time</code></td>
 <td class="org-left">(0018,1060)</td>
 <td class="org-left">2C</td>
 <td class="org-left">Always Sent. (even if value is zero length)</td>
 </tr>
 
 <tr>
-<td class="org-left">FloatSlopRTIATimer</td>
+<td class="org-left"><code>FloatSlopRTIATimer</code></td>
 <td class="org-left">(0021,105E)</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><code>RTIA_timer</code></td>
@@ -5181,33 +5242,10 @@ VIS_B: 1
 </div>
 </div>
 </div>
-
-
-<div id="outline-container-org56694ee" class="outline-2">
-<h2 id="org56694ee"><span class="section-number-2">6</span> SeriesNumber</h2>
-</div>
-<div id="outline-container-org77513d4" class="outline-2">
-<h2 id="org77513d4"><span class="section-number-2">7</span> ImagesInAcquisition</h2>
-</div>
-<div id="outline-container-org4ea6dfa" class="outline-2">
-<h2 id="org4ea6dfa"><span class="section-number-2">8</span> InStackPositionNumber</h2>
-</div>
-<div id="outline-container-orgd74cdb1" class="outline-2">
-<h2 id="orgd74cdb1"><span class="section-number-2">9</span> InstanceNumber</h2>
-</div>
-<div id="outline-container-org1e2f54f" class="outline-2">
-<h2 id="org1e2f54f"><span class="section-number-2">10</span> SliceLocation</h2>
-</div>
-<div id="outline-container-orged185db" class="outline-2">
-<h2 id="orged185db"><span class="section-number-2">11</span> TriggerTime</h2>
-</div>
-<div id="outline-container-orga4a2644" class="outline-2">
-<h2 id="orga4a2644"><span class="section-number-2">12</span> FloatSlopRTIATimer</h2>
-</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Nikadon</p>
-<p class="date">Created: 2018-08-24 Fri 19:34</p>
+<p class="date">Created: 2018-08-24 Fri 20:08</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
