@@ -1,0 +1,808 @@
+#+TITLE: cc-dcm2bids.py
+#+AUTHOR: Jan Nikadon
+
+#+SETUPFILE: theme-readtheorg-local.setup
+#+OPTIONS: prop:t
+
+* TODO TODOs
+
+  - [ ] add *slice timing estimation* functionality based on ~TR~ and slice position/time
+  - [X] use the first 256 (or actually ~44) slices only (do not load whole series data)
+    - [X] make example (dummy) EPI acquisitions for:
+      - [X] sequential top/down (~sTD~)
+      - [X] sequential bottom/up (~sBU~)
+      - [X] interleaved top/down (~iTD~)
+      - [X] interleaved bottom-up (~iBU~)
+    - [X] test the above mentioned code against the above mentioned data
+  - [X] add =-v=, =-vv=, =-vvv= for increased verbosity instead of =-m= for messages (but keep the debug mode =-d=) possibly combine =-vvv= and =-d= (or provide =-dd= =-ddd=)
+  - [ ] re-think the /"Origin"/ (as it was in the previous version resulting in =./= being added at sthe beginning of each of relative paths)
+  - [ ] add files counter (for logging and printing)
+  - [ ] add checking if =*= is present at least (or exactly) once in each pattern (for patient, exam, series, files)
+  - [ ] consider checking if at any level at least one directoty/file exists (otherwise raise an error)
+
+* Info
+
+  Convert DICOM to NIFTI (BIDS). With or w/o defacing.
+  Provide basic info based on DICOM data.
+
+  By default DICOM data is expected to reside in directories structured like:
+  - =./dicom/sub-*/ses-*/s*/=
+  The directory for the output defaults to:
+  - =./nifti/=
+
+* Dependencies
+
+  Dependencies include:
+  - =pydicom=
+  - =pandas=
+  - =tabulate=
+  - =pprint=
+  - =argparse=
+  - =colorama=
+  - =datetime=
+  - =glob=
+  - =sys=
+  - =os=
+  - =re=
+  - =subprocess=
+  - =socket=
+
+  Conversion dependencies:
+  - =pydeface=
+  - =dcm2bids=
+
+* Help
+
+  #+BEGIN_EXAMPLE
+
+usage: cc-dcm2bids.py [-O PATH] [-D DIRECTORY] [-N DIRECTORY] [-p]
+                              [-P PATTERN] [-e] [-E PATTERN] [-s] [-S PATTERN]
+                              [-f] [-F PATTERN [PATTERN ...]] [-l] [-L FILE]
+                              [-r] [-w] [-W FILE] [-k] [-i] [-t] [-u] [-c]
+                              [-C] [-J FILE] [-n] [-g] [-b] [-d] [-m] [-q]
+                              [-v] [-h]
+
+cc-dcm2bids.py:
+ - explore DICOM directories,
+ - display summaries for the data discovered,
+ - optionally convert to NIFTI (BIDS) data format.
+
+Tested on GE Discovery 750 MR scanner.
+
+cc-dcm2bids.py is free software licensed under GPL 3.0.  Assembled from
+various code snippets found on the web by Jan Nikadon (nikadon <at>
+gmail <dot> com).
+
+
+
+optional arguments:
+  -O PATH, --origin PATH
+                        Start directory, e.g.,
+                        /home/username/study/dicom. The default is
+                        <current directory> e.g.,
+                        /home/cybercraft/cc/dev/mri-hacks/cc-custom-dcm-
+                        tools/cc-dcm2bids
+  -D DIRECTORY, --dicom-dir DIRECTORY
+                        DICOM (source) directory. The default is
+                        dicom
+  -N DIRECTORY, --nifti-dir DIRECTORY
+                        NIFTI (target) directory. The default is
+                        nifti
+  -p, --show-patients   Display patients (subjects) discovered.
+  -P PATTERN, --patients PATTERN
+                        Unix-like pattern that matches patient (subject)
+                        directories, e.g., p* or
+                        group-*/sub-*. The default is sub-*
+  -e, --show-exams      Display exams (sessions) discovered.
+  -E PATTERN, --exams PATTERN
+                        Unix-like pattern that matches exam (session)
+                        directories, e.g., e*. The default is
+                        ses-*
+  -s, --show-series     Display series (sequences) discovered.
+  -S PATTERN, --series PATTERN
+                        Unix-like pattern that matches series (sequence)
+                        directories, e.g., s* (which also is the
+                        default).
+  -f, --show-files      Display DICOM files discovered.
+  -F PATTERN [PATTERN ...], --files PATTERN [PATTERN ...]
+                        Unix-like pattern that matches DICOM files, e.g.,
+                        '*'. Multiple patterns are accepted. The
+                        default is 'i*MRDC*' 'i*SCPT*'.
+  -l, --log             Save log to file.
+  -L FILE, --log-file FILE
+                        Log output filename. The default is based on filename
+                        executed, hostname, date and time, i.e., z
+                        ---<executable-filename>---<hostname>---<YYYYmmdd-HH-
+                        MM-SS-sss>---log.org e.g., z---cc-dcm2bids.py
+                        ---false---20180820-113634-815---log.org.
+  -r, --report          Produce detailed report on DICOM files found. The
+                        default is False.
+  -w, --write-csv       Write DICOM information to CSV file. Implies
+                        -r.
+  -W FILE, --write-csv-file FILE
+                        File name for DICOM information to CSV. The default is
+                        basename oflog-file with '.csv' extension.
+  -k, --keep-sequence-information
+                        Keep series information in the report. The default is
+                        False
+  -i, --include-stacked-screen-saves
+                        Include series containing stacked screen saves in the
+                        report. The default is False
+  -t, --tell-slice-time
+                        Display slice timing related information. Implies
+                        -k.
+  -u, --utterly-informative-mode
+                        Display more information derrived from DICOM files.
+  -c, --convert-demo    Show commands used to convert discovered series
+                        (sequences) from DICOM to NIFTI format. The default is
+                        False.
+  -C, --convert         Convert discovered series (sequences) from DICOM to
+                        NIFTI format. The default is False. Implies
+                        -c.
+  -J FILE, --study-specific-json FILE
+                        Study specific JSON file dontaining series description
+                        e.g., study-specific.json. If none provided
+                        session-specific JSON file(s) are expected to be
+                        located in <current directory> with names
+                        corresponding to session(s) E.g., ses-
+                        01pre.json, ses-02post.json ETC.
+  -n, --no-defaceing    Turn off defacing during conversion. The default is
+                        False
+  -g, --GE              Same as -P "p*" -E "e*" -S "s*"  (patterns
+                        tailored to raw data obtained from GE MR750 scanner
+                        running DV 2.4)
+  -b, --BIDS            Same as -P "sub-*" -E "ses-*" -S "*"
+                        (patterns tailored to BIDS data structure)
+  -d, --debug           Enable printing of debug messages to console
+  -m, --messages        Enable printing of summary messages to console.
+  -q, --quiet           Be (quite) quiet.
+  -v, --version         show program's version number and exit
+  -h, --help            Show this help message and exit
+
+Examples:
+
+cc-dcm2bids.py --help
+cc-dcm2bids.py -dm -pes -lrw -cn
+cc-dcm2bids.py -pes
+cc-dcm2bids.py -lr
+
+  #+END_EXAMPLE
+* Example of functional sequences inspection (GE MR750)
+** Overview
+*** Code
+
+    #+BEGIN_SRC sh
+
+cc-dcm2bids.py -pes -v -tkim -E "ses-*fmriGeometry"  -lw
+
+    #+END_SRC
+
+*** Info
+    - O: =/home/cybercraft/cc/dat/varia/2018/q03/agar-testing-settings=
+    - N: =nifti=
+    - D: =dicom=
+    - P: =sub-*=
+    - E: =ses-*fmriGeometry=
+    - S: =s*=
+    - F: =['i*MRDC*', 'i*SCPT*']=
+*** Standard tree
+****    dicom/ (1 of 1)
+*****   dicom/sub-agar/ (1 of 1)
+******  dicom/sub-agar/ses-fmriGeometry/ (1 of 1)
+******* dicom/sub-agar/ses-fmriGeometry/s726/ (1 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s734/ (2 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s732/ (3 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s733/ (4 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s725/ (5 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s729/ (6 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s731/ (7 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s723/ (8 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s727/ (9 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s724/ (10 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s722/ (11 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s730/ (12 of 13)
+******* dicom/sub-agar/ses-fmriGeometry/s728/ (13 of 13)
+*** Detailed tree
+    - dicom [dicom/]
+      - agar [dicom/sub-agar/]
+        - fmriGeometry [dicom/sub-agar/ses-fmriGeometry/]
+          - 726 [dicom/sub-agar/ses-fmriGeometry/s726/]
+            - i929583.MRDC.2525 [dicom/sub-agar/ses-fmriGeometry/s726/i929583.MRDC.2525]
+          - 734 [dicom/sub-agar/ses-fmriGeometry/s734/]
+            - i950479.MRDC.2312 [dicom/sub-agar/ses-fmriGeometry/s734/i950479.MRDC.2312]
+          - 732 [dicom/sub-agar/ses-fmriGeometry/s732/]
+            - i945503.MRDC.2621 [dicom/sub-agar/ses-fmriGeometry/s732/i945503.MRDC.2621]
+          - 733 [dicom/sub-agar/ses-fmriGeometry/s733/]
+            - i946459.MRDC.932 [dicom/sub-agar/ses-fmriGeometry/s733/i946459.MRDC.932]
+          - 725 [dicom/sub-agar/ses-fmriGeometry/s725/]
+            - i927042.MRDC.26 [dicom/sub-agar/ses-fmriGeometry/s725/i927042.MRDC.26]
+          - 729 [dicom/sub-agar/ses-fmriGeometry/s729/]
+            - i937237.MRDC.2270 [dicom/sub-agar/ses-fmriGeometry/s729/i937237.MRDC.2270]
+          - 731 [dicom/sub-agar/ses-fmriGeometry/s731/]
+            - i941193.MRDC.947 [dicom/sub-agar/ses-fmriGeometry/s731/i941193.MRDC.947]
+          - 723 [dicom/sub-agar/ses-fmriGeometry/s723/]
+            - i926911.MRDC.111 [dicom/sub-agar/ses-fmriGeometry/s723/i926911.MRDC.111]
+          - 727 [dicom/sub-agar/ses-fmriGeometry/s727/]
+            - i930490.MRDC.826 [dicom/sub-agar/ses-fmriGeometry/s727/i930490.MRDC.826]
+          - 724 [dicom/sub-agar/ses-fmriGeometry/s724/]
+            - i926995.MRDC.67 [dicom/sub-agar/ses-fmriGeometry/s724/i926995.MRDC.67]
+          - 722 [dicom/sub-agar/ses-fmriGeometry/s722/]
+            - i926798.MRDC.1 [dicom/sub-agar/ses-fmriGeometry/s722/i926798.MRDC.1]
+          - 730 [dicom/sub-agar/ses-fmriGeometry/s730/]
+            - i939072.MRDC.1465 [dicom/sub-agar/ses-fmriGeometry/s730/i939072.MRDC.1465]
+          - 728 [dicom/sub-agar/ses-fmriGeometry/s728/]
+            - i933002.MRDC.690 [dicom/sub-agar/ses-fmriGeometry/s728/i933002.MRDC.690]
+*** Table
+  |    | Path                                 | NumFiles | PatientID | SeriesDescription     | SeriesNumber |
+  |----+--------------------------------------+----------+-----------+-----------------------+--------------|
+  | 10 | dicom/sub-agar/ses-fmriGeometry/s722 |        3 | agar      | 3Plane-Loc-SSFSE-ge   |            1 |
+  |  7 | dicom/sub-agar/ses-fmriGeometry/s723 |      128 | agar      | ASSET Cal GE mod OK   |            2 |
+  |  9 | dicom/sub-agar/ses-fmriGeometry/s724 |       75 | agar      | 3Plane-Loc-SSFSE-det  |            3 |
+  |  4 | dicom/sub-agar/ses-fmriGeometry/s725 |       44 | agar      | Ax_T1_GRE_inPlane_sTD |            4 |
+  |  0 | dicom/sub-agar/ses-fmriGeometry/s726 |     2640 | agar      | fMRI_rest_sTD         |            5 |
+  |  8 | dicom/sub-agar/ses-fmriGeometry/s727 |     2640 | agar      | fMRI_rest_sTD         |            6 |
+  | 12 | dicom/sub-agar/ses-fmriGeometry/s728 |     2640 | agar      | fMRI_rest_sTD         |            7 |
+  |  5 | dicom/sub-agar/ses-fmriGeometry/s729 |     2640 | agar      | fMRI_rest_sTD         |            8 |
+  | 11 | dicom/sub-agar/ses-fmriGeometry/s730 |     2640 | agar      | fMRI_rest_sTD         |            9 |
+  |  6 | dicom/sub-agar/ses-fmriGeometry/s731 |     2640 | agar      | fMRI_rest_sTD         |           10 |
+  |  2 | dicom/sub-agar/ses-fmriGeometry/s732 |     2640 | agar      | fMRI_rest_sTD         |           11 |
+  |  3 | dicom/sub-agar/ses-fmriGeometry/s733 |     2640 | agar      | fMRI_rest_sTD         |           12 |
+  |  1 | dicom/sub-agar/ses-fmriGeometry/s734 |     2640 | agar      | fMRI_rest_sTD         |           13 |
+
+*** fMRI geometry
+
+    #+BEGIN: columnview :hlines 1 :id "dc72ab10-b551-4438-9ed8-85670fcabbaa" :indent t
+    | Item          | NUM | ORDER | ACQ         | VIS_T | VIS_B |
+    |---------------+-----+-------+-------------+-------+-------|
+    | \_    Results |     |       |             |       |       |
+    | \_      s06   |   6 | TD    | Sequential  |     1 |    44 |
+    | \_      s07   |   7 | BU    | Sequential  |     1 |    44 |
+    | \_      s08   |   7 | TD    | Sequential  |    44 |     1 |
+    | \_      s09   |   9 | BU    | Sequential  |    44 |     1 |
+    | \_      s10   |  10 | TD    | Interleaved |     1 |    44 |
+    | \_      s11   |  11 | BU    | Interleaved |     1 |    44 |
+    | \_      s12   |  12 | TD    | Interleaved |    44 |     1 |
+    | \_      s13   |  13 | BU    | Interleaved |    44 |     1 |
+    #+END:
+
+** fMRI geometry
+*** Script
+
+    #+BEGIN_SRC sh
+
+cd ~/cc/dat/varia/2018/q03/agar-testing-settings
+
+cc-dcm2bids.py -pes -S "*s727" -tkimr -lw -L "s727-s06.org"
+cc-dcm2bids.py -pes -S "*s728" -tkimr -lw -L "s728-s07.org"
+cc-dcm2bids.py -pes -S "*s729" -tkimr -lw -L "s729-s08.org"
+cc-dcm2bids.py -pes -S "*s730" -tkimr -lw -L "s730-s09.org"
+cc-dcm2bids.py -pes -S "*s731" -tkimr -lw -L "s731-s10.org"
+cc-dcm2bids.py -pes -S "*s732" -tkimr -lw -L "s732-s11.org"
+cc-dcm2bids.py -pes -S "*s733" -tkimr -lw -L "s733-s12.org"
+cc-dcm2bids.py -pes -S "*s734" -tkimr -lw -L "s734-s13.org"
+
+
+head -n 66 s727-s06.org > first_48_slices_s727-s06.org
+head -n 66 s728-s07.org > first_48_slices_s728-s07.org
+head -n 66 s729-s08.org > first_48_slices_s729-s08.org
+head -n 66 s730-s09.org > first_48_slices_s730-s09.org
+head -n 66 s731-s10.org > first_48_slices_s731-s10.org
+head -n 66 s732-s11.org > first_48_slices_s732-s11.org
+head -n 66 s733-s12.org > first_48_slices_s733-s12.org
+head -n 66 s734-s13.org > first_48_slices_s734-s13.org
+
+mkdir -p ./org-log-arch/
+mv -v ./s7*org ./s7*csv ./org-log-arch/
+
+
+    #+END_SRC
+
+*** Results
+    :PROPERTIES:
+    :COLUMNS:  %25ITEM(Item) %NUM %ORDER %ACQ %VIS_T %VIS_B
+    :ID:       dc72ab10-b551-4438-9ed8-85670fcabbaa
+    :END:
+**** s06
+     :PROPERTIES:
+     :NUM:      6
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    1
+     :VIS_B:    44
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |            6 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
+ |            6 |                  44 |                     2 |              2 |       61.2566 |             |                  0 |
+ |            6 |                  44 |                     3 |              3 |       58.0344 |             |             0.0932 |
+ |            6 |                  44 |                     4 |              4 |       54.8121 |             |             0.1386 |
+ |            6 |                  44 |                     5 |              5 |       51.5898 |             |             0.1841 |
+ |            6 |                  44 |                     6 |              6 |       48.3675 |             |             0.2295 |
+ |            6 |                  44 |                     7 |              7 |       45.1453 |             |              0.275 |
+ |            6 |                  44 |                     8 |              8 |        41.923 |             |             0.3204 |
+ |            6 |                  44 |                     9 |              9 |       38.7007 |             |             0.3659 |
+ |            6 |                  44 |                    10 |             10 |       35.4784 |             |             0.4114 |
+ |            6 |                  44 |                    11 |             11 |       32.2562 |             |             0.4568 |
+ |            6 |                  44 |                    12 |             12 |       29.0339 |             |             0.5023 |
+ |            6 |                  44 |                    13 |             13 |       25.8116 |             |             0.5477 |
+ |            6 |                  44 |                    14 |             14 |       22.5893 |             |             0.5932 |
+ |            6 |                  44 |                    15 |             15 |       19.3671 |             |             0.6386 |
+ |            6 |                  44 |                    16 |             16 |       16.1448 |             |             0.6841 |
+ |            6 |                  44 |                    17 |             17 |       12.9225 |             |             0.7295 |
+ |            6 |                  44 |                    18 |             18 |       9.70024 |             |              0.775 |
+ |            6 |                  44 |                    19 |             19 |       6.47797 |             |             0.8205 |
+ |            6 |                  44 |                    20 |             20 |       3.25569 |             |             0.8659 |
+ |            6 |                  44 |                    21 |             21 |     0.0334157 |             |             0.9114 |
+ |            6 |                  44 |                    22 |             22 |      -3.18886 |             |             0.9568 |
+ |            6 |                  44 |                    23 |             23 |      -6.41113 |             |             1.0023 |
+ |            6 |                  44 |                    24 |             24 |      -9.63341 |             |             1.0477 |
+ |            6 |                  44 |                    25 |             25 |      -12.8557 |             |             1.0932 |
+ |            6 |                  44 |                    26 |             26 |       -16.078 |             |             1.1387 |
+ |            6 |                  44 |                    27 |             27 |      -19.3002 |             |             1.1841 |
+ |            6 |                  44 |                    28 |             28 |      -22.5225 |             |             1.2296 |
+ |            6 |                  44 |                    29 |             29 |      -25.7448 |             |              1.275 |
+ |            6 |                  44 |                    30 |             30 |      -28.9671 |             |             1.3205 |
+ |            6 |                  44 |                    31 |             31 |      -32.1893 |             |             1.3659 |
+ |            6 |                  44 |                    32 |             32 |      -35.4116 |             |             1.4114 |
+ |            6 |                  44 |                    33 |             33 |      -38.6339 |             |             1.4568 |
+ |            6 |                  44 |                    34 |             34 |      -41.8562 |             |             1.5023 |
+ |            6 |                  44 |                    35 |             35 |      -45.0784 |             |             1.5477 |
+ |            6 |                  44 |                    36 |             36 |      -48.3007 |             |             1.5932 |
+ |            6 |                  44 |                    37 |             37 |       -51.523 |             |             1.6386 |
+ |            6 |                  44 |                    38 |             38 |      -54.7453 |             |             1.6841 |
+ |            6 |                  44 |                    39 |             39 |      -57.9675 |             |             1.7295 |
+ |            6 |                  44 |                    40 |             40 |      -61.1898 |             |              1.775 |
+ |            6 |                  44 |                    41 |             41 |      -64.4121 |             |             1.8204 |
+ |            6 |                  44 |                    42 |             42 |      -67.6344 |             |             1.8659 |
+ |            6 |                  44 |                    43 |             43 |      -70.8566 |             |             1.9113 |
+ |            6 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
+ |            6 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
+ |            6 |                  44 |                     2 |             46 |       61.2566 |             |             2.0477 |
+ |            6 |                  44 |                     3 |             47 |       58.0344 |             |             2.0932 |
+ |            6 |                  44 |                     4 |             48 |       54.8121 |             |             2.1386 |
+
+**** s07
+     :PROPERTIES:
+     :NUM:      7
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    1
+     :VIS_B:    44
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |            7 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
+ |            7 |                  44 |                     2 |              2 |       61.2566 |             |             0.0477 |
+ |            7 |                  44 |                     3 |              3 |       58.0344 |             |             0.0932 |
+ |            7 |                  44 |                     4 |              4 |       54.8121 |             |             0.1386 |
+ |            7 |                  44 |                     5 |              5 |       51.5898 |             |             0.1841 |
+ |            7 |                  44 |                     6 |              6 |       48.3675 |             |             0.2295 |
+ |            7 |                  44 |                     7 |              7 |       45.1453 |             |              0.275 |
+ |            7 |                  44 |                     8 |              8 |        41.923 |             |             0.3204 |
+ |            7 |                  44 |                     9 |              9 |       38.7007 |             |             0.3659 |
+ |            7 |                  44 |                    10 |             10 |       35.4784 |             |             0.4114 |
+ |            7 |                  44 |                    11 |             11 |       32.2562 |             |             0.4568 |
+ |            7 |                  44 |                    12 |             12 |       29.0339 |             |             0.5023 |
+ |            7 |                  44 |                    13 |             13 |       25.8116 |             |             0.5477 |
+ |            7 |                  44 |                    14 |             14 |       22.5893 |             |             0.5932 |
+ |            7 |                  44 |                    15 |             15 |       19.3671 |             |             0.6386 |
+ |            7 |                  44 |                    16 |             16 |       16.1448 |             |             0.6841 |
+ |            7 |                  44 |                    17 |             17 |       12.9225 |             |             0.7295 |
+ |            7 |                  44 |                    18 |             18 |       9.70024 |             |              0.775 |
+ |            7 |                  44 |                    19 |             19 |       6.47797 |             |             0.8205 |
+ |            7 |                  44 |                    20 |             20 |       3.25569 |             |             0.8659 |
+ |            7 |                  44 |                    21 |             21 |     0.0334157 |             |             0.9114 |
+ |            7 |                  44 |                    22 |             22 |      -3.18886 |             |             0.9568 |
+ |            7 |                  44 |                    23 |             23 |      -6.41113 |             |             1.0023 |
+ |            7 |                  44 |                    24 |             24 |      -9.63341 |             |             1.0477 |
+ |            7 |                  44 |                    25 |             25 |      -12.8557 |             |             1.0932 |
+ |            7 |                  44 |                    26 |             26 |       -16.078 |             |             1.1387 |
+ |            7 |                  44 |                    27 |             27 |      -19.3002 |             |             1.1841 |
+ |            7 |                  44 |                    28 |             28 |      -22.5225 |             |             1.2296 |
+ |            7 |                  44 |                    29 |             29 |      -25.7448 |             |              1.275 |
+ |            7 |                  44 |                    30 |             30 |      -28.9671 |             |             1.3205 |
+ |            7 |                  44 |                    31 |             31 |      -32.1893 |             |             1.3659 |
+ |            7 |                  44 |                    32 |             32 |      -35.4116 |             |             1.4114 |
+ |            7 |                  44 |                    33 |             33 |      -38.6339 |             |             1.4568 |
+ |            7 |                  44 |                    34 |             34 |      -41.8562 |             |             1.5023 |
+ |            7 |                  44 |                    35 |             35 |      -45.0784 |             |             1.5477 |
+ |            7 |                  44 |                    36 |             36 |      -48.3007 |             |             1.5932 |
+ |            7 |                  44 |                    37 |             37 |       -51.523 |             |             1.6386 |
+ |            7 |                  44 |                    38 |             38 |      -54.7453 |             |             1.6841 |
+ |            7 |                  44 |                    39 |             39 |      -57.9675 |             |             1.7295 |
+ |            7 |                  44 |                    40 |             40 |      -61.1898 |             |              1.775 |
+ |            7 |                  44 |                    41 |             41 |      -64.4121 |             |             1.8204 |
+ |            7 |                  44 |                    42 |             42 |      -67.6344 |             |             1.8659 |
+ |            7 |                  44 |                    43 |             43 |      -70.8566 |             |             1.9113 |
+ |            7 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
+ |            7 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
+ |            7 |                  44 |                     2 |             46 |       61.2566 |             |             2.0477 |
+ |            7 |                  44 |                     3 |             47 |       58.0344 |             |             2.0932 |
+ |            7 |                  44 |                     4 |             48 |       54.8121 |             |             2.1386 |
+
+**** s08
+     :PROPERTIES:
+     :NUM:      7
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |            8 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
+ |            8 |                  44 |                     2 |              2 |       -71.409 |             |             0.0477 |
+ |            8 |                  44 |                     3 |              3 |      -68.1868 |             |             0.0932 |
+ |            8 |                  44 |                     4 |              4 |      -64.9645 |             |             0.1386 |
+ |            8 |                  44 |                     5 |              5 |      -61.7422 |             |             0.1841 |
+ |            8 |                  44 |                     6 |              6 |      -58.5199 |             |             0.2295 |
+ |            8 |                  44 |                     7 |              7 |      -55.2977 |             |              0.275 |
+ |            8 |                  44 |                     8 |              8 |      -52.0754 |             |             0.3204 |
+ |            8 |                  44 |                     9 |              9 |      -48.8531 |             |             0.3659 |
+ |            8 |                  44 |                    10 |             10 |      -45.6308 |             |             0.4114 |
+ |            8 |                  44 |                    11 |             11 |      -42.4086 |             |             0.4568 |
+ |            8 |                  44 |                    12 |             12 |      -39.1863 |             |             0.5023 |
+ |            8 |                  44 |                    13 |             13 |       -35.964 |             |             0.5477 |
+ |            8 |                  44 |                    14 |             14 |      -32.7417 |             |             0.5932 |
+ |            8 |                  44 |                    15 |             15 |      -29.5195 |             |             0.6386 |
+ |            8 |                  44 |                    16 |             16 |      -26.2972 |             |             0.6841 |
+ |            8 |                  44 |                    17 |             17 |      -23.0749 |             |             0.7295 |
+ |            8 |                  44 |                    18 |             18 |      -19.8527 |             |              0.775 |
+ |            8 |                  44 |                    19 |             19 |      -16.6304 |             |             0.8205 |
+ |            8 |                  44 |                    20 |             20 |      -13.4081 |             |             0.8659 |
+ |            8 |                  44 |                    21 |             21 |      -10.1858 |             |             0.9114 |
+ |            8 |                  44 |                    22 |             22 |      -6.96356 |             |             0.9568 |
+ |            8 |                  44 |                    23 |             23 |      -3.74129 |             |             1.0023 |
+ |            8 |                  44 |                    24 |             24 |     -0.519012 |             |             1.0477 |
+ |            8 |                  44 |                    25 |             25 |       2.70326 |             |             1.0932 |
+ |            8 |                  44 |                    26 |             26 |       5.92554 |             |             1.1387 |
+ |            8 |                  44 |                    27 |             27 |       9.14781 |             |             1.1841 |
+ |            8 |                  44 |                    28 |             28 |       12.3701 |             |             1.2296 |
+ |            8 |                  44 |                    29 |             29 |       15.5924 |             |              1.275 |
+ |            8 |                  44 |                    30 |             30 |       18.8146 |             |             1.3205 |
+ |            8 |                  44 |                    31 |             31 |       22.0369 |             |             1.3659 |
+ |            8 |                  44 |                    32 |             32 |       25.2592 |             |             1.4114 |
+ |            8 |                  44 |                    33 |             33 |       28.4814 |             |             1.4568 |
+ |            8 |                  44 |                    34 |             34 |       31.7037 |             |             1.5023 |
+ |            8 |                  44 |                    35 |             35 |        34.926 |             |             1.5477 |
+ |            8 |                  44 |                    36 |             36 |       38.1483 |             |             1.5932 |
+ |            8 |                  44 |                    37 |             37 |       41.3705 |             |             1.6386 |
+ |            8 |                  44 |                    38 |             38 |       44.5928 |             |             1.6841 |
+ |            8 |                  44 |                    39 |             39 |       47.8151 |             |             1.7295 |
+ |            8 |                  44 |                    40 |             40 |       51.0374 |             |              1.775 |
+ |            8 |                  44 |                    41 |             41 |       54.2596 |             |             1.8204 |
+ |            8 |                  44 |                    42 |             42 |       57.4819 |             |             1.8659 |
+ |            8 |                  44 |                    43 |             43 |       60.7042 |             |             1.9113 |
+ |            8 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
+ |            8 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
+ |            8 |                  44 |                     2 |             46 |       -71.409 |             |             2.0477 |
+ |            8 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0932 |
+ |            8 |                  44 |                     4 |             48 |      -64.9645 |             |             2.1386 |
+
+**** s09
+     :PROPERTIES:
+     :NUM:      9
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |            9 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
+ |            9 |                  44 |                     2 |              2 |       -71.409 |             |             0.0477 |
+ |            9 |                  44 |                     3 |              3 |      -68.1868 |             |             0.0932 |
+ |            9 |                  44 |                     4 |              4 |      -64.9645 |             |             0.1386 |
+ |            9 |                  44 |                     5 |              5 |      -61.7422 |             |             0.1841 |
+ |            9 |                  44 |                     6 |              6 |      -58.5199 |             |             0.2295 |
+ |            9 |                  44 |                     7 |              7 |      -55.2977 |             |              0.275 |
+ |            9 |                  44 |                     8 |              8 |      -52.0754 |             |             0.3204 |
+ |            9 |                  44 |                     9 |              9 |      -48.8531 |             |             0.3659 |
+ |            9 |                  44 |                    10 |             10 |      -45.6308 |             |             0.4114 |
+ |            9 |                  44 |                    11 |             11 |      -42.4086 |             |             0.4568 |
+ |            9 |                  44 |                    12 |             12 |      -39.1863 |             |             0.5023 |
+ |            9 |                  44 |                    13 |             13 |       -35.964 |             |             0.5477 |
+ |            9 |                  44 |                    14 |             14 |      -32.7417 |             |             0.5932 |
+ |            9 |                  44 |                    15 |             15 |      -29.5195 |             |             0.6386 |
+ |            9 |                  44 |                    16 |             16 |      -26.2972 |             |             0.6841 |
+ |            9 |                  44 |                    17 |             17 |      -23.0749 |             |             0.7295 |
+ |            9 |                  44 |                    18 |             18 |      -19.8527 |             |              0.775 |
+ |            9 |                  44 |                    19 |             19 |      -16.6304 |             |             0.8205 |
+ |            9 |                  44 |                    20 |             20 |      -13.4081 |             |             0.8659 |
+ |            9 |                  44 |                    21 |             21 |      -10.1858 |             |             0.9114 |
+ |            9 |                  44 |                    22 |             22 |      -6.96356 |             |             0.9568 |
+ |            9 |                  44 |                    23 |             23 |      -3.74129 |             |             1.0023 |
+ |            9 |                  44 |                    24 |             24 |     -0.519012 |             |             1.0477 |
+ |            9 |                  44 |                    25 |             25 |       2.70326 |             |             1.0932 |
+ |            9 |                  44 |                    26 |             26 |       5.92554 |             |             1.1387 |
+ |            9 |                  44 |                    27 |             27 |       9.14781 |             |             1.1841 |
+ |            9 |                  44 |                    28 |             28 |       12.3701 |             |             1.2296 |
+ |            9 |                  44 |                    29 |             29 |       15.5924 |             |              1.275 |
+ |            9 |                  44 |                    30 |             30 |       18.8146 |             |             1.3205 |
+ |            9 |                  44 |                    31 |             31 |       22.0369 |             |             1.3659 |
+ |            9 |                  44 |                    32 |             32 |       25.2592 |             |             1.4114 |
+ |            9 |                  44 |                    33 |             33 |       28.4814 |             |             1.4568 |
+ |            9 |                  44 |                    34 |             34 |       31.7037 |             |             1.5023 |
+ |            9 |                  44 |                    35 |             35 |        34.926 |             |             1.5477 |
+ |            9 |                  44 |                    36 |             36 |       38.1483 |             |             1.5932 |
+ |            9 |                  44 |                    37 |             37 |       41.3705 |             |             1.6386 |
+ |            9 |                  44 |                    38 |             38 |       44.5928 |             |             1.6841 |
+ |            9 |                  44 |                    39 |             39 |       47.8151 |             |             1.7295 |
+ |            9 |                  44 |                    40 |             40 |       51.0374 |             |              1.775 |
+ |            9 |                  44 |                    41 |             41 |       54.2596 |             |             1.8204 |
+ |            9 |                  44 |                    42 |             42 |       57.4819 |             |             1.8659 |
+ |            9 |                  44 |                    43 |             43 |       60.7042 |             |             1.9113 |
+ |            9 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
+ |            9 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
+ |            9 |                  44 |                     2 |             46 |       -71.409 |             |             2.0477 |
+ |            9 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0932 |
+ |            9 |                  44 |                     4 |             48 |      -64.9645 |             |             2.1386 |
+
+**** s10
+     :PROPERTIES:
+     :NUM:      10
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |           10 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
+ |           10 |                  44 |                     2 |              2 |       61.2566 |             |             1.0023 |
+ |           10 |                  44 |                     3 |              3 |       58.0344 |             |             0.0477 |
+ |           10 |                  44 |                     4 |              4 |       54.8121 |             |             1.0477 |
+ |           10 |                  44 |                     5 |              5 |       51.5898 |             |             0.0932 |
+ |           10 |                  44 |                     6 |              6 |       48.3675 |             |             1.0932 |
+ |           10 |                  44 |                     7 |              7 |       45.1453 |             |             0.1386 |
+ |           10 |                  44 |                     8 |              8 |        41.923 |             |             1.1387 |
+ |           10 |                  44 |                     9 |              9 |       38.7007 |             |             0.1841 |
+ |           10 |                  44 |                    10 |             10 |       35.4784 |             |             1.1841 |
+ |           10 |                  44 |                    11 |             11 |       32.2562 |             |             0.2295 |
+ |           10 |                  44 |                    12 |             12 |       29.0339 |             |             1.2296 |
+ |           10 |                  44 |                    13 |             13 |       25.8116 |             |              0.275 |
+ |           10 |                  44 |                    14 |             14 |       22.5893 |             |              1.275 |
+ |           10 |                  44 |                    15 |             15 |       19.3671 |             |             0.3204 |
+ |           10 |                  44 |                    16 |             16 |       16.1448 |             |             1.3205 |
+ |           10 |                  44 |                    17 |             17 |       12.9225 |             |             0.3659 |
+ |           10 |                  44 |                    18 |             18 |       9.70024 |             |             1.3659 |
+ |           10 |                  44 |                    19 |             19 |       6.47797 |             |             0.4114 |
+ |           10 |                  44 |                    20 |             20 |       3.25569 |             |             1.4114 |
+ |           10 |                  44 |                    21 |             21 |     0.0334157 |             |             0.4568 |
+ |           10 |                  44 |                    22 |             22 |      -3.18886 |             |             1.4568 |
+ |           10 |                  44 |                    23 |             23 |      -6.41113 |             |             0.5023 |
+ |           10 |                  44 |                    24 |             24 |      -9.63341 |             |             1.5023 |
+ |           10 |                  44 |                    25 |             25 |      -12.8557 |             |             0.5477 |
+ |           10 |                  44 |                    26 |             26 |       -16.078 |             |             1.5477 |
+ |           10 |                  44 |                    27 |             27 |      -19.3002 |             |             0.5932 |
+ |           10 |                  44 |                    28 |             28 |      -22.5225 |             |             1.5932 |
+ |           10 |                  44 |                    29 |             29 |      -25.7448 |             |             0.6386 |
+ |           10 |                  44 |                    30 |             30 |      -28.9671 |             |             1.6386 |
+ |           10 |                  44 |                    31 |             31 |      -32.1893 |             |             0.6841 |
+ |           10 |                  44 |                    32 |             32 |      -35.4116 |             |             1.6841 |
+ |           10 |                  44 |                    33 |             33 |      -38.6339 |             |             0.7295 |
+ |           10 |                  44 |                    34 |             34 |      -41.8562 |             |             1.7295 |
+ |           10 |                  44 |                    35 |             35 |      -45.0784 |             |              0.775 |
+ |           10 |                  44 |                    36 |             36 |      -48.3007 |             |              1.775 |
+ |           10 |                  44 |                    37 |             37 |       -51.523 |             |             0.8205 |
+ |           10 |                  44 |                    38 |             38 |      -54.7453 |             |             1.8204 |
+ |           10 |                  44 |                    39 |             39 |      -57.9675 |             |             0.8659 |
+ |           10 |                  44 |                    40 |             40 |      -61.1898 |             |             1.8659 |
+ |           10 |                  44 |                    41 |             41 |      -64.4121 |             |             0.9114 |
+ |           10 |                  44 |                    42 |             42 |      -67.6344 |             |             1.9113 |
+ |           10 |                  44 |                    43 |             43 |      -70.8566 |             |             0.9568 |
+ |           10 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
+ |           10 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
+ |           10 |                  44 |                     2 |             46 |       61.2566 |             |             3.0023 |
+ |           10 |                  44 |                     3 |             47 |       58.0344 |             |             2.0477 |
+ |           10 |                  44 |                     4 |             48 |       54.8121 |             |             3.0477 |
+
+**** s11
+     :PROPERTIES:
+     :NUM:      11
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |           11 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
+ |           11 |                  44 |                     2 |              2 |       61.2566 |             |             1.0023 |
+ |           11 |                  44 |                     3 |              3 |       58.0344 |             |             0.0477 |
+ |           11 |                  44 |                     4 |              4 |       54.8121 |             |             1.0477 |
+ |           11 |                  44 |                     5 |              5 |       51.5898 |             |             0.0932 |
+ |           11 |                  44 |                     6 |              6 |       48.3675 |             |             1.0932 |
+ |           11 |                  44 |                     7 |              7 |       45.1453 |             |             0.1386 |
+ |           11 |                  44 |                     8 |              8 |        41.923 |             |             1.1387 |
+ |           11 |                  44 |                     9 |              9 |       38.7007 |             |             0.1841 |
+ |           11 |                  44 |                    10 |             10 |       35.4784 |             |             1.1841 |
+ |           11 |                  44 |                    11 |             11 |       32.2562 |             |             0.2295 |
+ |           11 |                  44 |                    12 |             12 |       29.0339 |             |             1.2296 |
+ |           11 |                  44 |                    13 |             13 |       25.8116 |             |              0.275 |
+ |           11 |                  44 |                    14 |             14 |       22.5893 |             |              1.275 |
+ |           11 |                  44 |                    15 |             15 |       19.3671 |             |             0.3204 |
+ |           11 |                  44 |                    16 |             16 |       16.1448 |             |             1.3205 |
+ |           11 |                  44 |                    17 |             17 |       12.9225 |             |             0.3659 |
+ |           11 |                  44 |                    18 |             18 |       9.70024 |             |             1.3659 |
+ |           11 |                  44 |                    19 |             19 |       6.47797 |             |             0.4114 |
+ |           11 |                  44 |                    20 |             20 |       3.25569 |             |             1.4114 |
+ |           11 |                  44 |                    21 |             21 |     0.0334157 |             |             0.4568 |
+ |           11 |                  44 |                    22 |             22 |      -3.18886 |             |             1.4568 |
+ |           11 |                  44 |                    23 |             23 |      -6.41113 |             |             0.5023 |
+ |           11 |                  44 |                    24 |             24 |      -9.63341 |             |             1.5023 |
+ |           11 |                  44 |                    25 |             25 |      -12.8557 |             |             0.5477 |
+ |           11 |                  44 |                    26 |             26 |       -16.078 |             |             1.5477 |
+ |           11 |                  44 |                    27 |             27 |      -19.3002 |             |             0.5932 |
+ |           11 |                  44 |                    28 |             28 |      -22.5225 |             |             1.5932 |
+ |           11 |                  44 |                    29 |             29 |      -25.7448 |             |             0.6386 |
+ |           11 |                  44 |                    30 |             30 |      -28.9671 |             |             1.6386 |
+ |           11 |                  44 |                    31 |             31 |      -32.1893 |             |             0.6841 |
+ |           11 |                  44 |                    32 |             32 |      -35.4116 |             |             1.6841 |
+ |           11 |                  44 |                    33 |             33 |      -38.6339 |             |             0.7295 |
+ |           11 |                  44 |                    34 |             34 |      -41.8562 |             |             1.7295 |
+ |           11 |                  44 |                    35 |             35 |      -45.0784 |             |              0.775 |
+ |           11 |                  44 |                    36 |             36 |      -48.3007 |             |              1.775 |
+ |           11 |                  44 |                    37 |             37 |       -51.523 |             |             0.8205 |
+ |           11 |                  44 |                    38 |             38 |      -54.7453 |             |             1.8204 |
+ |           11 |                  44 |                    39 |             39 |      -57.9675 |             |             0.8659 |
+ |           11 |                  44 |                    40 |             40 |      -61.1898 |             |             1.8659 |
+ |           11 |                  44 |                    41 |             41 |      -64.4121 |             |             0.9114 |
+ |           11 |                  44 |                    42 |             42 |      -67.6344 |             |             1.9113 |
+ |           11 |                  44 |                    43 |             43 |      -70.8566 |             |             0.9568 |
+ |           11 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
+ |           11 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
+ |           11 |                  44 |                     2 |             46 |       61.2566 |             |             3.0023 |
+ |           11 |                  44 |                     3 |             47 |       58.0344 |             |             2.0477 |
+ |           11 |                  44 |                     4 |             48 |       54.8121 |             |             3.0477 |
+
+**** s12
+     :PROPERTIES:
+     :NUM:      12
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |           12 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
+ |           12 |                  44 |                     2 |              2 |       -71.409 |             |                  0 |
+ |           12 |                  44 |                     3 |              3 |      -68.1868 |             |                  0 |
+ |           12 |                  44 |                     4 |              4 |      -64.9645 |             |                  0 |
+ |           12 |                  44 |                     5 |              5 |      -61.7422 |             |                  0 |
+ |           12 |                  44 |                     6 |              6 |      -58.5199 |             |                  0 |
+ |           12 |                  44 |                     7 |              7 |      -55.2977 |             |                  0 |
+ |           12 |                  44 |                     8 |              8 |      -52.0754 |             |                  0 |
+ |           12 |                  44 |                     9 |              9 |      -48.8531 |             |             0.1841 |
+ |           12 |                  44 |                    10 |             10 |      -45.6308 |             |             1.1841 |
+ |           12 |                  44 |                    11 |             11 |      -42.4086 |             |             0.2295 |
+ |           12 |                  44 |                    12 |             12 |      -39.1863 |             |             1.2296 |
+ |           12 |                  44 |                    13 |             13 |       -35.964 |             |              0.275 |
+ |           12 |                  44 |                    14 |             14 |      -32.7417 |             |              1.275 |
+ |           12 |                  44 |                    15 |             15 |      -29.5195 |             |             0.3204 |
+ |           12 |                  44 |                    16 |             16 |      -26.2972 |             |             1.3205 |
+ |           12 |                  44 |                    17 |             17 |      -23.0749 |             |             0.3659 |
+ |           12 |                  44 |                    18 |             18 |      -19.8527 |             |             1.3659 |
+ |           12 |                  44 |                    19 |             19 |      -16.6304 |             |             0.4114 |
+ |           12 |                  44 |                    20 |             20 |      -13.4081 |             |             1.4114 |
+ |           12 |                  44 |                    21 |             21 |      -10.1858 |             |             0.4568 |
+ |           12 |                  44 |                    22 |             22 |      -6.96356 |             |             1.4568 |
+ |           12 |                  44 |                    23 |             23 |      -3.74129 |             |             0.5023 |
+ |           12 |                  44 |                    24 |             24 |     -0.519012 |             |             1.5023 |
+ |           12 |                  44 |                    25 |             25 |       2.70326 |             |             0.5477 |
+ |           12 |                  44 |                    26 |             26 |       5.92554 |             |             1.5477 |
+ |           12 |                  44 |                    27 |             27 |       9.14781 |             |             0.5932 |
+ |           12 |                  44 |                    28 |             28 |       12.3701 |             |             1.5932 |
+ |           12 |                  44 |                    29 |             29 |       15.5924 |             |             0.6386 |
+ |           12 |                  44 |                    30 |             30 |       18.8146 |             |             1.6386 |
+ |           12 |                  44 |                    31 |             31 |       22.0369 |             |             0.6841 |
+ |           12 |                  44 |                    32 |             32 |       25.2592 |             |             1.6841 |
+ |           12 |                  44 |                    33 |             33 |       28.4814 |             |             0.7295 |
+ |           12 |                  44 |                    34 |             34 |       31.7037 |             |             1.7295 |
+ |           12 |                  44 |                    35 |             35 |        34.926 |             |              0.775 |
+ |           12 |                  44 |                    36 |             36 |       38.1483 |             |              1.775 |
+ |           12 |                  44 |                    37 |             37 |       41.3705 |             |             0.8205 |
+ |           12 |                  44 |                    38 |             38 |       44.5928 |             |             1.8204 |
+ |           12 |                  44 |                    39 |             39 |       47.8151 |             |             0.8659 |
+ |           12 |                  44 |                    40 |             40 |       51.0374 |             |             1.8659 |
+ |           12 |                  44 |                    41 |             41 |       54.2596 |             |             0.9114 |
+ |           12 |                  44 |                    42 |             42 |       57.4819 |             |             1.9113 |
+ |           12 |                  44 |                    43 |             43 |       60.7042 |             |             0.9568 |
+ |           12 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
+ |           12 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
+ |           12 |                  44 |                     2 |             46 |       -71.409 |             |             3.0023 |
+ |           12 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0477 |
+ |           12 |                  44 |                     4 |             48 |      -64.9645 |             |             3.0477 |
+
+**** s13
+     :PROPERTIES:
+     :NUM:      13
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+ | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+ |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+ |           13 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
+ |           13 |                  44 |                     2 |              2 |       -71.409 |             |             1.0023 |
+ |           13 |                  44 |                     3 |              3 |      -68.1868 |             |             0.0477 |
+ |           13 |                  44 |                     4 |              4 |      -64.9645 |             |             1.0477 |
+ |           13 |                  44 |                     5 |              5 |      -61.7422 |             |             0.0932 |
+ |           13 |                  44 |                     6 |              6 |      -58.5199 |             |             1.0932 |
+ |           13 |                  44 |                     7 |              7 |      -55.2977 |             |             0.1386 |
+ |           13 |                  44 |                     8 |              8 |      -52.0754 |             |             1.1387 |
+ |           13 |                  44 |                     9 |              9 |      -48.8531 |             |             0.1841 |
+ |           13 |                  44 |                    10 |             10 |      -45.6308 |             |             1.1841 |
+ |           13 |                  44 |                    11 |             11 |      -42.4086 |             |             0.2295 |
+ |           13 |                  44 |                    12 |             12 |      -39.1863 |             |             1.2296 |
+ |           13 |                  44 |                    13 |             13 |       -35.964 |             |              0.275 |
+ |           13 |                  44 |                    14 |             14 |      -32.7417 |             |              1.275 |
+ |           13 |                  44 |                    15 |             15 |      -29.5195 |             |             0.3204 |
+ |           13 |                  44 |                    16 |             16 |      -26.2972 |             |             1.3205 |
+ |           13 |                  44 |                    17 |             17 |      -23.0749 |             |             0.3659 |
+ |           13 |                  44 |                    18 |             18 |      -19.8527 |             |             1.3659 |
+ |           13 |                  44 |                    19 |             19 |      -16.6304 |             |             0.4114 |
+ |           13 |                  44 |                    20 |             20 |      -13.4081 |             |             1.4114 |
+ |           13 |                  44 |                    21 |             21 |      -10.1858 |             |             0.4568 |
+ |           13 |                  44 |                    22 |             22 |      -6.96356 |             |             1.4568 |
+ |           13 |                  44 |                    23 |             23 |      -3.74129 |             |             0.5023 |
+ |           13 |                  44 |                    24 |             24 |     -0.519012 |             |             1.5023 |
+ |           13 |                  44 |                    25 |             25 |       2.70326 |             |             0.5477 |
+ |           13 |                  44 |                    26 |             26 |       5.92554 |             |             1.5477 |
+ |           13 |                  44 |                    27 |             27 |       9.14781 |             |             0.5932 |
+ |           13 |                  44 |                    28 |             28 |       12.3701 |             |             1.5932 |
+ |           13 |                  44 |                    29 |             29 |       15.5924 |             |             0.6386 |
+ |           13 |                  44 |                    30 |             30 |       18.8146 |             |             1.6386 |
+ |           13 |                  44 |                    31 |             31 |       22.0369 |             |             0.6841 |
+ |           13 |                  44 |                    32 |             32 |       25.2592 |             |             1.6841 |
+ |           13 |                  44 |                    33 |             33 |       28.4814 |             |             0.7295 |
+ |           13 |                  44 |                    34 |             34 |       31.7037 |             |             1.7295 |
+ |           13 |                  44 |                    35 |             35 |        34.926 |             |              0.775 |
+ |           13 |                  44 |                    36 |             36 |       38.1483 |             |              1.775 |
+ |           13 |                  44 |                    37 |             37 |       41.3705 |             |             0.8205 |
+ |           13 |                  44 |                    38 |             38 |       44.5928 |             |             1.8204 |
+ |           13 |                  44 |                    39 |             39 |       47.8151 |             |             0.8659 |
+ |           13 |                  44 |                    40 |             40 |       51.0374 |             |             1.8659 |
+ |           13 |                  44 |                    41 |             41 |       54.2596 |             |             0.9114 |
+ |           13 |                  44 |                    42 |             42 |       57.4819 |             |             1.9113 |
+ |           13 |                  44 |                    43 |             43 |       60.7042 |             |             0.9568 |
+ |           13 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
+ |           13 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
+ |           13 |                  44 |                     2 |             46 |       -71.409 |             |             3.0023 |
+ |           13 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0477 |
+ |           13 |                  44 |                     4 |             48 |      -64.9645 |             |             3.0477 |
+ |              |                     |                       |                |               |             |                    |
+
+*** Links and notes
+
+    - https://github.com/rordenlab/dcm2niix/issues/163
+    - https://en.wikibooks.org/wiki/SPM/Slice_Timing
+    - https://drive.google.com/file/d/1ULITxqJ5SPn3OMKO1oV0daHaY4DEah4r/view
+    - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5274797/
+    - https://cni.stanford.edu/wiki/GE_Processing
+    - https://neurostars.org/t/getting-missing-ge-information-required-by-bids-for-common-preprocessing/1357
+    - https://github.com/ScottHaileRobertson/GE-MRI-Tools/blob/master/GePackage/%2BGE/%2BPfile/%2BHeader/%2BRDB15/imagedb.h
+
+    | Attribute Name     | Tag         | Type | Notes                                       |
+    |--------------------+-------------+------+---------------------------------------------|
+    | Trigger Time       | (0018,1060) | 2C   | Always Sent. (even if value is zero length) |
+    | FloatSlopRTIATimer | (0021,105E) |      | =RTIA_timer=                                  |
+
+
+* SeriesNumber
+* ImagesInAcquisition
+* InStackPositionNumber
+* InstanceNumber
+* SliceLocation
+* TriggerTime
+* FloatSlopRTIATimer
