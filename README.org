@@ -55,21 +55,22 @@
 
   #+BEGIN_EXAMPLE
 
-usage: cc-dcm2bids.py [-O PATH] [-D DIRECTORY] [-N DIRECTORY] [-p]
-                              [-P PATTERN] [-e] [-E PATTERN] [-s] [-S PATTERN]
-                              [-f] [-F PATTERN [PATTERN ...]] [-l] [-L FILE]
-                              [-r] [-w] [-W FILE] [-k] [-i] [-t] [-u] [-c]
-                              [-C] [-J FILE] [-n] [-g] [-b] [-d] [-m] [-q]
-                              [-v] [-h]
+usage: cc-dcm2bids-wrapper.py [-O PATH] [-D DIRECTORY] [-N DIRECTORY]
+                                      [-p] [-P PATTERN] [-e] [-E PATTERN] [-s]
+                                      [-S PATTERN] [-f]
+                                      [-F PATTERN [PATTERN ...]] [-l]
+                                      [-L FILE] [-t] [-w] [-W FILE] [-k] [-i]
+                                      [-m] [-r] [-c] [-C] [-J FILE] [-n] [-g]
+                                      [-b] [-q] [-v] [-d] [--version] [-h]
 
-cc-dcm2bids.py:
+cc-dcm2bids-wrapper.py:
  - explore DICOM directories,
  - display summaries for the data discovered,
  - optionally convert to NIFTI (BIDS) data format.
 
 Tested on GE Discovery 750 MR scanner.
 
-cc-dcm2bids.py is free software licensed under GPL 3.0.  Assembled from
+cc-dcm2bids-wrapper.py is free software licensed under GPL 3.0.  Assembled from
 various code snippets found on the web by Jan Nikadon (nikadon <at>
 gmail <dot> com).
 
@@ -80,8 +81,8 @@ optional arguments:
                         Start directory, e.g.,
                         /home/username/study/dicom. The default is
                         <current directory> e.g.,
-                        /home/cybercraft/cc/dev/mri-hacks/cc-custom-dcm-
-                        tools/cc-dcm2bids
+                        /home/cybercraft/cc/dev/mri/cc-custom-dcm-
+                        tools
   -D DIRECTORY, --dicom-dir DIRECTORY
                         DICOM (source) directory. The default is
                         dicom
@@ -111,11 +112,13 @@ optional arguments:
   -l, --log             Save log to file.
   -L FILE, --log-file FILE
                         Log output filename. The default is based on filename
-                        executed, hostname, date and time, i.e., z
-                        ---<executable-filename>---<hostname>---<YYYYmmdd-HH-
-                        MM-SS-sss>---log.org e.g., z---cc-dcm2bids.py
-                        ---false---20180820-113634-815---log.org.
-  -r, --report          Produce detailed report on DICOM files found. The
+                        executed, hostname, date and time, i.e.,
+                        z---<executable-
+                        filename>---<hostname>---<YYYYmmdd-HH-MM-SS-
+                        sss>---log.org e.g., z---cc-dcm2bids-
+                        wrapper.py---false---20180824-180437-768---
+                        log.org.
+  -t, --table           Produce detailed table on DICOM files found. The
                         default is False.
   -w, --write-csv       Write DICOM information to CSV file. Implies
                         -r.
@@ -123,16 +126,14 @@ optional arguments:
                         File name for DICOM information to CSV. The default is
                         basename oflog-file with '.csv' extension.
   -k, --keep-sequence-information
-                        Keep series information in the report. The default is
+                        Keep series information in the table. The default is
                         False
   -i, --include-stacked-screen-saves
                         Include series containing stacked screen saves in the
-                        report. The default is False
-  -t, --tell-slice-time
-                        Display slice timing related information. Implies
-                        -k.
-  -u, --utterly-informative-mode
-                        Display more information derrived from DICOM files.
+                        table. The default is False
+  -m, --more-info       Display more information derrived from DICOM files.
+  -r, --report-files    Display slice timing related information. Implies
+                        -tkm.
   -c, --convert-demo    Show commands used to convert discovered series
                         (sequences) from DICOM to NIFTI format. The default is
                         False.
@@ -144,8 +145,8 @@ optional arguments:
                         e.g., study-specific.json. If none provided
                         session-specific JSON file(s) are expected to be
                         located in <current directory> with names
-                        corresponding to session(s) E.g., ses-
-                        01pre.json, ses-02post.json ETC.
+                        corresponding to session(s) E.g.,
+                        ses-01pre.json, ses-02post.json ETC.
   -n, --no-defaceing    Turn off defacing during conversion. The default is
                         False
   -g, --GE              Same as -P "p*" -E "e*" -S "s*"  (patterns
@@ -153,20 +154,23 @@ optional arguments:
                         running DV 2.4)
   -b, --BIDS            Same as -P "sub-*" -E "ses-*" -S "*"
                         (patterns tailored to BIDS data structure)
-  -d, --debug           Enable printing of debug messages to console
-  -m, --messages        Enable printing of summary messages to console.
   -q, --quiet           Be (quite) quiet.
-  -v, --version         show program's version number and exit
+  -v, --verbose         Verbose (use multiple times to increase verbbosity up
+                        to -vvvv).
+  -d, --debug           Debug mode (use multiple times to increase debugging
+                        level up to -ddd).
+  --version             show program's version number and exit
   -h, --help            Show this help message and exit
 
 Examples:
 
-cc-dcm2bids.py --help
-cc-dcm2bids.py -dm -pes -lrw -cn
-cc-dcm2bids.py -pes
-cc-dcm2bids.py -lr
+cc-dcm2bids-wrapper.py --help
+cc-dcm2bids-wrapper.py -dm -pes -lrw -cn
+cc-dcm2bids-wrapper.py -pes
+cc-dcm2bids-wrapper.py -lr
 
   #+END_EXAMPLE
+
 * Example of functional sequences inspection (GE MR750)
 ** Overview
 *** Code
