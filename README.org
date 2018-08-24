@@ -440,7 +440,7 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
 
 **** s08
      :PROPERTIES:
-     :NUM:      7
+     :NUM:      8
      :ORDER:    TD
      :ACQ:      Sequential
      :VIS_T:    44
@@ -448,7 +448,7 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
      :END:
 
      #+BEGIN_EXAMPLE
-     :NUM:      7
+     :NUM:      8
      :ORDER:    TD
      :ACQ:      Sequential
      :VIS_T:    44
