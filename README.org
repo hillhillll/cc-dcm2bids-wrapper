@@ -257,7 +257,7 @@ cc-dcm2bids.py -pes -v -tkim -E "ses-*fmriGeometry"  -lw
     | \_    Results |     |       |             |       |       |
     | \_      s06   |   6 | TD    | Sequential  |     1 |    44 |
     | \_      s07   |   7 | BU    | Sequential  |     1 |    44 |
-    | \_      s08   |   7 | TD    | Sequential  |    44 |     1 |
+    | \_      s08   |   8 | TD    | Sequential  |    44 |     1 |
     | \_      s09   |   9 | BU    | Sequential  |    44 |     1 |
     | \_      s10   |  10 | TD    | Interleaved |     1 |    44 |
     | \_      s11   |  11 | BU    | Interleaved |     1 |    44 |
