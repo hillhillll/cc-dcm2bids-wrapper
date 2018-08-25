@@ -178,6 +178,7 @@ cc-dcm2bids-wrapper.py -lr
 **** Raw data
 
      - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/dicom---sub-human---6vols.tar.gz][dicom---sub-human---6vols.tar.gz]]
+     - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/dicom---sub-human---pepolarity.tar.gz][dicom---sub-human---pepolarity.tar.gz]]
 
 **** Code
 
