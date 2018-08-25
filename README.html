@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-25 Sat 17:24 -->
+<!-- 2018-08-25 Sat 17:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>cc-dcm2bids.py</title>
@@ -240,27 +240,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2ae5e05">1. <span class="todo TODO">TODO</span> TODOs</a></li>
-<li><a href="#org8d57009">2. <span class="todo DOIN">DOIN</span> Info</a></li>
-<li><a href="#org1b110ef">3. <span class="done DONE">DONE</span> Dependencies</a></li>
-<li><a href="#org87bcb4f">4. <span class="done DONE">DONE</span> Help</a></li>
-<li><a href="#org5fefa93">5. <span class="done DONE">DONE</span> Example of functional sequences inspection (GE MR750)</a>
+<li><a href="#org10e2df3">1. <span class="todo TODO">TODO</span> TODOs</a></li>
+<li><a href="#orgc1652d2">2. <span class="todo DOIN">DOIN</span> Info</a></li>
+<li><a href="#org082ad07">3. <span class="done DONE">DONE</span> Dependencies</a></li>
+<li><a href="#orga7a4fd4">4. <span class="done DONE">DONE</span> Help</a></li>
+<li><a href="#org5bceedd">5. <span class="done DONE">DONE</span> Examples</a>
 <ul>
-<li><a href="#org87ecee5">5.1. Overview</a>
+<li><a href="#orgd040eda">5.1. <span class="done DONE">DONE</span> Functional sequence inspection (<code>GE MR750</code>)</a>
 <ul>
-<li><a href="#orgfa541aa">5.1.1. Code</a></li>
-<li><a href="#org990672b">5.1.2. Info</a></li>
-<li><a href="#org606ec8b">5.1.3. Standard tree</a></li>
-<li><a href="#orge44d9c4">5.1.4. Detailed tree</a></li>
-<li><a href="#orgb2c3c3f">5.1.5. Table</a></li>
-<li><a href="#orgfea51ff">5.1.6. fMRI geometry</a></li>
-</ul>
-</li>
-<li><a href="#orgd7cd923">5.2. fMRI geometry</a>
-<ul>
-<li><a href="#orge52473a">5.2.1. Script</a></li>
-<li><a href="#orgf947a64">5.2.2. Results</a></li>
-<li><a href="#orgc1eb100">5.2.3. Links and notes</a></li>
+<li><a href="#org644aa5b">5.1.1. Session overview</a></li>
+<li><a href="#orge97dc1d">5.1.2. fMRI geometry</a></li>
 </ul>
 </li>
 </ul>
@@ -269,8 +258,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org2ae5e05" class="outline-2">
-<h2 id="org2ae5e05"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> TODOs</h2>
+<div id="outline-container-org10e2df3" class="outline-2">
+<h2 id="org10e2df3"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> TODOs</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li class="off"><code>[&#xa0;]</code> add <b>slice timing estimation</b> functionality based on <code>TR</code> and slice position/time</li>
@@ -294,8 +283,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8d57009" class="outline-2">
-<h2 id="org8d57009"><span class="section-number-2">2</span> <span class="todo DOIN">DOIN</span> Info</h2>
+<div id="outline-container-orgc1652d2" class="outline-2">
+<h2 id="orgc1652d2"><span class="section-number-2">2</span> <span class="todo DOIN">DOIN</span> Info</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Convert DICOM to NIFTI (BIDS). With or w/o defacing.
@@ -317,8 +306,8 @@ The directory for the output defaults to:
 </div>
 </div>
 
-<div id="outline-container-org1b110ef" class="outline-2">
-<h2 id="org1b110ef"><span class="section-number-2">3</span> <span class="done DONE">DONE</span> Dependencies</h2>
+<div id="outline-container-org082ad07" class="outline-2">
+<h2 id="org082ad07"><span class="section-number-2">3</span> <span class="done DONE">DONE</span> Dependencies</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Dependencies include:
@@ -349,8 +338,8 @@ Conversion dependencies:
 </div>
 </div>
 
-<div id="outline-container-org87bcb4f" class="outline-2">
-<h2 id="org87bcb4f"><span class="section-number-2">4</span> <span class="done DONE">DONE</span> Help</h2>
+<div id="outline-container-orga7a4fd4" class="outline-2">
+<h2 id="orga7a4fd4"><span class="section-number-2">4</span> <span class="done DONE">DONE</span> Help</h2>
 <div class="outline-text-2" id="text-4">
 <pre class="example">
 
@@ -472,17 +461,21 @@ cc-dcm2bids-wrapper.py -lr
 </div>
 </div>
 
-<div id="outline-container-org5fefa93" class="outline-2">
-<h2 id="org5fefa93"><span class="section-number-2">5</span> <span class="done DONE">DONE</span> Example of functional sequences inspection (GE MR750)</h2>
+<div id="outline-container-org5bceedd" class="outline-2">
+<h2 id="org5bceedd"><span class="section-number-2">5</span> <span class="done DONE">DONE</span> Examples</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org87ecee5" class="outline-3">
-<h3 id="org87ecee5"><span class="section-number-3">5.1</span> Overview</h3>
+<div id="outline-container-orgd040eda" class="outline-3">
+<h3 id="orgd040eda"><span class="section-number-3">5.1</span> <span class="done DONE">DONE</span> Functional sequence inspection (<code>GE MR750</code>)</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-orgfa541aa" class="outline-4">
-<h4 id="orgfa541aa"><span class="section-number-4">5.1.1</span> Code</h4>
+<div id="outline-container-org644aa5b" class="outline-4">
+<h4 id="org644aa5b"><span class="section-number-4">5.1.1</span> Session overview</h4>
 <div class="outline-text-4" id="text-5-1-1">
+</div>
+<ol class="org-ol">
+<li><a id="orgdf82d28"></a>Code<br />
+<div class="outline-text-5" id="text-5-1-1-1">
 <div class="org-src-container">
 <pre class="src src-sh">
 <span style="color: #e44649;">cd</span> ~/cc/dat/varia/2018/q03/human-6vTests/
@@ -491,11 +484,10 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org990672b" class="outline-4">
-<h4 id="org990672b"><span class="section-number-4">5.1.2</span> Info</h4>
-<div class="outline-text-4" id="text-5-1-2">
+<li><a id="org99ff1c3"></a>Info<br />
+<div class="outline-text-5" id="text-5-1-1-2">
 <ul class="org-ul">
 <li>O: <code>/home/cybercraft/cc/dat/varia/2018/q03/human-6vTests</code></li>
 <li>N: <code>nifti</code></li>
@@ -506,26 +498,23 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 <li>F: <code>['i*MRDC*', 'i*SCPT*']</code></li>
 </ul>
 </div>
-</div>
-<div id="outline-container-org606ec8b" class="outline-4">
-<h4 id="org606ec8b"><span class="section-number-4">5.1.3</span> Standard tree</h4>
-<div class="outline-text-4" id="text-5-1-3">
-</div>
+</li>
+<li><a id="org72a09ca"></a>Standard tree<br />
 <ol class="org-ol">
-<li><a id="orgb99e74a"></a>dicom/ (1 of 1)<br />
+<li><a id="orgbeb9cff"></a>dicom/ (1 of 1)<br />
 <ol class="org-ol">
-<li><a id="orgdda1637"></a>dicom/sub-human/ (1 of 1)<br />
+<li><a id="orgf3dcfc6"></a>dicom/sub-human/ (1 of 1)<br />
 <ol class="org-ol">
-<li><a id="org17bb01b"></a>dicom/sub-human/ses-01vol6tests/ (1 of 1)<br />
+<li><a id="orgf810da1"></a>dicom/sub-human/ses-01vol6tests/ (1 of 1)<br />
 <ol class="org-ol">
-<li><a id="orga370bd9"></a>dicom/sub-human/ses-01vol6tests/s742/ (1 of 8)<br /></li>
-<li><a id="orgda23858"></a>dicom/sub-human/ses-01vol6tests/s743/ (2 of 8)<br /></li>
-<li><a id="org8548fac"></a>dicom/sub-human/ses-01vol6tests/s744/ (3 of 8)<br /></li>
-<li><a id="org2600f30"></a>dicom/sub-human/ses-01vol6tests/s745/ (4 of 8)<br /></li>
-<li><a id="org22bd53e"></a>dicom/sub-human/ses-01vol6tests/s746/ (5 of 8)<br /></li>
-<li><a id="orgb9dad1a"></a>dicom/sub-human/ses-01vol6tests/s747/ (6 of 8)<br /></li>
-<li><a id="org6d55665"></a>dicom/sub-human/ses-01vol6tests/s748/ (7 of 8)<br /></li>
-<li><a id="orgb5f41f3"></a>dicom/sub-human/ses-01vol6tests/s749/ (8 of 8)<br /></li>
+<li><a id="org4eda050"></a>dicom/sub-human/ses-01vol6tests/s742/ (1 of 8)<br /></li>
+<li><a id="org2cc0f78"></a>dicom/sub-human/ses-01vol6tests/s743/ (2 of 8)<br /></li>
+<li><a id="orgcc3b040"></a>dicom/sub-human/ses-01vol6tests/s744/ (3 of 8)<br /></li>
+<li><a id="org82bb5dd"></a>dicom/sub-human/ses-01vol6tests/s745/ (4 of 8)<br /></li>
+<li><a id="org5e68096"></a>dicom/sub-human/ses-01vol6tests/s746/ (5 of 8)<br /></li>
+<li><a id="org6d11ba9"></a>dicom/sub-human/ses-01vol6tests/s747/ (6 of 8)<br /></li>
+<li><a id="org4789e6e"></a>dicom/sub-human/ses-01vol6tests/s748/ (7 of 8)<br /></li>
+<li><a id="orge275c70"></a>dicom/sub-human/ses-01vol6tests/s749/ (8 of 8)<br /></li>
 </ol>
 </li>
 </ol>
@@ -533,10 +522,9 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 </ol>
 </li>
 </ol>
-</div>
-<div id="outline-container-orge44d9c4" class="outline-4">
-<h4 id="orge44d9c4"><span class="section-number-4">5.1.4</span> Detailed tree</h4>
-<div class="outline-text-4" id="text-5-1-4">
+</li>
+<li><a id="org8479299"></a>Detailed tree<br />
+<div class="outline-text-5" id="text-5-1-1-4">
 <ul class="org-ul">
 <li>dicom [dicom/]
 <ul class="org-ul">
@@ -581,10 +569,9 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 </ul></li>
 </ul>
 </div>
-</div>
-<div id="outline-container-orgb2c3c3f" class="outline-4">
-<h4 id="orgb2c3c3f"><span class="section-number-4">5.1.5</span> Table</h4>
-<div class="outline-text-4" id="text-5-1-5">
+</li>
+<li><a id="org9b3f572"></a>Table<br />
+<div class="outline-text-5" id="text-5-1-1-5">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -675,11 +662,17 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 </tbody>
 </table>
 </div>
+</li>
+</ol>
 </div>
 
-<div id="outline-container-orgfea51ff" class="outline-4">
-<h4 id="orgfea51ff"><span class="section-number-4">5.1.6</span> fMRI geometry</h4>
-<div class="outline-text-4" id="text-5-1-6">
+<div id="outline-container-orge97dc1d" class="outline-4">
+<h4 id="orge97dc1d"><span class="section-number-4">5.1.2</span> fMRI geometry</h4>
+<div class="outline-text-4" id="text-5-1-2">
+</div>
+<ol class="org-ol">
+<li><a id="orgc78ab61"></a>Overview<br />
+<div class="outline-text-5" id="text-5-1-2-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -698,17 +691,17 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">Item</th>
-<th scope="col" class="org-right">NUM</th>
-<th scope="col" class="org-left">ORDER</th>
-<th scope="col" class="org-left">ACQ</th>
-<th scope="col" class="org-right">VIS<sub>T</sub></th>
-<th scope="col" class="org-right">VIS<sub>B</sub></th>
+<th scope="col" class="org-left">Code</th>
+<th scope="col" class="org-right">SeqNum</th>
+<th scope="col" class="org-left">Order</th>
+<th scope="col" class="org-left">Acquisition</th>
+<th scope="col" class="org-right">Slice num at head top</th>
+<th scope="col" class="org-right">Slice num at head bottom</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="org-left">&ensp;&ensp;&ensp;&ensp;Results</td>
+<td class="org-left">&ensp;&ensp;&ensp;&ensp;Sequence details</td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
@@ -790,16 +783,10 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 </tbody>
 </table>
 </div>
-</div>
-</div>
+</li>
 
-<div id="outline-container-orgd7cd923" class="outline-3">
-<h3 id="orgd7cd923"><span class="section-number-3">5.2</span> fMRI geometry</h3>
-<div class="outline-text-3" id="text-5-2">
-</div>
-<div id="outline-container-orge52473a" class="outline-4">
-<h4 id="orge52473a"><span class="section-number-4">5.2.1</span> Script</h4>
-<div class="outline-text-4" id="text-5-2-1">
+<li><a id="org0206449"></a>Script<br />
+<div class="outline-text-5" id="text-5-1-2-2">
 <div class="org-src-container">
 <pre class="src src-sh">
 <span style="color: #e44649;">cd</span> ~/cc/dat/varia/2018/q03/human-6vTests/
@@ -831,19 +818,1169 @@ mv -v s742.csv s743.csv s744.csv s745.csv s746.csv s747.csv s748.csv s749.csv ./
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-orgf947a64" class="outline-4">
-<h4 id="orgf947a64"><a id="ID-dc72ab10-b551-4438-9ed8-85670fcabbaa"></a><span class="section-number-4">5.2.2</span> Results</h4>
-<div class="outline-text-4" id="text-5-2-2">
+<li><a id="org8ec07f8"></a>Summary<br />
+<div class="outline-text-5" id="text-5-1-2-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">ImagesInAcquisition</th>
+<th scope="col" class="org-right">InStackPositionNumber</th>
+<th scope="col" class="org-right">InstanceNumber</th>
+<th scope="col" class="org-right">SliceLocation-7</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-7</th>
+<th scope="col" class="org-right">SliceLocation-8</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-8</th>
+<th scope="col" class="org-right">SliceLocation-9</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-9</th>
+<th scope="col" class="org-right">SliceLocation-10</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-10</th>
+<th scope="col" class="org-right">SliceLocation-11</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-11</th>
+<th scope="col" class="org-right">SliceLocation-13</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-13</th>
+<th scope="col" class="org-right">SliceLocation-14</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-14</th>
+<th scope="col" class="org-right">SliceLocation-15</th>
+<th scope="col" class="org-right">FloatSlopRTIATimer-15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">118.463</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">118.963</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">118.463</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">118.963</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">0.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">0.0023</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+<td class="org-right">115.23</td>
+<td class="org-right">0.0477</td>
+<td class="org-right">115.73</td>
+<td class="org-right">0.0477</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">0.0477</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">0.0477</td>
+<td class="org-right">115.23</td>
+<td class="org-right">0</td>
+<td class="org-right">115.73</td>
+<td class="org-right">1.0023</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">1.0023</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">111.997</td>
+<td class="org-right">0.0932</td>
+<td class="org-right">112.497</td>
+<td class="org-right">0.0932</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">0.0932</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">0.0932</td>
+<td class="org-right">111.997</td>
+<td class="org-right">0</td>
+<td class="org-right">112.497</td>
+<td class="org-right">0.0477</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">0.0477</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">4</td>
+<td class="org-right">4</td>
+<td class="org-right">108.763</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">109.263</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">108.763</td>
+<td class="org-right">0</td>
+<td class="org-right">109.263</td>
+<td class="org-right">1.0477</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">1.0477</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">5</td>
+<td class="org-right">5</td>
+<td class="org-right">105.53</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">106.03</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">105.53</td>
+<td class="org-right">0</td>
+<td class="org-right">106.03</td>
+<td class="org-right">0.0932</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">0.0932</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">6</td>
+<td class="org-right">6</td>
+<td class="org-right">102.297</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">102.797</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">-0.606466</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">-0.606466</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">102.297</td>
+<td class="org-right">0</td>
+<td class="org-right">102.797</td>
+<td class="org-right">1.0932</td>
+<td class="org-right">-0.606466</td>
+<td class="org-right">1.0932</td>
+<td class="org-right">-0.606466</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">7</td>
+<td class="org-right">7</td>
+<td class="org-right">99.0637</td>
+<td class="org-right">0.275</td>
+<td class="org-right">99.5637</td>
+<td class="org-right">0.275</td>
+<td class="org-right">2.62633</td>
+<td class="org-right">0.275</td>
+<td class="org-right">2.62633</td>
+<td class="org-right">0.275</td>
+<td class="org-right">99.0637</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">99.5637</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">2.62633</td>
+<td class="org-right">0.1386</td>
+<td class="org-right">2.62633</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">8</td>
+<td class="org-right">8</td>
+<td class="org-right">95.8305</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">96.3305</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">5.85913</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">5.85913</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">95.8305</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">96.3305</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">5.85913</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">5.85913</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">9</td>
+<td class="org-right">9</td>
+<td class="org-right">92.5973</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">93.0973</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">9.09192</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">9.09192</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">92.5973</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">93.0973</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">9.09192</td>
+<td class="org-right">0.1841</td>
+<td class="org-right">9.09192</td>
+<td class="org-right">0.1841</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">10</td>
+<td class="org-right">10</td>
+<td class="org-right">89.3641</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">89.8641</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">12.3247</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">12.3247</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">89.3641</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">89.8641</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">12.3247</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">12.3247</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">11</td>
+<td class="org-right">11</td>
+<td class="org-right">86.1309</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">86.6309</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">15.5575</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">15.5575</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">86.1309</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">86.6309</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">15.5575</td>
+<td class="org-right">0.2295</td>
+<td class="org-right">15.5575</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">12</td>
+<td class="org-right">12</td>
+<td class="org-right">82.8977</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">83.3977</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">18.7903</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">18.7903</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">82.8977</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">83.3977</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">18.7903</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">18.7903</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">13</td>
+<td class="org-right">13</td>
+<td class="org-right">79.6645</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">80.1645</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">22.0231</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">22.0231</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">79.6645</td>
+<td class="org-right">0.275</td>
+<td class="org-right">80.1645</td>
+<td class="org-right">0.275</td>
+<td class="org-right">22.0231</td>
+<td class="org-right">0.275</td>
+<td class="org-right">22.0231</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">14</td>
+<td class="org-right">14</td>
+<td class="org-right">76.4313</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">76.9313</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">25.2559</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">25.2559</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">76.4313</td>
+<td class="org-right">1.275</td>
+<td class="org-right">76.9313</td>
+<td class="org-right">1.275</td>
+<td class="org-right">25.2559</td>
+<td class="org-right">1.275</td>
+<td class="org-right">25.2559</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">15</td>
+<td class="org-right">15</td>
+<td class="org-right">73.1981</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">73.6981</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">28.4887</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">28.4887</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">73.1981</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">73.6981</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">28.4887</td>
+<td class="org-right">0.3204</td>
+<td class="org-right">28.4887</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">16</td>
+<td class="org-right">16</td>
+<td class="org-right">69.9649</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">70.4649</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">31.7215</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">31.7215</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">69.9649</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">70.4649</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">31.7215</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">31.7215</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">17</td>
+<td class="org-right">17</td>
+<td class="org-right">66.7317</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">67.2317</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">34.9543</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">34.9543</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">66.7317</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">67.2317</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">34.9543</td>
+<td class="org-right">0.3659</td>
+<td class="org-right">34.9543</td>
+<td class="org-right">0.3659</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">18</td>
+<td class="org-right">18</td>
+<td class="org-right">63.4985</td>
+<td class="org-right">0.775</td>
+<td class="org-right">63.9985</td>
+<td class="org-right">0.775</td>
+<td class="org-right">38.1871</td>
+<td class="org-right">0.775</td>
+<td class="org-right">38.1871</td>
+<td class="org-right">0.775</td>
+<td class="org-right">63.4985</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">63.9985</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">38.1871</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">38.1871</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">19</td>
+<td class="org-right">19</td>
+<td class="org-right">60.2653</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">60.7653</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">41.4199</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">41.4199</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">60.2653</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">60.7653</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">41.4199</td>
+<td class="org-right">0.4114</td>
+<td class="org-right">41.4199</td>
+<td class="org-right">0.4114</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">20</td>
+<td class="org-right">20</td>
+<td class="org-right">57.0321</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">57.5321</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">44.6527</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">44.6527</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">57.0321</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">57.5321</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">44.6527</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">44.6527</td>
+<td class="org-right">1.4114</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">21</td>
+<td class="org-right">21</td>
+<td class="org-right">53.7989</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">54.2989</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">47.8855</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">47.8855</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">53.7989</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">54.2989</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">47.8855</td>
+<td class="org-right">0.4568</td>
+<td class="org-right">47.8855</td>
+<td class="org-right">0.4568</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">22</td>
+<td class="org-right">22</td>
+<td class="org-right">50.5657</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">51.0657</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">51.1183</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">51.1183</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">50.5657</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">51.0657</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">51.1183</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">51.1183</td>
+<td class="org-right">1.4568</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">23</td>
+<td class="org-right">23</td>
+<td class="org-right">47.3325</td>
+<td class="org-right">1.0023</td>
+<td class="org-right">47.8325</td>
+<td class="org-right">1.0023</td>
+<td class="org-right">54.3511</td>
+<td class="org-right">1.0023</td>
+<td class="org-right">54.3511</td>
+<td class="org-right">1.0023</td>
+<td class="org-right">47.3325</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">47.8325</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">54.3511</td>
+<td class="org-right">0.5023</td>
+<td class="org-right">54.3511</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">24</td>
+<td class="org-right">24</td>
+<td class="org-right">44.0993</td>
+<td class="org-right">1.0477</td>
+<td class="org-right">44.5993</td>
+<td class="org-right">1.0477</td>
+<td class="org-right">57.5839</td>
+<td class="org-right">1.0477</td>
+<td class="org-right">57.5839</td>
+<td class="org-right">1.0477</td>
+<td class="org-right">44.0993</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">44.5993</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">57.5839</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">57.5839</td>
+<td class="org-right">1.5023</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">25</td>
+<td class="org-right">25</td>
+<td class="org-right">40.8661</td>
+<td class="org-right">1.0932</td>
+<td class="org-right">41.3661</td>
+<td class="org-right">1.0932</td>
+<td class="org-right">60.8167</td>
+<td class="org-right">1.0932</td>
+<td class="org-right">60.8167</td>
+<td class="org-right">1.0932</td>
+<td class="org-right">40.8661</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">41.3661</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">60.8167</td>
+<td class="org-right">0.5477</td>
+<td class="org-right">60.8167</td>
+<td class="org-right">0.5477</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">26</td>
+<td class="org-right">26</td>
+<td class="org-right">37.6329</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">38.1329</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">64.0495</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">64.0495</td>
+<td class="org-right">1.1387</td>
+<td class="org-right">37.6329</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">38.1329</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">64.0495</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">64.0495</td>
+<td class="org-right">1.5477</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">27</td>
+<td class="org-right">27</td>
+<td class="org-right">34.3997</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">34.8997</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">67.2822</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">67.2822</td>
+<td class="org-right">1.1841</td>
+<td class="org-right">34.3997</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">34.8997</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">67.2822</td>
+<td class="org-right">0.5932</td>
+<td class="org-right">67.2822</td>
+<td class="org-right">0.5932</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">28</td>
+<td class="org-right">28</td>
+<td class="org-right">31.1665</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">31.6665</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">70.515</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">70.515</td>
+<td class="org-right">1.2296</td>
+<td class="org-right">31.1665</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">31.6665</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">70.515</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">70.515</td>
+<td class="org-right">1.5932</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">29</td>
+<td class="org-right">29</td>
+<td class="org-right">27.9333</td>
+<td class="org-right">1.275</td>
+<td class="org-right">28.4333</td>
+<td class="org-right">1.275</td>
+<td class="org-right">73.7478</td>
+<td class="org-right">1.275</td>
+<td class="org-right">73.7478</td>
+<td class="org-right">1.275</td>
+<td class="org-right">27.9333</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">28.4333</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">73.7478</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">73.7478</td>
+<td class="org-right">0.6386</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">30</td>
+<td class="org-right">30</td>
+<td class="org-right">24.7001</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">25.2001</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">76.9806</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">76.9806</td>
+<td class="org-right">1.3205</td>
+<td class="org-right">24.7001</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">25.2001</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">76.9806</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">76.9806</td>
+<td class="org-right">1.6386</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">31</td>
+<td class="org-right">31</td>
+<td class="org-right">21.4669</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">21.9669</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">80.2134</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">80.2134</td>
+<td class="org-right">1.3659</td>
+<td class="org-right">21.4669</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">21.9669</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">80.2134</td>
+<td class="org-right">0.6841</td>
+<td class="org-right">80.2134</td>
+<td class="org-right">0.6841</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">32</td>
+<td class="org-right">32</td>
+<td class="org-right">18.2337</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">18.7337</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">83.4462</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">83.4462</td>
+<td class="org-right">1.4114</td>
+<td class="org-right">18.2337</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">18.7337</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">83.4462</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">83.4462</td>
+<td class="org-right">1.6841</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">33</td>
+<td class="org-right">33</td>
+<td class="org-right">15.0005</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">15.5005</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">86.679</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">86.679</td>
+<td class="org-right">1.4568</td>
+<td class="org-right">15.0005</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">15.5005</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">86.679</td>
+<td class="org-right">0.7295</td>
+<td class="org-right">86.679</td>
+<td class="org-right">0.7295</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">34</td>
+<td class="org-right">34</td>
+<td class="org-right">11.7673</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">12.2673</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">89.9118</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">89.9118</td>
+<td class="org-right">1.5023</td>
+<td class="org-right">11.7673</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">12.2673</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">89.9118</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">89.9118</td>
+<td class="org-right">1.7295</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">35</td>
+<td class="org-right">35</td>
+<td class="org-right">8.53412</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">9.03412</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">93.1446</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">93.1446</td>
+<td class="org-right">1.5477</td>
+<td class="org-right">8.53412</td>
+<td class="org-right">0.775</td>
+<td class="org-right">9.03412</td>
+<td class="org-right">0.775</td>
+<td class="org-right">93.1446</td>
+<td class="org-right">0.775</td>
+<td class="org-right">93.1446</td>
+<td class="org-right">0.775</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">36</td>
+<td class="org-right">36</td>
+<td class="org-right">5.30092</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">5.80092</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">96.3774</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">96.3774</td>
+<td class="org-right">1.5932</td>
+<td class="org-right">5.30092</td>
+<td class="org-right">1.775</td>
+<td class="org-right">5.80092</td>
+<td class="org-right">1.775</td>
+<td class="org-right">96.3774</td>
+<td class="org-right">1.775</td>
+<td class="org-right">96.3774</td>
+<td class="org-right">1.775</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">37</td>
+<td class="org-right">37</td>
+<td class="org-right">2.06772</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">2.56772</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">99.6102</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">99.6102</td>
+<td class="org-right">1.6386</td>
+<td class="org-right">2.06772</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">2.56772</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">99.6102</td>
+<td class="org-right">0.8205</td>
+<td class="org-right">99.6102</td>
+<td class="org-right">0.8205</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">38</td>
+<td class="org-right">38</td>
+<td class="org-right">-1.16548</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">-0.665483</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">102.843</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">102.843</td>
+<td class="org-right">1.6841</td>
+<td class="org-right">-1.16548</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">-0.665483</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">102.843</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">102.843</td>
+<td class="org-right">1.8204</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">39</td>
+<td class="org-right">39</td>
+<td class="org-right">-4.39868</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">-3.89868</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">106.076</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">106.076</td>
+<td class="org-right">1.7295</td>
+<td class="org-right">-4.39868</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">-3.89868</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">106.076</td>
+<td class="org-right">0.8659</td>
+<td class="org-right">106.076</td>
+<td class="org-right">0.8659</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">40</td>
+<td class="org-right">40</td>
+<td class="org-right">-7.63189</td>
+<td class="org-right">1.775</td>
+<td class="org-right">-7.13189</td>
+<td class="org-right">1.775</td>
+<td class="org-right">109.309</td>
+<td class="org-right">1.775</td>
+<td class="org-right">109.309</td>
+<td class="org-right">1.775</td>
+<td class="org-right">-7.63189</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">-7.13189</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">109.309</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">109.309</td>
+<td class="org-right">1.8659</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">41</td>
+<td class="org-right">41</td>
+<td class="org-right">-10.8651</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">-10.3651</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">112.541</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">112.541</td>
+<td class="org-right">1.8204</td>
+<td class="org-right">-10.8651</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">-10.3651</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">112.541</td>
+<td class="org-right">0.9114</td>
+<td class="org-right">112.541</td>
+<td class="org-right">0.9114</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">42</td>
+<td class="org-right">42</td>
+<td class="org-right">-14.0983</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">-13.5983</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">115.774</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">115.774</td>
+<td class="org-right">1.8659</td>
+<td class="org-right">-14.0983</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">-13.5983</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">115.774</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">115.774</td>
+<td class="org-right">1.9113</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">43</td>
+<td class="org-right">43</td>
+<td class="org-right">-17.3315</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">-16.8315</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">119.007</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">119.007</td>
+<td class="org-right">1.9113</td>
+<td class="org-right">-17.3315</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">-16.8315</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">119.007</td>
+<td class="org-right">0.9568</td>
+<td class="org-right">119.007</td>
+<td class="org-right">0.9568</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">44</td>
+<td class="org-right">44</td>
+<td class="org-right">-20.5647</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">-20.0647</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">122.24</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">122.24</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">-20.5647</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">-20.0647</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">122.24</td>
+<td class="org-right">1.9568</td>
+<td class="org-right">122.24</td>
+<td class="org-right">1.9568</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">1</td>
+<td class="org-right">45</td>
+<td class="org-right">118.463</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">118.963</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">118.463</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">118.963</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">2.0023</td>
+<td class="org-right">-16.7704</td>
+<td class="org-right">2.0023</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">2</td>
+<td class="org-right">46</td>
+<td class="org-right">115.23</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">115.73</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">115.23</td>
+<td class="org-right">3.0023</td>
+<td class="org-right">115.73</td>
+<td class="org-right">3.0023</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">3.0023</td>
+<td class="org-right">-13.5377</td>
+<td class="org-right">3.0023</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">3</td>
+<td class="org-right">47</td>
+<td class="org-right">111.997</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">112.497</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">111.997</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">112.497</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">2.0477</td>
+<td class="org-right">-10.3049</td>
+<td class="org-right">2.0477</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">4</td>
+<td class="org-right">48</td>
+<td class="org-right">108.763</td>
+<td class="org-right">2.1386</td>
+<td class="org-right">109.263</td>
+<td class="org-right">2.1386</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">2.1386</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">2.1386</td>
+<td class="org-right">108.763</td>
+<td class="org-right">3.0477</td>
+<td class="org-right">109.263</td>
+<td class="org-right">3.0477</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">3.0477</td>
+<td class="org-right">-7.07206</td>
+<td class="org-right">3.0477</td>
+</tr>
+
+<tr>
+<td class="org-right">44</td>
+<td class="org-right">5</td>
+<td class="org-right">49</td>
+<td class="org-right">105.53</td>
+<td class="org-right">2.1841</td>
+<td class="org-right">106.03</td>
+<td class="org-right">2.1841</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">2.1841</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">2.1841</td>
+<td class="org-right">105.53</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">106.03</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">2.0932</td>
+<td class="org-right">-3.83926</td>
+<td class="org-right">2.0932</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+
+
+<li><a id="org3562ac5"></a><a id="ID-dc72ab10-b551-4438-9ed8-85670fcabbaa"></a>Sequence details<br />
+<div class="outline-text-5" id="text-5-1-2-4">
 <pre class="example">
-COLUMNS: %25ITEM(Item) %NUM %ORDER %ACQ %VIS_T %VIS_B
+COLUMNS: %25ITEM(Code) %NUM(SeqNum) %ORDER(Order) %ACQ(Acquisition) %VIS_T(Slice num at head top) %VIS_B(Slice num at head bottom)
 ID: dc72ab10-b551-4438-9ed8-85670fcabbaa
 </pre>
 </div>
 <ol class="org-ol">
-<li><a id="org52e4116"></a>s07<br />
-<div class="outline-text-5" id="text-5-2-2-1">
+<li><a id="org1240bad"></a>s07<br />
+<div class="outline-text-6" id="text-5-1-2-4-1">
 <pre class="example">
 NUM: 7
 ORDER: TD
@@ -1540,8 +2677,8 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="orgb769095"></a>s08<br />
-<div class="outline-text-5" id="text-5-2-2-2">
+<li><a id="org6480fc0"></a>s08<br />
+<div class="outline-text-6" id="text-5-1-2-4-2">
 <pre class="example">
 NUM: 8
 ORDER: BU
@@ -2238,8 +3375,8 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="org0c2ff1e"></a>s09<br />
-<div class="outline-text-5" id="text-5-2-2-3">
+<li><a id="orgaed69a5"></a>s09<br />
+<div class="outline-text-6" id="text-5-1-2-4-3">
 <pre class="example">
 NUM: 9
 ORDER: TD
@@ -2936,8 +4073,8 @@ VIS_B: 1
 </div>
 </li>
 
-<li><a id="orgb69f4cf"></a>s10<br />
-<div class="outline-text-5" id="text-5-2-2-4">
+<li><a id="org700860b"></a>s10<br />
+<div class="outline-text-6" id="text-5-1-2-4-4">
 <pre class="example">
 NUM: 10
 ORDER: BU
@@ -3634,8 +4771,8 @@ VIS_B: 1
 </div>
 </li>
 
-<li><a id="orgcc46bb0"></a>s11<br />
-<div class="outline-text-5" id="text-5-2-2-5">
+<li><a id="orge694d7e"></a>s11<br />
+<div class="outline-text-6" id="text-5-1-2-4-5">
 <pre class="example">
 NUM: 11
 ORDER: TD
@@ -4332,8 +5469,8 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="orgd91d2db"></a>s13<br />
-<div class="outline-text-5" id="text-5-2-2-6">
+<li><a id="orgffbfd0d"></a>s13<br />
+<div class="outline-text-6" id="text-5-1-2-4-6">
 <pre class="example">
 NUM: 13
 ORDER: BU
@@ -5030,8 +6167,8 @@ VIS_B: 44
 </div>
 </li>
 
-<li><a id="org85161ed"></a>s14<br />
-<div class="outline-text-5" id="text-5-2-2-7">
+<li><a id="org5328532"></a>s14<br />
+<div class="outline-text-6" id="text-5-1-2-4-7">
 <pre class="example">
 NUM: 14
 ORDER: TD
@@ -5729,8 +6866,8 @@ VIS_B: 1
 </div>
 </li>
 
-<li><a id="org9b4e37f"></a>s15<br />
-<div class="outline-text-5" id="text-5-2-2-8">
+<li><a id="orgde03b51"></a>s15<br />
+<div class="outline-text-6" id="text-5-1-2-4-8">
 <pre class="example">
 NUM: 15
 ORDER: BU
@@ -6427,11 +7564,10 @@ VIS_B: 1
 </div>
 </li>
 </ol>
-</div>
+</li>
 
-<div id="outline-container-orgc1eb100" class="outline-4">
-<h4 id="orgc1eb100"><span class="section-number-4">5.2.3</span> Links and notes</h4>
-<div class="outline-text-4" id="text-5-2-3">
+<li><a id="orgc1ac931"></a>Links and notes<br />
+<div class="outline-text-5" id="text-5-1-2-5">
 <ul class="org-ul">
 <li><a href="https://github.com/rordenlab/dcm2niix/issues/163">https://github.com/rordenlab/dcm2niix/issues/163</a></li>
 <li><a href="https://en.wikibooks.org/wiki/SPM/Slice_Timing">https://en.wikibooks.org/wiki/SPM/Slice_Timing</a></li>
@@ -6484,13 +7620,15 @@ VIS_B: 1
 </tbody>
 </table>
 </div>
+</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: nikadon at gmail dot com</p>
-<p class="date">Created: 2018-08-25 Sat 17:24</p>
+<p class="date">Created: 2018-08-25 Sat 17:46</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
