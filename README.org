@@ -1,7 +1,8 @@
 #+TITLE: cc-dcm2bids.py
-#+AUTHOR: Jan Nikadon
+#+AUTHOR: nikadon at gmail dot com
 
 #+SETUPFILE: theme-readtheorg-local.setup
+
 #+OPTIONS: prop:t
 
 * TODO TODOs
@@ -20,7 +21,7 @@
   - [ ] add checking if =*= is present at least (or exactly) once in each pattern (for patient, exam, series, files)
   - [ ] consider checking if at any level at least one directoty/file exists (otherwise raise an error)
 
-* Info
+* DOIN Info
 
   Convert DICOM to NIFTI (BIDS). With or w/o defacing.
   Provide basic info based on DICOM data.
@@ -30,7 +31,7 @@
   The directory for the output defaults to:
   - =./nifti/=
 
-* Dependencies
+* DONE Dependencies
 
   Dependencies include:
   - =pydicom=
@@ -51,7 +52,7 @@
   - =pydeface=
   - =dcm2bids=
 
-* Help
+* DONE Help
 
   #+BEGIN_EXAMPLE
 
@@ -171,87 +172,69 @@ cc-dcm2bids-wrapper.py -lr
 
   #+END_EXAMPLE
 
-* Example of functional sequences inspection (GE MR750)
+* DONE Example of functional sequences inspection (GE MR750)
 ** Overview
 *** Code
 
-    #+BEGIN_SRC sh
+    #+BEGIN_SRC sh :eval query
 
-cc-dcm2bids.py -pes -v -tkim -E "ses-*fmriGeometry"  -lw
+cd ~/cc/dat/varia/2018/q03/human-6vTests/
+cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 
     #+END_SRC
 
 *** Info
-    - O: =/home/cybercraft/cc/dat/varia/2018/q03/agar-testing-settings=
+    - O: =/home/cybercraft/cc/dat/varia/2018/q03/human-6vTests=
     - N: =nifti=
     - D: =dicom=
     - P: =sub-*=
-    - E: =ses-*fmriGeometry=
+    - E: =ses-*=
     - S: =s*=
     - F: =['i*MRDC*', 'i*SCPT*']=
 *** Standard tree
 ****    dicom/ (1 of 1)
-*****   dicom/sub-agar/ (1 of 1)
-******  dicom/sub-agar/ses-fmriGeometry/ (1 of 1)
-******* dicom/sub-agar/ses-fmriGeometry/s726/ (1 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s734/ (2 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s732/ (3 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s733/ (4 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s725/ (5 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s729/ (6 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s731/ (7 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s723/ (8 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s727/ (9 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s724/ (10 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s722/ (11 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s730/ (12 of 13)
-******* dicom/sub-agar/ses-fmriGeometry/s728/ (13 of 13)
+*****   dicom/sub-human/ (1 of 1)
+******  dicom/sub-human/ses-01vol6tests/ (1 of 1)
+******* dicom/sub-human/ses-01vol6tests/s742/ (1 of 8)
+******* dicom/sub-human/ses-01vol6tests/s743/ (2 of 8)
+******* dicom/sub-human/ses-01vol6tests/s744/ (3 of 8)
+******* dicom/sub-human/ses-01vol6tests/s745/ (4 of 8)
+******* dicom/sub-human/ses-01vol6tests/s746/ (5 of 8)
+******* dicom/sub-human/ses-01vol6tests/s747/ (6 of 8)
+******* dicom/sub-human/ses-01vol6tests/s748/ (7 of 8)
+******* dicom/sub-human/ses-01vol6tests/s749/ (8 of 8)
 *** Detailed tree
     - dicom [dicom/]
-      - agar [dicom/sub-agar/]
-        - fmriGeometry [dicom/sub-agar/ses-fmriGeometry/]
-          - 726 [dicom/sub-agar/ses-fmriGeometry/s726/]
-            - i929583.MRDC.2525 [dicom/sub-agar/ses-fmriGeometry/s726/i929583.MRDC.2525]
-          - 734 [dicom/sub-agar/ses-fmriGeometry/s734/]
-            - i950479.MRDC.2312 [dicom/sub-agar/ses-fmriGeometry/s734/i950479.MRDC.2312]
-          - 732 [dicom/sub-agar/ses-fmriGeometry/s732/]
-            - i945503.MRDC.2621 [dicom/sub-agar/ses-fmriGeometry/s732/i945503.MRDC.2621]
-          - 733 [dicom/sub-agar/ses-fmriGeometry/s733/]
-            - i946459.MRDC.932 [dicom/sub-agar/ses-fmriGeometry/s733/i946459.MRDC.932]
-          - 725 [dicom/sub-agar/ses-fmriGeometry/s725/]
-            - i927042.MRDC.26 [dicom/sub-agar/ses-fmriGeometry/s725/i927042.MRDC.26]
-          - 729 [dicom/sub-agar/ses-fmriGeometry/s729/]
-            - i937237.MRDC.2270 [dicom/sub-agar/ses-fmriGeometry/s729/i937237.MRDC.2270]
-          - 731 [dicom/sub-agar/ses-fmriGeometry/s731/]
-            - i941193.MRDC.947 [dicom/sub-agar/ses-fmriGeometry/s731/i941193.MRDC.947]
-          - 723 [dicom/sub-agar/ses-fmriGeometry/s723/]
-            - i926911.MRDC.111 [dicom/sub-agar/ses-fmriGeometry/s723/i926911.MRDC.111]
-          - 727 [dicom/sub-agar/ses-fmriGeometry/s727/]
-            - i930490.MRDC.826 [dicom/sub-agar/ses-fmriGeometry/s727/i930490.MRDC.826]
-          - 724 [dicom/sub-agar/ses-fmriGeometry/s724/]
-            - i926995.MRDC.67 [dicom/sub-agar/ses-fmriGeometry/s724/i926995.MRDC.67]
-          - 722 [dicom/sub-agar/ses-fmriGeometry/s722/]
-            - i926798.MRDC.1 [dicom/sub-agar/ses-fmriGeometry/s722/i926798.MRDC.1]
-          - 730 [dicom/sub-agar/ses-fmriGeometry/s730/]
-            - i939072.MRDC.1465 [dicom/sub-agar/ses-fmriGeometry/s730/i939072.MRDC.1465]
-          - 728 [dicom/sub-agar/ses-fmriGeometry/s728/]
-            - i933002.MRDC.690 [dicom/sub-agar/ses-fmriGeometry/s728/i933002.MRDC.690]
+      - human [dicom/sub-human/]
+        - 01vol6tests [dicom/sub-human/ses-01vol6tests/]
+          - 742 [dicom/sub-human/ses-01vol6tests/s742/]
+            - i951581.MRDC.44 [dicom/sub-human/ses-01vol6tests/s742/i951581.MRDC.44]
+          - 743 [dicom/sub-human/ses-01vol6tests/s743/]
+            - i951845.MRDC.44 [dicom/sub-human/ses-01vol6tests/s743/i951845.MRDC.44]
+          - 744 [dicom/sub-human/ses-01vol6tests/s744/]
+            - i952109.MRDC.1 [dicom/sub-human/ses-01vol6tests/s744/i952109.MRDC.1]
+          - 745 [dicom/sub-human/ses-01vol6tests/s745/]
+            - i952373.MRDC.1 [dicom/sub-human/ses-01vol6tests/s745/i952373.MRDC.1]
+          - 746 [dicom/sub-human/ses-01vol6tests/s746/]
+            - i952637.MRDC.44 [dicom/sub-human/ses-01vol6tests/s746/i952637.MRDC.44]
+          - 747 [dicom/sub-human/ses-01vol6tests/s747/]
+            - i952901.MRDC.44 [dicom/sub-human/ses-01vol6tests/s747/i952901.MRDC.44]
+          - 748 [dicom/sub-human/ses-01vol6tests/s748/]
+            - i953165.MRDC.1 [dicom/sub-human/ses-01vol6tests/s748/i953165.MRDC.1]
+          - 749 [dicom/sub-human/ses-01vol6tests/s749/]
+            - i953429.MRDC.1 [dicom/sub-human/ses-01vol6tests/s749/i953429.MRDC.1]
 *** Table
-  |    | Path                                 | NumFiles | PatientID | SeriesDescription     | SeriesNumber |
-  |----+--------------------------------------+----------+-----------+-----------------------+--------------|
-  | 10 | dicom/sub-agar/ses-fmriGeometry/s722 |        3 | agar      | 3Plane-Loc-SSFSE-ge   |            1 |
-  |  7 | dicom/sub-agar/ses-fmriGeometry/s723 |      128 | agar      | ASSET Cal GE mod OK   |            2 |
-  |  9 | dicom/sub-agar/ses-fmriGeometry/s724 |       75 | agar      | 3Plane-Loc-SSFSE-det  |            3 |
-  |  4 | dicom/sub-agar/ses-fmriGeometry/s725 |       44 | agar      | Ax_T1_GRE_inPlane_sTD |            4 |
-  |  0 | dicom/sub-agar/ses-fmriGeometry/s726 |     2640 | agar      | fMRI_rest_sTD         |            5 |
-  |  8 | dicom/sub-agar/ses-fmriGeometry/s727 |     2640 | agar      | fMRI_rest_sTD         |            6 |
-  | 12 | dicom/sub-agar/ses-fmriGeometry/s728 |     2640 | agar      | fMRI_rest_sTD         |            7 |
-  |  5 | dicom/sub-agar/ses-fmriGeometry/s729 |     2640 | agar      | fMRI_rest_sTD         |            8 |
-  | 11 | dicom/sub-agar/ses-fmriGeometry/s730 |     2640 | agar      | fMRI_rest_sTD         |            9 |
-  |  6 | dicom/sub-agar/ses-fmriGeometry/s731 |     2640 | agar      | fMRI_rest_sTD         |           10 |
-  |  2 | dicom/sub-agar/ses-fmriGeometry/s732 |     2640 | agar      | fMRI_rest_sTD         |           11 |
-  |  3 | dicom/sub-agar/ses-fmriGeometry/s733 |     2640 | agar      | fMRI_rest_sTD         |           12 |
-  |  1 | dicom/sub-agar/ses-fmriGeometry/s734 |     2640 | agar      | fMRI_rest_sTD         |           13 |
+
+  |   | Path                                 | NumFiles | SeriesDescription  | SeriesNumber |
+  |---+--------------------------------------+----------+--------------------+--------------|
+  | 0 | dicom/sub-human/ses-01vol6tests/s742 |      264 | fMRI_rest6vTDseq1  |            7 |
+  | 1 | dicom/sub-human/ses-01vol6tests/s743 |      264 | fMRI_rest6vBUseq1  |            8 |
+  | 2 | dicom/sub-human/ses-01vol6tests/s744 |      264 | fMRI_rest6vTDseq44 |            9 |
+  | 3 | dicom/sub-human/ses-01vol6tests/s745 |      264 | fMRI_rest6vBUseq44 |           10 |
+  | 4 | dicom/sub-human/ses-01vol6tests/s746 |      264 | fMRI_rest6vTDint1  |           11 |
+  | 5 | dicom/sub-human/ses-01vol6tests/s747 |      264 | fMRI_rest6vBUint1  |           13 |
+  | 6 | dicom/sub-human/ses-01vol6tests/s748 |      264 | fMRI_rest6vTDint44 |           14 |
+  | 7 | dicom/sub-human/ses-01vol6tests/s749 |      264 | fMRI_rest6vBUint44 |           15 |
 
 *** fMRI geometry
 
@@ -259,45 +242,46 @@ cc-dcm2bids.py -pes -v -tkim -E "ses-*fmriGeometry"  -lw
     | Item          | NUM | ORDER | ACQ         | VIS_T | VIS_B |
     |---------------+-----+-------+-------------+-------+-------|
     | \_    Results |     |       |             |       |       |
-    | \_      s06   |   6 | TD    | Sequential  |     1 |    44 |
-    | \_      s07   |   7 | BU    | Sequential  |     1 |    44 |
-    | \_      s08   |   8 | TD    | Sequential  |    44 |     1 |
-    | \_      s09   |   9 | BU    | Sequential  |    44 |     1 |
-    | \_      s10   |  10 | TD    | Interleaved |     1 |    44 |
-    | \_      s11   |  11 | BU    | Interleaved |     1 |    44 |
-    | \_      s12   |  12 | TD    | Interleaved |    44 |     1 |
-    | \_      s13   |  13 | BU    | Interleaved |    44 |     1 |
+    | \_      s07   |   7 | TD    | Sequential  |     1 |    44 |
+    | \_      s08   |   8 | BU    | Sequential  |     1 |    44 |
+    | \_      s09   |   9 | TD    | Sequential  |    44 |     1 |
+    | \_      s10   |  10 | BU    | Sequential  |    44 |     1 |
+    | \_      s11   |  11 | TD    | Interleaved |     1 |    44 |
+    | \_      s13   |  13 | BU    | Interleaved |     1 |    44 |
+    | \_      s14   |  14 | TD    | Interleaved |    44 |     1 |
+    | \_      s15   |  15 | BU    | Interleaved |    44 |     1 |
     #+END:
 
 ** fMRI geometry
 *** Script
 
-    #+BEGIN_SRC sh
+    #+BEGIN_SRC sh :eval query
 
-cd ~/cc/dat/varia/2018/q03/agar-testing-settings
+cd ~/cc/dat/varia/2018/q03/human-6vTests/
 
-cc-dcm2bids.py -pes -S "*s727" -tkimr -lw -L "s727-s06.org"
-cc-dcm2bids.py -pes -S "*s728" -tkimr -lw -L "s728-s07.org"
-cc-dcm2bids.py -pes -S "*s729" -tkimr -lw -L "s729-s08.org"
-cc-dcm2bids.py -pes -S "*s730" -tkimr -lw -L "s730-s09.org"
-cc-dcm2bids.py -pes -S "*s731" -tkimr -lw -L "s731-s10.org"
-cc-dcm2bids.py -pes -S "*s732" -tkimr -lw -L "s732-s11.org"
-cc-dcm2bids.py -pes -S "*s733" -tkimr -lw -L "s733-s12.org"
-cc-dcm2bids.py -pes -S "*s734" -tkimr -lw -L "s734-s13.org"
+cc-dcm2bids-wrapper.py -pes -S "*s742" -tkimr -lw -L "s742-aka-s07.org"
+cc-dcm2bids-wrapper.py -pes -S "*s743" -tkimr -lw -L "s743-aka-s08.org"
+cc-dcm2bids-wrapper.py -pes -S "*s744" -tkimr -lw -L "s744-aka-s09.org"
+cc-dcm2bids-wrapper.py -pes -S "*s745" -tkimr -lw -L "s745-aka-s10.org"
+cc-dcm2bids-wrapper.py -pes -S "*s746" -tkimr -lw -L "s746-aka-s11.org"
+cc-dcm2bids-wrapper.py -pes -S "*s747" -tkimr -lw -L "s747-aka-s13.org"
+cc-dcm2bids-wrapper.py -pes -S "*s748" -tkimr -lw -L "s748-aka-s14.org"
+cc-dcm2bids-wrapper.py -pes -S "*s749" -tkimr -lw -L "s749-aka-s15.org"
 
 
-head -n 66 s727-s06.org > first_48_slices_s727-s06.org
-head -n 66 s728-s07.org > first_48_slices_s728-s07.org
-head -n 66 s729-s08.org > first_48_slices_s729-s08.org
-head -n 66 s730-s09.org > first_48_slices_s730-s09.org
-head -n 66 s731-s10.org > first_48_slices_s731-s10.org
-head -n 66 s732-s11.org > first_48_slices_s732-s11.org
-head -n 66 s733-s12.org > first_48_slices_s733-s12.org
-head -n 66 s734-s13.org > first_48_slices_s734-s13.org
+head -n 66 s742-aka-s07.org > s742.org_66lines.org
+head -n 66 s743-aka-s08.org > s743.org_66lines.org
+head -n 66 s744-aka-s09.org > s744.org_66lines.org
+head -n 66 s745-aka-s10.org > s745.org_66lines.org
+head -n 66 s746-aka-s11.org > s746.org_66lines.org
+head -n 66 s747-aka-s13.org > s747.org_66lines.org
+head -n 66 s748-aka-s14.org > s748.org_66lines.org
+head -n 66 s749-aka-s15.org > s749.org_66lines.org
 
 mkdir -p ./org-log-arch/
-mv -v ./s7*org ./s7*csv ./org-log-arch/
 
+mv -v s742.org s743.org s744.org s745.org s746.org s747.org s748.org s749.org ./org-log-arch/
+mv -v s742.csv s743.csv s744.csv s745.csv s746.csv s747.csv s748.csv s749.csv ./org-log-arch/
 
     #+END_SRC
 
@@ -306,78 +290,10 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
     :COLUMNS:  %25ITEM(Item) %NUM %ORDER %ACQ %VIS_T %VIS_B
     :ID:       dc72ab10-b551-4438-9ed8-85670fcabbaa
     :END:
-**** s06
-     :PROPERTIES:
-     :NUM:      6
-     :ORDER:    TD
-     :ACQ:      Sequential
-     :VIS_T:    1
-     :VIS_B:    44
-     :END:
-
-     #+BEGIN_EXAMPLE
-     :NUM:      6
-     :ORDER:    TD
-     :ACQ:      Sequential
-     :VIS_T:    1
-     :VIS_B:    44
-     #+END_EXAMPLE
-
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |            6 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
- |            6 |                  44 |                     2 |              2 |       61.2566 |             |                  0 |
- |            6 |                  44 |                     3 |              3 |       58.0344 |             |             0.0932 |
- |            6 |                  44 |                     4 |              4 |       54.8121 |             |             0.1386 |
- |            6 |                  44 |                     5 |              5 |       51.5898 |             |             0.1841 |
- |            6 |                  44 |                     6 |              6 |       48.3675 |             |             0.2295 |
- |            6 |                  44 |                     7 |              7 |       45.1453 |             |              0.275 |
- |            6 |                  44 |                     8 |              8 |        41.923 |             |             0.3204 |
- |            6 |                  44 |                     9 |              9 |       38.7007 |             |             0.3659 |
- |            6 |                  44 |                    10 |             10 |       35.4784 |             |             0.4114 |
- |            6 |                  44 |                    11 |             11 |       32.2562 |             |             0.4568 |
- |            6 |                  44 |                    12 |             12 |       29.0339 |             |             0.5023 |
- |            6 |                  44 |                    13 |             13 |       25.8116 |             |             0.5477 |
- |            6 |                  44 |                    14 |             14 |       22.5893 |             |             0.5932 |
- |            6 |                  44 |                    15 |             15 |       19.3671 |             |             0.6386 |
- |            6 |                  44 |                    16 |             16 |       16.1448 |             |             0.6841 |
- |            6 |                  44 |                    17 |             17 |       12.9225 |             |             0.7295 |
- |            6 |                  44 |                    18 |             18 |       9.70024 |             |              0.775 |
- |            6 |                  44 |                    19 |             19 |       6.47797 |             |             0.8205 |
- |            6 |                  44 |                    20 |             20 |       3.25569 |             |             0.8659 |
- |            6 |                  44 |                    21 |             21 |     0.0334157 |             |             0.9114 |
- |            6 |                  44 |                    22 |             22 |      -3.18886 |             |             0.9568 |
- |            6 |                  44 |                    23 |             23 |      -6.41113 |             |             1.0023 |
- |            6 |                  44 |                    24 |             24 |      -9.63341 |             |             1.0477 |
- |            6 |                  44 |                    25 |             25 |      -12.8557 |             |             1.0932 |
- |            6 |                  44 |                    26 |             26 |       -16.078 |             |             1.1387 |
- |            6 |                  44 |                    27 |             27 |      -19.3002 |             |             1.1841 |
- |            6 |                  44 |                    28 |             28 |      -22.5225 |             |             1.2296 |
- |            6 |                  44 |                    29 |             29 |      -25.7448 |             |              1.275 |
- |            6 |                  44 |                    30 |             30 |      -28.9671 |             |             1.3205 |
- |            6 |                  44 |                    31 |             31 |      -32.1893 |             |             1.3659 |
- |            6 |                  44 |                    32 |             32 |      -35.4116 |             |             1.4114 |
- |            6 |                  44 |                    33 |             33 |      -38.6339 |             |             1.4568 |
- |            6 |                  44 |                    34 |             34 |      -41.8562 |             |             1.5023 |
- |            6 |                  44 |                    35 |             35 |      -45.0784 |             |             1.5477 |
- |            6 |                  44 |                    36 |             36 |      -48.3007 |             |             1.5932 |
- |            6 |                  44 |                    37 |             37 |       -51.523 |             |             1.6386 |
- |            6 |                  44 |                    38 |             38 |      -54.7453 |             |             1.6841 |
- |            6 |                  44 |                    39 |             39 |      -57.9675 |             |             1.7295 |
- |            6 |                  44 |                    40 |             40 |      -61.1898 |             |              1.775 |
- |            6 |                  44 |                    41 |             41 |      -64.4121 |             |             1.8204 |
- |            6 |                  44 |                    42 |             42 |      -67.6344 |             |             1.8659 |
- |            6 |                  44 |                    43 |             43 |      -70.8566 |             |             1.9113 |
- |            6 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
- |            6 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
- |            6 |                  44 |                     2 |             46 |       61.2566 |             |             2.0477 |
- |            6 |                  44 |                     3 |             47 |       58.0344 |             |             2.0932 |
- |            6 |                  44 |                     4 |             48 |       54.8121 |             |             2.1386 |
-
 **** s07
      :PROPERTIES:
      :NUM:      7
-     :ORDER:    BU
+     :ORDER:    TD
      :ACQ:      Sequential
      :VIS_T:    1
      :VIS_B:    44
@@ -385,135 +301,137 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
 
      #+BEGIN_EXAMPLE
      :NUM:      7
-     :ORDER:    BU
+     :ORDER:    TD
      :ACQ:      Sequential
      :VIS_T:    1
      :VIS_B:    44
      #+END_EXAMPLE
 
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |            7 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
- |            7 |                  44 |                     2 |              2 |       61.2566 |             |             0.0477 |
- |            7 |                  44 |                     3 |              3 |       58.0344 |             |             0.0932 |
- |            7 |                  44 |                     4 |              4 |       54.8121 |             |             0.1386 |
- |            7 |                  44 |                     5 |              5 |       51.5898 |             |             0.1841 |
- |            7 |                  44 |                     6 |              6 |       48.3675 |             |             0.2295 |
- |            7 |                  44 |                     7 |              7 |       45.1453 |             |              0.275 |
- |            7 |                  44 |                     8 |              8 |        41.923 |             |             0.3204 |
- |            7 |                  44 |                     9 |              9 |       38.7007 |             |             0.3659 |
- |            7 |                  44 |                    10 |             10 |       35.4784 |             |             0.4114 |
- |            7 |                  44 |                    11 |             11 |       32.2562 |             |             0.4568 |
- |            7 |                  44 |                    12 |             12 |       29.0339 |             |             0.5023 |
- |            7 |                  44 |                    13 |             13 |       25.8116 |             |             0.5477 |
- |            7 |                  44 |                    14 |             14 |       22.5893 |             |             0.5932 |
- |            7 |                  44 |                    15 |             15 |       19.3671 |             |             0.6386 |
- |            7 |                  44 |                    16 |             16 |       16.1448 |             |             0.6841 |
- |            7 |                  44 |                    17 |             17 |       12.9225 |             |             0.7295 |
- |            7 |                  44 |                    18 |             18 |       9.70024 |             |              0.775 |
- |            7 |                  44 |                    19 |             19 |       6.47797 |             |             0.8205 |
- |            7 |                  44 |                    20 |             20 |       3.25569 |             |             0.8659 |
- |            7 |                  44 |                    21 |             21 |     0.0334157 |             |             0.9114 |
- |            7 |                  44 |                    22 |             22 |      -3.18886 |             |             0.9568 |
- |            7 |                  44 |                    23 |             23 |      -6.41113 |             |             1.0023 |
- |            7 |                  44 |                    24 |             24 |      -9.63341 |             |             1.0477 |
- |            7 |                  44 |                    25 |             25 |      -12.8557 |             |             1.0932 |
- |            7 |                  44 |                    26 |             26 |       -16.078 |             |             1.1387 |
- |            7 |                  44 |                    27 |             27 |      -19.3002 |             |             1.1841 |
- |            7 |                  44 |                    28 |             28 |      -22.5225 |             |             1.2296 |
- |            7 |                  44 |                    29 |             29 |      -25.7448 |             |              1.275 |
- |            7 |                  44 |                    30 |             30 |      -28.9671 |             |             1.3205 |
- |            7 |                  44 |                    31 |             31 |      -32.1893 |             |             1.3659 |
- |            7 |                  44 |                    32 |             32 |      -35.4116 |             |             1.4114 |
- |            7 |                  44 |                    33 |             33 |      -38.6339 |             |             1.4568 |
- |            7 |                  44 |                    34 |             34 |      -41.8562 |             |             1.5023 |
- |            7 |                  44 |                    35 |             35 |      -45.0784 |             |             1.5477 |
- |            7 |                  44 |                    36 |             36 |      -48.3007 |             |             1.5932 |
- |            7 |                  44 |                    37 |             37 |       -51.523 |             |             1.6386 |
- |            7 |                  44 |                    38 |             38 |      -54.7453 |             |             1.6841 |
- |            7 |                  44 |                    39 |             39 |      -57.9675 |             |             1.7295 |
- |            7 |                  44 |                    40 |             40 |      -61.1898 |             |              1.775 |
- |            7 |                  44 |                    41 |             41 |      -64.4121 |             |             1.8204 |
- |            7 |                  44 |                    42 |             42 |      -67.6344 |             |             1.8659 |
- |            7 |                  44 |                    43 |             43 |      -70.8566 |             |             1.9113 |
- |            7 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
- |            7 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
- |            7 |                  44 |                     2 |             46 |       61.2566 |             |             2.0477 |
- |            7 |                  44 |                     3 |             47 |       58.0344 |             |             2.0932 |
- |            7 |                  44 |                     4 |             48 |       54.8121 |             |             2.1386 |
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     | 43 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     1 |              1 |       118.463 |             |             0.0023 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     2 |              2 |        115.23 |             |             0.0477 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     3 |              3 |       111.997 |             |             0.0932 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     4 |              4 |       108.763 |             |             0.1386 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     5 |              5 |        105.53 |             |             0.1841 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     6 |              6 |       102.297 |             |             0.2295 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     7 |              7 |       99.0637 |             |              0.275 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     8 |              8 |       95.8305 |             |             0.3204 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     9 |              9 |       92.5973 |             |             0.3659 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    10 |             10 |       89.3641 |             |             0.4114 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    11 |             11 |       86.1309 |             |             0.4568 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    12 |             12 |       82.8977 |             |             0.5023 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    13 |             13 |       79.6645 |             |             0.5477 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    14 |             14 |       76.4313 |             |             0.5932 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    15 |             15 |       73.1981 |             |             0.6386 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    16 |             16 |       69.9649 |             |             0.6841 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    17 |             17 |       66.7317 |             |             0.7295 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    18 |             18 |       63.4985 |             |              0.775 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    19 |             19 |       60.2653 |             |             0.8205 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    20 |             20 |       57.0321 |             |             0.8659 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    21 |             21 |       53.7989 |             |             0.9114 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    22 |             22 |       50.5657 |             |             0.9568 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    23 |             23 |       47.3325 |             |             1.0023 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    24 |             24 |       44.0993 |             |             1.0477 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    25 |             25 |       40.8661 |             |             1.0932 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    26 |             26 |       37.6329 |             |             1.1387 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    27 |             27 |       34.3997 |             |             1.1841 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    28 |             28 |       31.1665 |             |             1.2296 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    29 |             29 |       27.9333 |             |              1.275 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    30 |             30 |       24.7001 |             |             1.3205 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    31 |             31 |       21.4669 |             |             1.3659 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    32 |             32 |       18.2337 |             |             1.4114 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    33 |             33 |       15.0005 |             |             1.4568 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    34 |             34 |       11.7673 |             |             1.5023 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    35 |             35 |       8.53412 |             |             1.5477 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    36 |             36 |       5.30092 |             |             1.5932 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    37 |             37 |       2.06772 |             |             1.6386 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    38 |             38 |      -1.16548 |             |             1.6841 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    39 |             39 |      -4.39868 |             |             1.7295 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    40 |             40 |      -7.63189 |             |              1.775 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    41 |             41 |      -10.8651 |             |             1.8204 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    42 |             42 |      -14.0983 |             |             1.8659 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    43 |             43 |      -17.3315 |             |             1.9113 |
+     |  0 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                    44 |             44 |      -20.5647 |             |             1.9568 |
+     | 87 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     1 |             45 |       118.463 |             |             2.0023 |
+     | 86 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     2 |             46 |        115.23 |             |             2.0477 |
+     | 85 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     3 |             47 |       111.997 |             |             2.0932 |
+     | 84 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     4 |             48 |       108.763 |             |             2.1386 |
+     | 83 | dicom/sub-human/ses-01vol6tests/s742 |      264 |            7 |                  44 |                     5 |             49 |        105.53 |             |             2.1841 |
 
 **** s08
      :PROPERTIES:
      :NUM:      8
-     :ORDER:    TD
+     :ORDER:    BU
      :ACQ:      Sequential
-     :VIS_T:    44
-     :VIS_B:    1
+     :VIS_T:    1
+     :VIS_B:    44
      :END:
 
      #+BEGIN_EXAMPLE
      :NUM:      8
-     :ORDER:    TD
+     :ORDER:    BU
      :ACQ:      Sequential
-     :VIS_T:    44
-     :VIS_B:    1
+     :VIS_T:    1
+     :VIS_B:    44
      #+END_EXAMPLE
 
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |            8 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
- |            8 |                  44 |                     2 |              2 |       -71.409 |             |             0.0477 |
- |            8 |                  44 |                     3 |              3 |      -68.1868 |             |             0.0932 |
- |            8 |                  44 |                     4 |              4 |      -64.9645 |             |             0.1386 |
- |            8 |                  44 |                     5 |              5 |      -61.7422 |             |             0.1841 |
- |            8 |                  44 |                     6 |              6 |      -58.5199 |             |             0.2295 |
- |            8 |                  44 |                     7 |              7 |      -55.2977 |             |              0.275 |
- |            8 |                  44 |                     8 |              8 |      -52.0754 |             |             0.3204 |
- |            8 |                  44 |                     9 |              9 |      -48.8531 |             |             0.3659 |
- |            8 |                  44 |                    10 |             10 |      -45.6308 |             |             0.4114 |
- |            8 |                  44 |                    11 |             11 |      -42.4086 |             |             0.4568 |
- |            8 |                  44 |                    12 |             12 |      -39.1863 |             |             0.5023 |
- |            8 |                  44 |                    13 |             13 |       -35.964 |             |             0.5477 |
- |            8 |                  44 |                    14 |             14 |      -32.7417 |             |             0.5932 |
- |            8 |                  44 |                    15 |             15 |      -29.5195 |             |             0.6386 |
- |            8 |                  44 |                    16 |             16 |      -26.2972 |             |             0.6841 |
- |            8 |                  44 |                    17 |             17 |      -23.0749 |             |             0.7295 |
- |            8 |                  44 |                    18 |             18 |      -19.8527 |             |              0.775 |
- |            8 |                  44 |                    19 |             19 |      -16.6304 |             |             0.8205 |
- |            8 |                  44 |                    20 |             20 |      -13.4081 |             |             0.8659 |
- |            8 |                  44 |                    21 |             21 |      -10.1858 |             |             0.9114 |
- |            8 |                  44 |                    22 |             22 |      -6.96356 |             |             0.9568 |
- |            8 |                  44 |                    23 |             23 |      -3.74129 |             |             1.0023 |
- |            8 |                  44 |                    24 |             24 |     -0.519012 |             |             1.0477 |
- |            8 |                  44 |                    25 |             25 |       2.70326 |             |             1.0932 |
- |            8 |                  44 |                    26 |             26 |       5.92554 |             |             1.1387 |
- |            8 |                  44 |                    27 |             27 |       9.14781 |             |             1.1841 |
- |            8 |                  44 |                    28 |             28 |       12.3701 |             |             1.2296 |
- |            8 |                  44 |                    29 |             29 |       15.5924 |             |              1.275 |
- |            8 |                  44 |                    30 |             30 |       18.8146 |             |             1.3205 |
- |            8 |                  44 |                    31 |             31 |       22.0369 |             |             1.3659 |
- |            8 |                  44 |                    32 |             32 |       25.2592 |             |             1.4114 |
- |            8 |                  44 |                    33 |             33 |       28.4814 |             |             1.4568 |
- |            8 |                  44 |                    34 |             34 |       31.7037 |             |             1.5023 |
- |            8 |                  44 |                    35 |             35 |        34.926 |             |             1.5477 |
- |            8 |                  44 |                    36 |             36 |       38.1483 |             |             1.5932 |
- |            8 |                  44 |                    37 |             37 |       41.3705 |             |             1.6386 |
- |            8 |                  44 |                    38 |             38 |       44.5928 |             |             1.6841 |
- |            8 |                  44 |                    39 |             39 |       47.8151 |             |             1.7295 |
- |            8 |                  44 |                    40 |             40 |       51.0374 |             |              1.775 |
- |            8 |                  44 |                    41 |             41 |       54.2596 |             |             1.8204 |
- |            8 |                  44 |                    42 |             42 |       57.4819 |             |             1.8659 |
- |            8 |                  44 |                    43 |             43 |       60.7042 |             |             1.9113 |
- |            8 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
- |            8 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
- |            8 |                  44 |                     2 |             46 |       -71.409 |             |             2.0477 |
- |            8 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0932 |
- |            8 |                  44 |                     4 |             48 |      -64.9645 |             |             2.1386 |
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     | 43 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     1 |              1 |       118.963 |             |             0.0023 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     2 |              2 |        115.73 |             |             0.0477 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     3 |              3 |       112.497 |             |             0.0932 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     4 |              4 |       109.263 |             |             0.1386 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     5 |              5 |        106.03 |             |             0.1841 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     6 |              6 |       102.797 |             |             0.2295 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     7 |              7 |       99.5637 |             |              0.275 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     8 |              8 |       96.3305 |             |             0.3204 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     9 |              9 |       93.0973 |             |             0.3659 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    10 |             10 |       89.8641 |             |             0.4114 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    11 |             11 |       86.6309 |             |             0.4568 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    12 |             12 |       83.3977 |             |             0.5023 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    13 |             13 |       80.1645 |             |             0.5477 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    14 |             14 |       76.9313 |             |             0.5932 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    15 |             15 |       73.6981 |             |             0.6386 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    16 |             16 |       70.4649 |             |             0.6841 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    17 |             17 |       67.2317 |             |             0.7295 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    18 |             18 |       63.9985 |             |              0.775 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    19 |             19 |       60.7653 |             |             0.8205 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    20 |             20 |       57.5321 |             |             0.8659 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    21 |             21 |       54.2989 |             |             0.9114 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    22 |             22 |       51.0657 |             |             0.9568 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    23 |             23 |       47.8325 |             |             1.0023 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    24 |             24 |       44.5993 |             |             1.0477 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    25 |             25 |       41.3661 |             |             1.0932 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    26 |             26 |       38.1329 |             |             1.1387 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    27 |             27 |       34.8997 |             |             1.1841 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    28 |             28 |       31.6665 |             |             1.2296 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    29 |             29 |       28.4333 |             |              1.275 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    30 |             30 |       25.2001 |             |             1.3205 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    31 |             31 |       21.9669 |             |             1.3659 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    32 |             32 |       18.7337 |             |             1.4114 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    33 |             33 |       15.5005 |             |             1.4568 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    34 |             34 |       12.2673 |             |             1.5023 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    35 |             35 |       9.03412 |             |             1.5477 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    36 |             36 |       5.80092 |             |             1.5932 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    37 |             37 |       2.56772 |             |             1.6386 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    38 |             38 |     -0.665483 |             |             1.6841 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    39 |             39 |      -3.89868 |             |             1.7295 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    40 |             40 |      -7.13189 |             |              1.775 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    41 |             41 |      -10.3651 |             |             1.8204 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    42 |             42 |      -13.5983 |             |             1.8659 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    43 |             43 |      -16.8315 |             |             1.9113 |
+     |  0 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                    44 |             44 |      -20.0647 |             |             1.9568 |
+     | 87 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     1 |             45 |       118.963 |             |             2.0023 |
+     | 86 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     2 |             46 |        115.73 |             |             2.0477 |
+     | 85 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     3 |             47 |       112.497 |             |             2.0932 |
+     | 84 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     4 |             48 |       109.263 |             |             2.1386 |
+     | 83 | dicom/sub-human/ses-01vol6tests/s743 |      264 |            8 |                  44 |                     5 |             49 |        106.03 |             |             2.1841 |
 
 **** s09
      :PROPERTIES:
      :NUM:      9
-     :ORDER:    BU
+     :ORDER:    TD
      :ACQ:      Sequential
      :VIS_T:    44
      :VIS_B:    1
@@ -521,135 +439,137 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
 
      #+BEGIN_EXAMPLE
      :NUM:      9
+     :ORDER:    TD
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+     #+END_EXAMPLE
+
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     |  0 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     1 |              1 |      -16.7704 |             |             0.0023 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     2 |              2 |      -13.5377 |             |             0.0477 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     3 |              3 |      -10.3049 |             |             0.0932 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     4 |              4 |      -7.07206 |             |             0.1386 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     5 |              5 |      -3.83926 |             |             0.1841 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     6 |              6 |     -0.606466 |             |             0.2295 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     7 |              7 |       2.62633 |             |              0.275 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     8 |              8 |       5.85913 |             |             0.3204 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     9 |              9 |       9.09192 |             |             0.3659 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    10 |             10 |       12.3247 |             |             0.4114 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    11 |             11 |       15.5575 |             |             0.4568 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    12 |             12 |       18.7903 |             |             0.5023 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    13 |             13 |       22.0231 |             |             0.5477 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    14 |             14 |       25.2559 |             |             0.5932 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    15 |             15 |       28.4887 |             |             0.6386 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    16 |             16 |       31.7215 |             |             0.6841 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    17 |             17 |       34.9543 |             |             0.7295 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    18 |             18 |       38.1871 |             |              0.775 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    19 |             19 |       41.4199 |             |             0.8205 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    20 |             20 |       44.6527 |             |             0.8659 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    21 |             21 |       47.8855 |             |             0.9114 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    22 |             22 |       51.1183 |             |             0.9568 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    23 |             23 |       54.3511 |             |             1.0023 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    24 |             24 |       57.5839 |             |             1.0477 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    25 |             25 |       60.8167 |             |             1.0932 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    26 |             26 |       64.0495 |             |             1.1387 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    27 |             27 |       67.2822 |             |             1.1841 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    28 |             28 |        70.515 |             |             1.2296 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    29 |             29 |       73.7478 |             |              1.275 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    30 |             30 |       76.9806 |             |             1.3205 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    31 |             31 |       80.2134 |             |             1.3659 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    32 |             32 |       83.4462 |             |             1.4114 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    33 |             33 |        86.679 |             |             1.4568 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    34 |             34 |       89.9118 |             |             1.5023 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    35 |             35 |       93.1446 |             |             1.5477 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    36 |             36 |       96.3774 |             |             1.5932 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    37 |             37 |       99.6102 |             |             1.6386 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    38 |             38 |       102.843 |             |             1.6841 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    39 |             39 |       106.076 |             |             1.7295 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    40 |             40 |       109.309 |             |              1.775 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    41 |             41 |       112.541 |             |             1.8204 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    42 |             42 |       115.774 |             |             1.8659 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    43 |             43 |       119.007 |             |             1.9113 |
+     | 43 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                    44 |             44 |        122.24 |             |             1.9568 |
+     | 44 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     1 |             45 |      -16.7704 |             |             2.0023 |
+     | 45 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     2 |             46 |      -13.5377 |             |             2.0477 |
+     | 46 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     3 |             47 |      -10.3049 |             |             2.0932 |
+     | 47 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     4 |             48 |      -7.07206 |             |             2.1386 |
+     | 48 | dicom/sub-human/ses-01vol6tests/s744 |      264 |            9 |                  44 |                     5 |             49 |      -3.83926 |             |             2.1841 |
+
+**** s10
+     :PROPERTIES:
+     :NUM:      10
+     :ORDER:    BU
+     :ACQ:      Sequential
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      10
      :ORDER:    BU
      :ACQ:      Sequential
      :VIS_T:    44
      :VIS_B:    1
      #+END_EXAMPLE
 
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |            9 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
- |            9 |                  44 |                     2 |              2 |       -71.409 |             |             0.0477 |
- |            9 |                  44 |                     3 |              3 |      -68.1868 |             |             0.0932 |
- |            9 |                  44 |                     4 |              4 |      -64.9645 |             |             0.1386 |
- |            9 |                  44 |                     5 |              5 |      -61.7422 |             |             0.1841 |
- |            9 |                  44 |                     6 |              6 |      -58.5199 |             |             0.2295 |
- |            9 |                  44 |                     7 |              7 |      -55.2977 |             |              0.275 |
- |            9 |                  44 |                     8 |              8 |      -52.0754 |             |             0.3204 |
- |            9 |                  44 |                     9 |              9 |      -48.8531 |             |             0.3659 |
- |            9 |                  44 |                    10 |             10 |      -45.6308 |             |             0.4114 |
- |            9 |                  44 |                    11 |             11 |      -42.4086 |             |             0.4568 |
- |            9 |                  44 |                    12 |             12 |      -39.1863 |             |             0.5023 |
- |            9 |                  44 |                    13 |             13 |       -35.964 |             |             0.5477 |
- |            9 |                  44 |                    14 |             14 |      -32.7417 |             |             0.5932 |
- |            9 |                  44 |                    15 |             15 |      -29.5195 |             |             0.6386 |
- |            9 |                  44 |                    16 |             16 |      -26.2972 |             |             0.6841 |
- |            9 |                  44 |                    17 |             17 |      -23.0749 |             |             0.7295 |
- |            9 |                  44 |                    18 |             18 |      -19.8527 |             |              0.775 |
- |            9 |                  44 |                    19 |             19 |      -16.6304 |             |             0.8205 |
- |            9 |                  44 |                    20 |             20 |      -13.4081 |             |             0.8659 |
- |            9 |                  44 |                    21 |             21 |      -10.1858 |             |             0.9114 |
- |            9 |                  44 |                    22 |             22 |      -6.96356 |             |             0.9568 |
- |            9 |                  44 |                    23 |             23 |      -3.74129 |             |             1.0023 |
- |            9 |                  44 |                    24 |             24 |     -0.519012 |             |             1.0477 |
- |            9 |                  44 |                    25 |             25 |       2.70326 |             |             1.0932 |
- |            9 |                  44 |                    26 |             26 |       5.92554 |             |             1.1387 |
- |            9 |                  44 |                    27 |             27 |       9.14781 |             |             1.1841 |
- |            9 |                  44 |                    28 |             28 |       12.3701 |             |             1.2296 |
- |            9 |                  44 |                    29 |             29 |       15.5924 |             |              1.275 |
- |            9 |                  44 |                    30 |             30 |       18.8146 |             |             1.3205 |
- |            9 |                  44 |                    31 |             31 |       22.0369 |             |             1.3659 |
- |            9 |                  44 |                    32 |             32 |       25.2592 |             |             1.4114 |
- |            9 |                  44 |                    33 |             33 |       28.4814 |             |             1.4568 |
- |            9 |                  44 |                    34 |             34 |       31.7037 |             |             1.5023 |
- |            9 |                  44 |                    35 |             35 |        34.926 |             |             1.5477 |
- |            9 |                  44 |                    36 |             36 |       38.1483 |             |             1.5932 |
- |            9 |                  44 |                    37 |             37 |       41.3705 |             |             1.6386 |
- |            9 |                  44 |                    38 |             38 |       44.5928 |             |             1.6841 |
- |            9 |                  44 |                    39 |             39 |       47.8151 |             |             1.7295 |
- |            9 |                  44 |                    40 |             40 |       51.0374 |             |              1.775 |
- |            9 |                  44 |                    41 |             41 |       54.2596 |             |             1.8204 |
- |            9 |                  44 |                    42 |             42 |       57.4819 |             |             1.8659 |
- |            9 |                  44 |                    43 |             43 |       60.7042 |             |             1.9113 |
- |            9 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
- |            9 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
- |            9 |                  44 |                     2 |             46 |       -71.409 |             |             2.0477 |
- |            9 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0932 |
- |            9 |                  44 |                     4 |             48 |      -64.9645 |             |             2.1386 |
-
-**** s10
-     :PROPERTIES:
-     :NUM:      10
-     :ORDER:    TD
-     :ACQ:      Interleaved
-     :VIS_T:    1
-     :VIS_B:    44
-     :END:
-
-     #+BEGIN_EXAMPLE
-     :NUM:      10
-     :ORDER:    TD
-     :ACQ:      Interleaved
-     :VIS_T:    1
-     :VIS_B:    44
-     #+END_EXAMPLE
-
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |           10 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
- |           10 |                  44 |                     2 |              2 |       61.2566 |             |             1.0023 |
- |           10 |                  44 |                     3 |              3 |       58.0344 |             |             0.0477 |
- |           10 |                  44 |                     4 |              4 |       54.8121 |             |             1.0477 |
- |           10 |                  44 |                     5 |              5 |       51.5898 |             |             0.0932 |
- |           10 |                  44 |                     6 |              6 |       48.3675 |             |             1.0932 |
- |           10 |                  44 |                     7 |              7 |       45.1453 |             |             0.1386 |
- |           10 |                  44 |                     8 |              8 |        41.923 |             |             1.1387 |
- |           10 |                  44 |                     9 |              9 |       38.7007 |             |             0.1841 |
- |           10 |                  44 |                    10 |             10 |       35.4784 |             |             1.1841 |
- |           10 |                  44 |                    11 |             11 |       32.2562 |             |             0.2295 |
- |           10 |                  44 |                    12 |             12 |       29.0339 |             |             1.2296 |
- |           10 |                  44 |                    13 |             13 |       25.8116 |             |              0.275 |
- |           10 |                  44 |                    14 |             14 |       22.5893 |             |              1.275 |
- |           10 |                  44 |                    15 |             15 |       19.3671 |             |             0.3204 |
- |           10 |                  44 |                    16 |             16 |       16.1448 |             |             1.3205 |
- |           10 |                  44 |                    17 |             17 |       12.9225 |             |             0.3659 |
- |           10 |                  44 |                    18 |             18 |       9.70024 |             |             1.3659 |
- |           10 |                  44 |                    19 |             19 |       6.47797 |             |             0.4114 |
- |           10 |                  44 |                    20 |             20 |       3.25569 |             |             1.4114 |
- |           10 |                  44 |                    21 |             21 |     0.0334157 |             |             0.4568 |
- |           10 |                  44 |                    22 |             22 |      -3.18886 |             |             1.4568 |
- |           10 |                  44 |                    23 |             23 |      -6.41113 |             |             0.5023 |
- |           10 |                  44 |                    24 |             24 |      -9.63341 |             |             1.5023 |
- |           10 |                  44 |                    25 |             25 |      -12.8557 |             |             0.5477 |
- |           10 |                  44 |                    26 |             26 |       -16.078 |             |             1.5477 |
- |           10 |                  44 |                    27 |             27 |      -19.3002 |             |             0.5932 |
- |           10 |                  44 |                    28 |             28 |      -22.5225 |             |             1.5932 |
- |           10 |                  44 |                    29 |             29 |      -25.7448 |             |             0.6386 |
- |           10 |                  44 |                    30 |             30 |      -28.9671 |             |             1.6386 |
- |           10 |                  44 |                    31 |             31 |      -32.1893 |             |             0.6841 |
- |           10 |                  44 |                    32 |             32 |      -35.4116 |             |             1.6841 |
- |           10 |                  44 |                    33 |             33 |      -38.6339 |             |             0.7295 |
- |           10 |                  44 |                    34 |             34 |      -41.8562 |             |             1.7295 |
- |           10 |                  44 |                    35 |             35 |      -45.0784 |             |              0.775 |
- |           10 |                  44 |                    36 |             36 |      -48.3007 |             |              1.775 |
- |           10 |                  44 |                    37 |             37 |       -51.523 |             |             0.8205 |
- |           10 |                  44 |                    38 |             38 |      -54.7453 |             |             1.8204 |
- |           10 |                  44 |                    39 |             39 |      -57.9675 |             |             0.8659 |
- |           10 |                  44 |                    40 |             40 |      -61.1898 |             |             1.8659 |
- |           10 |                  44 |                    41 |             41 |      -64.4121 |             |             0.9114 |
- |           10 |                  44 |                    42 |             42 |      -67.6344 |             |             1.9113 |
- |           10 |                  44 |                    43 |             43 |      -70.8566 |             |             0.9568 |
- |           10 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
- |           10 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
- |           10 |                  44 |                     2 |             46 |       61.2566 |             |             3.0023 |
- |           10 |                  44 |                     3 |             47 |       58.0344 |             |             2.0477 |
- |           10 |                  44 |                     4 |             48 |       54.8121 |             |             3.0477 |
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     |  0 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     1 |              1 |      -16.7704 |             |             0.0023 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     2 |              2 |      -13.5377 |             |             0.0477 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     3 |              3 |      -10.3049 |             |             0.0932 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     4 |              4 |      -7.07206 |             |             0.1386 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     5 |              5 |      -3.83926 |             |             0.1841 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     6 |              6 |     -0.606466 |             |             0.2295 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     7 |              7 |       2.62633 |             |              0.275 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     8 |              8 |       5.85913 |             |             0.3204 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     9 |              9 |       9.09192 |             |             0.3659 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    10 |             10 |       12.3247 |             |             0.4114 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    11 |             11 |       15.5575 |             |             0.4568 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    12 |             12 |       18.7903 |             |             0.5023 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    13 |             13 |       22.0231 |             |             0.5477 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    14 |             14 |       25.2559 |             |             0.5932 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    15 |             15 |       28.4887 |             |             0.6386 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    16 |             16 |       31.7215 |             |             0.6841 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    17 |             17 |       34.9543 |             |             0.7295 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    18 |             18 |       38.1871 |             |              0.775 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    19 |             19 |       41.4199 |             |             0.8205 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    20 |             20 |       44.6527 |             |             0.8659 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    21 |             21 |       47.8855 |             |             0.9114 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    22 |             22 |       51.1183 |             |             0.9568 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    23 |             23 |       54.3511 |             |             1.0023 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    24 |             24 |       57.5839 |             |             1.0477 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    25 |             25 |       60.8167 |             |             1.0932 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    26 |             26 |       64.0495 |             |             1.1387 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    27 |             27 |       67.2822 |             |             1.1841 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    28 |             28 |        70.515 |             |             1.2296 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    29 |             29 |       73.7478 |             |              1.275 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    30 |             30 |       76.9806 |             |             1.3205 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    31 |             31 |       80.2134 |             |             1.3659 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    32 |             32 |       83.4462 |             |             1.4114 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    33 |             33 |        86.679 |             |             1.4568 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    34 |             34 |       89.9118 |             |             1.5023 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    35 |             35 |       93.1446 |             |             1.5477 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    36 |             36 |       96.3774 |             |             1.5932 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    37 |             37 |       99.6102 |             |             1.6386 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    38 |             38 |       102.843 |             |             1.6841 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    39 |             39 |       106.076 |             |             1.7295 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    40 |             40 |       109.309 |             |              1.775 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    41 |             41 |       112.541 |             |             1.8204 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    42 |             42 |       115.774 |             |             1.8659 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    43 |             43 |       119.007 |             |             1.9113 |
+     | 43 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                    44 |             44 |        122.24 |             |             1.9568 |
+     | 44 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     1 |             45 |      -16.7704 |             |             2.0023 |
+     | 45 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     2 |             46 |      -13.5377 |             |             2.0477 |
+     | 46 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     3 |             47 |      -10.3049 |             |             2.0932 |
+     | 47 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     4 |             48 |      -7.07206 |             |             2.1386 |
+     | 48 | dicom/sub-human/ses-01vol6tests/s745 |      264 |           10 |                  44 |                     5 |             49 |      -3.83926 |             |             2.1841 |
 
 **** s11
      :PROPERTIES:
      :NUM:      11
-     :ORDER:    BU
+     :ORDER:    TD
      :ACQ:      Interleaved
      :VIS_T:    1
      :VIS_B:    44
@@ -657,199 +577,271 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
 
      #+BEGIN_EXAMPLE
      :NUM:      11
-     :ORDER:    BU
+     :ORDER:    TD
      :ACQ:      Interleaved
      :VIS_T:    1
      :VIS_B:    44
      #+END_EXAMPLE
 
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |           11 |                  44 |                     1 |              1 |       64.4789 |             |             0.0023 |
- |           11 |                  44 |                     2 |              2 |       61.2566 |             |             1.0023 |
- |           11 |                  44 |                     3 |              3 |       58.0344 |             |             0.0477 |
- |           11 |                  44 |                     4 |              4 |       54.8121 |             |             1.0477 |
- |           11 |                  44 |                     5 |              5 |       51.5898 |             |             0.0932 |
- |           11 |                  44 |                     6 |              6 |       48.3675 |             |             1.0932 |
- |           11 |                  44 |                     7 |              7 |       45.1453 |             |             0.1386 |
- |           11 |                  44 |                     8 |              8 |        41.923 |             |             1.1387 |
- |           11 |                  44 |                     9 |              9 |       38.7007 |             |             0.1841 |
- |           11 |                  44 |                    10 |             10 |       35.4784 |             |             1.1841 |
- |           11 |                  44 |                    11 |             11 |       32.2562 |             |             0.2295 |
- |           11 |                  44 |                    12 |             12 |       29.0339 |             |             1.2296 |
- |           11 |                  44 |                    13 |             13 |       25.8116 |             |              0.275 |
- |           11 |                  44 |                    14 |             14 |       22.5893 |             |              1.275 |
- |           11 |                  44 |                    15 |             15 |       19.3671 |             |             0.3204 |
- |           11 |                  44 |                    16 |             16 |       16.1448 |             |             1.3205 |
- |           11 |                  44 |                    17 |             17 |       12.9225 |             |             0.3659 |
- |           11 |                  44 |                    18 |             18 |       9.70024 |             |             1.3659 |
- |           11 |                  44 |                    19 |             19 |       6.47797 |             |             0.4114 |
- |           11 |                  44 |                    20 |             20 |       3.25569 |             |             1.4114 |
- |           11 |                  44 |                    21 |             21 |     0.0334157 |             |             0.4568 |
- |           11 |                  44 |                    22 |             22 |      -3.18886 |             |             1.4568 |
- |           11 |                  44 |                    23 |             23 |      -6.41113 |             |             0.5023 |
- |           11 |                  44 |                    24 |             24 |      -9.63341 |             |             1.5023 |
- |           11 |                  44 |                    25 |             25 |      -12.8557 |             |             0.5477 |
- |           11 |                  44 |                    26 |             26 |       -16.078 |             |             1.5477 |
- |           11 |                  44 |                    27 |             27 |      -19.3002 |             |             0.5932 |
- |           11 |                  44 |                    28 |             28 |      -22.5225 |             |             1.5932 |
- |           11 |                  44 |                    29 |             29 |      -25.7448 |             |             0.6386 |
- |           11 |                  44 |                    30 |             30 |      -28.9671 |             |             1.6386 |
- |           11 |                  44 |                    31 |             31 |      -32.1893 |             |             0.6841 |
- |           11 |                  44 |                    32 |             32 |      -35.4116 |             |             1.6841 |
- |           11 |                  44 |                    33 |             33 |      -38.6339 |             |             0.7295 |
- |           11 |                  44 |                    34 |             34 |      -41.8562 |             |             1.7295 |
- |           11 |                  44 |                    35 |             35 |      -45.0784 |             |              0.775 |
- |           11 |                  44 |                    36 |             36 |      -48.3007 |             |              1.775 |
- |           11 |                  44 |                    37 |             37 |       -51.523 |             |             0.8205 |
- |           11 |                  44 |                    38 |             38 |      -54.7453 |             |             1.8204 |
- |           11 |                  44 |                    39 |             39 |      -57.9675 |             |             0.8659 |
- |           11 |                  44 |                    40 |             40 |      -61.1898 |             |             1.8659 |
- |           11 |                  44 |                    41 |             41 |      -64.4121 |             |             0.9114 |
- |           11 |                  44 |                    42 |             42 |      -67.6344 |             |             1.9113 |
- |           11 |                  44 |                    43 |             43 |      -70.8566 |             |             0.9568 |
- |           11 |                  44 |                    44 |             44 |      -74.0789 |             |             1.9568 |
- |           11 |                  44 |                     1 |             45 |       64.4789 |             |             2.0023 |
- |           11 |                  44 |                     2 |             46 |       61.2566 |             |             3.0023 |
- |           11 |                  44 |                     3 |             47 |       58.0344 |             |             2.0477 |
- |           11 |                  44 |                     4 |             48 |       54.8121 |             |             3.0477 |
-
-**** s12
-     :PROPERTIES:
-     :NUM:      12
-     :ORDER:    TD
-     :ACQ:      Interleaved
-     :VIS_T:    44
-     :VIS_B:    1
-     :END:
-
-     #+BEGIN_EXAMPLE
-     :NUM:      12
-     :ORDER:    TD
-     :ACQ:      Interleaved
-     :VIS_T:    44
-     :VIS_B:    1
-     #+END_EXAMPLE
-
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |           12 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
- |           12 |                  44 |                     2 |              2 |       -71.409 |             |                  0 |
- |           12 |                  44 |                     3 |              3 |      -68.1868 |             |                  0 |
- |           12 |                  44 |                     4 |              4 |      -64.9645 |             |                  0 |
- |           12 |                  44 |                     5 |              5 |      -61.7422 |             |                  0 |
- |           12 |                  44 |                     6 |              6 |      -58.5199 |             |                  0 |
- |           12 |                  44 |                     7 |              7 |      -55.2977 |             |                  0 |
- |           12 |                  44 |                     8 |              8 |      -52.0754 |             |                  0 |
- |           12 |                  44 |                     9 |              9 |      -48.8531 |             |             0.1841 |
- |           12 |                  44 |                    10 |             10 |      -45.6308 |             |             1.1841 |
- |           12 |                  44 |                    11 |             11 |      -42.4086 |             |             0.2295 |
- |           12 |                  44 |                    12 |             12 |      -39.1863 |             |             1.2296 |
- |           12 |                  44 |                    13 |             13 |       -35.964 |             |              0.275 |
- |           12 |                  44 |                    14 |             14 |      -32.7417 |             |              1.275 |
- |           12 |                  44 |                    15 |             15 |      -29.5195 |             |             0.3204 |
- |           12 |                  44 |                    16 |             16 |      -26.2972 |             |             1.3205 |
- |           12 |                  44 |                    17 |             17 |      -23.0749 |             |             0.3659 |
- |           12 |                  44 |                    18 |             18 |      -19.8527 |             |             1.3659 |
- |           12 |                  44 |                    19 |             19 |      -16.6304 |             |             0.4114 |
- |           12 |                  44 |                    20 |             20 |      -13.4081 |             |             1.4114 |
- |           12 |                  44 |                    21 |             21 |      -10.1858 |             |             0.4568 |
- |           12 |                  44 |                    22 |             22 |      -6.96356 |             |             1.4568 |
- |           12 |                  44 |                    23 |             23 |      -3.74129 |             |             0.5023 |
- |           12 |                  44 |                    24 |             24 |     -0.519012 |             |             1.5023 |
- |           12 |                  44 |                    25 |             25 |       2.70326 |             |             0.5477 |
- |           12 |                  44 |                    26 |             26 |       5.92554 |             |             1.5477 |
- |           12 |                  44 |                    27 |             27 |       9.14781 |             |             0.5932 |
- |           12 |                  44 |                    28 |             28 |       12.3701 |             |             1.5932 |
- |           12 |                  44 |                    29 |             29 |       15.5924 |             |             0.6386 |
- |           12 |                  44 |                    30 |             30 |       18.8146 |             |             1.6386 |
- |           12 |                  44 |                    31 |             31 |       22.0369 |             |             0.6841 |
- |           12 |                  44 |                    32 |             32 |       25.2592 |             |             1.6841 |
- |           12 |                  44 |                    33 |             33 |       28.4814 |             |             0.7295 |
- |           12 |                  44 |                    34 |             34 |       31.7037 |             |             1.7295 |
- |           12 |                  44 |                    35 |             35 |        34.926 |             |              0.775 |
- |           12 |                  44 |                    36 |             36 |       38.1483 |             |              1.775 |
- |           12 |                  44 |                    37 |             37 |       41.3705 |             |             0.8205 |
- |           12 |                  44 |                    38 |             38 |       44.5928 |             |             1.8204 |
- |           12 |                  44 |                    39 |             39 |       47.8151 |             |             0.8659 |
- |           12 |                  44 |                    40 |             40 |       51.0374 |             |             1.8659 |
- |           12 |                  44 |                    41 |             41 |       54.2596 |             |             0.9114 |
- |           12 |                  44 |                    42 |             42 |       57.4819 |             |             1.9113 |
- |           12 |                  44 |                    43 |             43 |       60.7042 |             |             0.9568 |
- |           12 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
- |           12 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
- |           12 |                  44 |                     2 |             46 |       -71.409 |             |             3.0023 |
- |           12 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0477 |
- |           12 |                  44 |                     4 |             48 |      -64.9645 |             |             3.0477 |
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     | 43 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     1 |              1 |       118.463 |             |             0.0023 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     2 |              2 |        115.23 |             |                  0 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     3 |              3 |       111.997 |             |                  0 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     4 |              4 |       108.763 |             |                  0 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     5 |              5 |        105.53 |             |                  0 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     6 |              6 |       102.297 |             |                  0 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     7 |              7 |       99.0637 |             |             0.1386 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     8 |              8 |       95.8305 |             |             1.1387 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     9 |              9 |       92.5973 |             |             0.1841 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    10 |             10 |       89.3641 |             |             1.1841 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    11 |             11 |       86.1309 |             |             0.2295 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    12 |             12 |       82.8977 |             |             1.2296 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    13 |             13 |       79.6645 |             |              0.275 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    14 |             14 |       76.4313 |             |              1.275 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    15 |             15 |       73.1981 |             |             0.3204 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    16 |             16 |       69.9649 |             |             1.3205 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    17 |             17 |       66.7317 |             |             0.3659 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    18 |             18 |       63.4985 |             |             1.3659 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    19 |             19 |       60.2653 |             |             0.4114 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    20 |             20 |       57.0321 |             |             1.4114 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    21 |             21 |       53.7989 |             |             0.4568 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    22 |             22 |       50.5657 |             |             1.4568 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    23 |             23 |       47.3325 |             |             0.5023 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    24 |             24 |       44.0993 |             |             1.5023 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    25 |             25 |       40.8661 |             |             0.5477 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    26 |             26 |       37.6329 |             |             1.5477 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    27 |             27 |       34.3997 |             |             0.5932 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    28 |             28 |       31.1665 |             |             1.5932 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    29 |             29 |       27.9333 |             |             0.6386 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    30 |             30 |       24.7001 |             |             1.6386 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    31 |             31 |       21.4669 |             |             0.6841 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    32 |             32 |       18.2337 |             |             1.6841 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    33 |             33 |       15.0005 |             |             0.7295 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    34 |             34 |       11.7673 |             |             1.7295 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    35 |             35 |       8.53412 |             |              0.775 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    36 |             36 |       5.30092 |             |              1.775 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    37 |             37 |       2.06772 |             |             0.8205 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    38 |             38 |      -1.16548 |             |             1.8204 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    39 |             39 |      -4.39868 |             |             0.8659 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    40 |             40 |      -7.63189 |             |             1.8659 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    41 |             41 |      -10.8651 |             |             0.9114 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    42 |             42 |      -14.0983 |             |             1.9113 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    43 |             43 |      -17.3315 |             |             0.9568 |
+     |  0 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                    44 |             44 |      -20.5647 |             |             1.9568 |
+     | 87 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     1 |             45 |       118.463 |             |             2.0023 |
+     | 86 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     2 |             46 |        115.23 |             |             3.0023 |
+     | 85 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     3 |             47 |       111.997 |             |             2.0477 |
+     | 84 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     4 |             48 |       108.763 |             |             3.0477 |
+     | 83 | dicom/sub-human/ses-01vol6tests/s746 |      264 |           11 |                  44 |                     5 |             49 |        105.53 |             |             2.0932 |
 
 **** s13
      :PROPERTIES:
      :NUM:      13
      :ORDER:    BU
      :ACQ:      Interleaved
-     :VIS_T:    44
-     :VIS_B:    1
+     :VIS_T:    1
+     :VIS_B:    44
      :END:
 
      #+BEGIN_EXAMPLE
      :NUM:      13
      :ORDER:    BU
      :ACQ:      Interleaved
+     :VIS_T:    1
+     :VIS_B:    44
+     #+END_EXAMPLE
+
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     | 43 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     1 |              1 |       118.963 |             |             0.0023 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     2 |              2 |        115.73 |             |             1.0023 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     3 |              3 |       112.497 |             |             0.0477 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     4 |              4 |       109.263 |             |             1.0477 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     5 |              5 |        106.03 |             |             0.0932 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     6 |              6 |       102.797 |             |             1.0932 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     7 |              7 |       99.5637 |             |             0.1386 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     8 |              8 |       96.3305 |             |             1.1387 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     9 |              9 |       93.0973 |             |             0.1841 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    10 |             10 |       89.8641 |             |             1.1841 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    11 |             11 |       86.6309 |             |             0.2295 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    12 |             12 |       83.3977 |             |             1.2296 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    13 |             13 |       80.1645 |             |              0.275 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    14 |             14 |       76.9313 |             |              1.275 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    15 |             15 |       73.6981 |             |             0.3204 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    16 |             16 |       70.4649 |             |             1.3205 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    17 |             17 |       67.2317 |             |             0.3659 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    18 |             18 |       63.9985 |             |             1.3659 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    19 |             19 |       60.7653 |             |             0.4114 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    20 |             20 |       57.5321 |             |             1.4114 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    21 |             21 |       54.2989 |             |             0.4568 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    22 |             22 |       51.0657 |             |             1.4568 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    23 |             23 |       47.8325 |             |             0.5023 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    24 |             24 |       44.5993 |             |             1.5023 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    25 |             25 |       41.3661 |             |             0.5477 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    26 |             26 |       38.1329 |             |             1.5477 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    27 |             27 |       34.8997 |             |             0.5932 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    28 |             28 |       31.6665 |             |             1.5932 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    29 |             29 |       28.4333 |             |             0.6386 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    30 |             30 |       25.2001 |             |             1.6386 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    31 |             31 |       21.9669 |             |             0.6841 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    32 |             32 |       18.7337 |             |             1.6841 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    33 |             33 |       15.5005 |             |             0.7295 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    34 |             34 |       12.2673 |             |             1.7295 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    35 |             35 |       9.03412 |             |              0.775 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    36 |             36 |       5.80092 |             |              1.775 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    37 |             37 |       2.56772 |             |             0.8205 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    38 |             38 |     -0.665483 |             |             1.8204 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    39 |             39 |      -3.89868 |             |             0.8659 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    40 |             40 |      -7.13189 |             |             1.8659 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    41 |             41 |      -10.3651 |             |             0.9114 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    42 |             42 |      -13.5983 |             |             1.9113 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    43 |             43 |      -16.8315 |             |             0.9568 |
+     |  0 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                    44 |             44 |      -20.0647 |             |             1.9568 |
+     | 87 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     1 |             45 |       118.963 |             |             2.0023 |
+     | 86 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     2 |             46 |        115.73 |             |             3.0023 |
+     | 85 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     3 |             47 |       112.497 |             |             2.0477 |
+     | 84 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     4 |             48 |       109.263 |             |             3.0477 |
+     | 83 | dicom/sub-human/ses-01vol6tests/s747 |      264 |           13 |                  44 |                     5 |             49 |        106.03 |             |             2.0932 |
+
+**** s14
+     :PROPERTIES:
+     :NUM:      14
+     :ORDER:    TD
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      14
+     :ORDER:    TD
+     :ACQ:      Interleaved
      :VIS_T:    44
      :VIS_B:    1
      #+END_EXAMPLE
 
- | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
- |--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
- |           13 |                  44 |                     1 |              1 |      -74.6313 |             |             0.0023 |
- |           13 |                  44 |                     2 |              2 |       -71.409 |             |             1.0023 |
- |           13 |                  44 |                     3 |              3 |      -68.1868 |             |             0.0477 |
- |           13 |                  44 |                     4 |              4 |      -64.9645 |             |             1.0477 |
- |           13 |                  44 |                     5 |              5 |      -61.7422 |             |             0.0932 |
- |           13 |                  44 |                     6 |              6 |      -58.5199 |             |             1.0932 |
- |           13 |                  44 |                     7 |              7 |      -55.2977 |             |             0.1386 |
- |           13 |                  44 |                     8 |              8 |      -52.0754 |             |             1.1387 |
- |           13 |                  44 |                     9 |              9 |      -48.8531 |             |             0.1841 |
- |           13 |                  44 |                    10 |             10 |      -45.6308 |             |             1.1841 |
- |           13 |                  44 |                    11 |             11 |      -42.4086 |             |             0.2295 |
- |           13 |                  44 |                    12 |             12 |      -39.1863 |             |             1.2296 |
- |           13 |                  44 |                    13 |             13 |       -35.964 |             |              0.275 |
- |           13 |                  44 |                    14 |             14 |      -32.7417 |             |              1.275 |
- |           13 |                  44 |                    15 |             15 |      -29.5195 |             |             0.3204 |
- |           13 |                  44 |                    16 |             16 |      -26.2972 |             |             1.3205 |
- |           13 |                  44 |                    17 |             17 |      -23.0749 |             |             0.3659 |
- |           13 |                  44 |                    18 |             18 |      -19.8527 |             |             1.3659 |
- |           13 |                  44 |                    19 |             19 |      -16.6304 |             |             0.4114 |
- |           13 |                  44 |                    20 |             20 |      -13.4081 |             |             1.4114 |
- |           13 |                  44 |                    21 |             21 |      -10.1858 |             |             0.4568 |
- |           13 |                  44 |                    22 |             22 |      -6.96356 |             |             1.4568 |
- |           13 |                  44 |                    23 |             23 |      -3.74129 |             |             0.5023 |
- |           13 |                  44 |                    24 |             24 |     -0.519012 |             |             1.5023 |
- |           13 |                  44 |                    25 |             25 |       2.70326 |             |             0.5477 |
- |           13 |                  44 |                    26 |             26 |       5.92554 |             |             1.5477 |
- |           13 |                  44 |                    27 |             27 |       9.14781 |             |             0.5932 |
- |           13 |                  44 |                    28 |             28 |       12.3701 |             |             1.5932 |
- |           13 |                  44 |                    29 |             29 |       15.5924 |             |             0.6386 |
- |           13 |                  44 |                    30 |             30 |       18.8146 |             |             1.6386 |
- |           13 |                  44 |                    31 |             31 |       22.0369 |             |             0.6841 |
- |           13 |                  44 |                    32 |             32 |       25.2592 |             |             1.6841 |
- |           13 |                  44 |                    33 |             33 |       28.4814 |             |             0.7295 |
- |           13 |                  44 |                    34 |             34 |       31.7037 |             |             1.7295 |
- |           13 |                  44 |                    35 |             35 |        34.926 |             |              0.775 |
- |           13 |                  44 |                    36 |             36 |       38.1483 |             |              1.775 |
- |           13 |                  44 |                    37 |             37 |       41.3705 |             |             0.8205 |
- |           13 |                  44 |                    38 |             38 |       44.5928 |             |             1.8204 |
- |           13 |                  44 |                    39 |             39 |       47.8151 |             |             0.8659 |
- |           13 |                  44 |                    40 |             40 |       51.0374 |             |             1.8659 |
- |           13 |                  44 |                    41 |             41 |       54.2596 |             |             0.9114 |
- |           13 |                  44 |                    42 |             42 |       57.4819 |             |             1.9113 |
- |           13 |                  44 |                    43 |             43 |       60.7042 |             |             0.9568 |
- |           13 |                  44 |                    44 |             44 |       63.9265 |             |             1.9568 |
- |           13 |                  44 |                     1 |             45 |      -74.6313 |             |             2.0023 |
- |           13 |                  44 |                     2 |             46 |       -71.409 |             |             3.0023 |
- |           13 |                  44 |                     3 |             47 |      -68.1868 |             |             2.0477 |
- |           13 |                  44 |                     4 |             48 |      -64.9645 |             |             3.0477 |
- |              |                     |                       |                |               |             |                    |
+
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     |  0 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     1 |              1 |      -16.7704 |             |             0.0023 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     2 |              2 |      -13.5377 |             |             1.0023 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     3 |              3 |      -10.3049 |             |             0.0477 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     4 |              4 |      -7.07206 |             |             1.0477 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     5 |              5 |      -3.83926 |             |             0.0932 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     6 |              6 |     -0.606466 |             |             1.0932 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     7 |              7 |       2.62633 |             |             0.1386 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     8 |              8 |       5.85913 |             |             1.1387 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     9 |              9 |       9.09192 |             |             0.1841 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    10 |             10 |       12.3247 |             |             1.1841 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    11 |             11 |       15.5575 |             |             0.2295 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    12 |             12 |       18.7903 |             |             1.2296 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    13 |             13 |       22.0231 |             |              0.275 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    14 |             14 |       25.2559 |             |              1.275 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    15 |             15 |       28.4887 |             |             0.3204 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    16 |             16 |       31.7215 |             |             1.3205 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    17 |             17 |       34.9543 |             |             0.3659 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    18 |             18 |       38.1871 |             |             1.3659 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    19 |             19 |       41.4199 |             |             0.4114 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    20 |             20 |       44.6527 |             |             1.4114 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    21 |             21 |       47.8855 |             |             0.4568 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    22 |             22 |       51.1183 |             |             1.4568 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    23 |             23 |       54.3511 |             |             0.5023 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    24 |             24 |       57.5839 |             |             1.5023 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    25 |             25 |       60.8167 |             |             0.5477 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    26 |             26 |       64.0495 |             |             1.5477 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    27 |             27 |       67.2822 |             |             0.5932 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    28 |             28 |        70.515 |             |             1.5932 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    29 |             29 |       73.7478 |             |             0.6386 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    30 |             30 |       76.9806 |             |             1.6386 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    31 |             31 |       80.2134 |             |             0.6841 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    32 |             32 |       83.4462 |             |             1.6841 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    33 |             33 |        86.679 |             |             0.7295 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    34 |             34 |       89.9118 |             |             1.7295 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    35 |             35 |       93.1446 |             |              0.775 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    36 |             36 |       96.3774 |             |              1.775 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    37 |             37 |       99.6102 |             |             0.8205 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    38 |             38 |       102.843 |             |             1.8204 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    39 |             39 |       106.076 |             |             0.8659 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    40 |             40 |       109.309 |             |             1.8659 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    41 |             41 |       112.541 |             |             0.9114 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    42 |             42 |       115.774 |             |             1.9113 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    43 |             43 |       119.007 |             |             0.9568 |
+     | 43 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                    44 |             44 |        122.24 |             |             1.9568 |
+     | 44 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     1 |             45 |      -16.7704 |             |             2.0023 |
+     | 45 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     2 |             46 |      -13.5377 |             |             3.0023 |
+     | 46 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     3 |             47 |      -10.3049 |             |             2.0477 |
+     | 47 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     4 |             48 |      -7.07206 |             |             3.0477 |
+     | 48 | dicom/sub-human/ses-01vol6tests/s748 |      264 |           14 |                  44 |                     5 |             49 |      -3.83926 |             |             2.0932 |
+
+**** s15
+     :PROPERTIES:
+     :NUM:      15
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     :END:
+
+     #+BEGIN_EXAMPLE
+     :NUM:      15
+     :ORDER:    BU
+     :ACQ:      Interleaved
+     :VIS_T:    44
+     :VIS_B:    1
+     #+END_EXAMPLE
+
+     |    | Path                                 | NumFiles | SeriesNumber | ImagesInAcquisition | InStackPositionNumber | InstanceNumber | SliceLocation | TriggerTime | FloatSlopRTIATimer |
+     |----+--------------------------------------+----------+--------------+---------------------+-----------------------+----------------+---------------+-------------+--------------------|
+     |  0 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     1 |              1 |      -16.7704 |             |             0.0023 |
+     |  1 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     2 |              2 |      -13.5377 |             |                  0 |
+     |  2 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     3 |              3 |      -10.3049 |             |                  0 |
+     |  3 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     4 |              4 |      -7.07206 |             |                  0 |
+     |  4 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     5 |              5 |      -3.83926 |             |                  0 |
+     |  5 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     6 |              6 |     -0.606466 |             |                  0 |
+     |  6 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     7 |              7 |       2.62633 |             |                  0 |
+     |  7 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     8 |              8 |       5.85913 |             |                  0 |
+     |  8 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     9 |              9 |       9.09192 |             |             0.1841 |
+     |  9 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    10 |             10 |       12.3247 |             |                  0 |
+     | 10 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    11 |             11 |       15.5575 |             |                  0 |
+     | 11 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    12 |             12 |       18.7903 |             |                  0 |
+     | 12 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    13 |             13 |       22.0231 |             |                  0 |
+     | 13 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    14 |             14 |       25.2559 |             |                  0 |
+     | 14 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    15 |             15 |       28.4887 |             |                  0 |
+     | 15 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    16 |             16 |       31.7215 |             |                  0 |
+     | 16 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    17 |             17 |       34.9543 |             |             0.3659 |
+     | 17 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    18 |             18 |       38.1871 |             |                  0 |
+     | 18 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    19 |             19 |       41.4199 |             |             0.4114 |
+     | 19 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    20 |             20 |       44.6527 |             |             1.4114 |
+     | 20 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    21 |             21 |       47.8855 |             |             0.4568 |
+     | 21 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    22 |             22 |       51.1183 |             |             1.4568 |
+     | 22 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    23 |             23 |       54.3511 |             |                  0 |
+     | 23 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    24 |             24 |       57.5839 |             |             1.5023 |
+     | 24 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    25 |             25 |       60.8167 |             |             0.5477 |
+     | 25 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    26 |             26 |       64.0495 |             |             1.5477 |
+     | 26 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    27 |             27 |       67.2822 |             |             0.5932 |
+     | 27 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    28 |             28 |        70.515 |             |             1.5932 |
+     | 28 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    29 |             29 |       73.7478 |             |             0.6386 |
+     | 29 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    30 |             30 |       76.9806 |             |             1.6386 |
+     | 30 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    31 |             31 |       80.2134 |             |             0.6841 |
+     | 31 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    32 |             32 |       83.4462 |             |             1.6841 |
+     | 32 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    33 |             33 |        86.679 |             |             0.7295 |
+     | 33 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    34 |             34 |       89.9118 |             |             1.7295 |
+     | 34 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    35 |             35 |       93.1446 |             |              0.775 |
+     | 35 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    36 |             36 |       96.3774 |             |              1.775 |
+     | 36 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    37 |             37 |       99.6102 |             |             0.8205 |
+     | 37 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    38 |             38 |       102.843 |             |             1.8204 |
+     | 38 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    39 |             39 |       106.076 |             |             0.8659 |
+     | 39 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    40 |             40 |       109.309 |             |             1.8659 |
+     | 40 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    41 |             41 |       112.541 |             |             0.9114 |
+     | 41 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    42 |             42 |       115.774 |             |             1.9113 |
+     | 42 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    43 |             43 |       119.007 |             |             0.9568 |
+     | 43 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                    44 |             44 |        122.24 |             |             1.9568 |
+     | 44 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     1 |             45 |      -16.7704 |             |             2.0023 |
+     | 45 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     2 |             46 |      -13.5377 |             |             3.0023 |
+     | 46 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     3 |             47 |      -10.3049 |             |             2.0477 |
+     | 47 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     4 |             48 |      -7.07206 |             |             3.0477 |
+     | 48 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     5 |             49 |      -3.83926 |             |             2.0932 |
 
 *** Links and notes
 
@@ -861,7 +853,7 @@ mv -v ./s7*org ./s7*csv ./org-log-arch/
     - https://neurostars.org/t/getting-missing-ge-information-required-by-bids-for-common-preprocessing/1357
     - https://github.com/ScottHaileRobertson/GE-MRI-Tools/blob/master/GePackage/%2BGE/%2BPfile/%2BHeader/%2BRDB15/imagedb.h
 
-    | Attribute Name     | Tag         | Type | Notes                                       |
-    |--------------------+-------------+------+---------------------------------------------|
-    | =Trigger Time=       | (0018,1060) | 2C   | Always Sent. (even if value is zero length) |
-    | =FloatSlopRTIATimer= | (0021,105E) |      | =RTIA_timer=                                  |
+    | Attribute Name     | Tag         | Type | Notes                                       | Comments |
+    |--------------------+-------------+------+---------------------------------------------+----------|
+    | =Trigger Time=       | (0018,1060) | 2C   | Always Sent. (even if value is zero length) | WTF?     |
+    | =FloatSlopRTIATimer= | (0021,105E) |      | =RTIA_timer=                                  |          |
