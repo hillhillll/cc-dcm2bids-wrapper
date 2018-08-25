@@ -175,6 +175,10 @@ cc-dcm2bids-wrapper.py -lr
 * DONE Examples
 ** DONE Functional sequence inspection (=GE MR750=)
 *** Session overview
+**** Raw data
+
+     - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/dicom---sub-human---6vols.tar.gz][dicom---sub-human---6vols.tar.gz]]
+
 **** Code
 
      #+BEGIN_SRC sh :eval query
@@ -240,6 +244,19 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
 *** fMRI geometry
 **** Overview
 
+
+     | SeqNum | Order | Acquisition | Slice num at head top | Slice num at head bottom |
+     |--------+-------+-------------+-----------------------+--------------------------|
+     |      7 | TD    | Sequential  |                     1 |                       44 |
+     |      8 | BU    | Sequential  |                     1 |                       44 |
+     |      9 | TD    | Sequential  |                    44 |                        1 |
+     |     10 | BU    | Sequential  |                    44 |                        1 |
+     |     11 | TD    | Interleaved |                     1 |                       44 |
+     |     13 | BU    | Interleaved |                     1 |                       44 |
+     |     14 | TD    | Interleaved |                    44 |                        1 |
+     |     15 | BU    | Interleaved |                    44 |                        1 |
+
+
      #+BEGIN: columnview :hlines 1 :id "dc72ab10-b551-4438-9ed8-85670fcabbaa" :indent t
      | Code                   | SeqNum | Order | Acquisition | Slice num at head top | Slice num at head bottom |
      |------------------------+--------+-------+-------------+-----------------------+--------------------------|
@@ -253,6 +270,20 @@ cc-dcm2bids-wrapper.py -pes -t -kim -l -L ses-log.org
      | \_      s14            |     14 | TD    | Interleaved |                    44 |                        1 |
      | \_      s15            |     15 | BU    | Interleaved |                    44 |                        1 |
      #+END:
+
+     #+BEGIN_EXAMPLE
+
+        ---------------------- 1                  ---------------------- 44
+        ----------------------                    ----------------------
+        ----------------------                    ----------------------
+                  .                                         .
+                  .                   OR                    .
+                  .                                         .
+        ----------------------                    ----------------------
+        ----------------------                    ----------------------
+     44 ----------------------                  1 ----------------------
+
+     #+END_EXAMPLE
 
 **** Script
 
