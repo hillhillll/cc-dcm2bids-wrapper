@@ -174,5 +174,4 @@ cc-dcm2bids-wrapper.py -lr
 
 * DONE DICOM QA Examples
 
-  See
   - [[./dicom-qa-examples]]
