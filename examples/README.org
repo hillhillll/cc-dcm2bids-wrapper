@@ -29,6 +29,7 @@
 *** Raw DICOM data
 
    - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/ge-mr750-slice-timing/data/dicom---sub-human---6vols.tar.gz][dicom---sub-human---6vols.tar.gz]]
+   - =md5sum: 8988299cd7a74b8f524a1f9c24e1bae6=
 
 ** Phase Encoding
 *** Summary
@@ -45,3 +46,4 @@
 *** Raw DICOM data
 
    - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/ge-mr750-pepolarity/data/dicom---sub-human---pepolarity.tar.gz][dicom---sub-human---pepolarity.tar.gz]]
+   - =md5sum: a4abc98ac2be2f6a18653774d70ca742=
