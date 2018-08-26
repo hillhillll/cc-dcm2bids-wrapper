@@ -1,4 +1,4 @@
-#+TITLE: GE MR750 =pepolarity=
+#+TITLE: GE MR750 =pepolar=
 
 
 * TODO Session overview
