@@ -2,6 +2,7 @@
 
 
 
-* GE MR750 slice timing
+* See
 
-  [[./ge-mr750-slice-timing]]
+  - [[./ge-mr750-slice-timing]]
+  - [[./ge-mr750-pepolarity]]
