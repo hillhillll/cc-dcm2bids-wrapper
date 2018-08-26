@@ -2,3 +2,11 @@
 
 
 * TODO Description
+* TODO Images
+
+  - [[./img/s07-pepolarity.jpg]]
+  - [[./img/s06-pepolarity.jpg]]
+  - [[./img/s05-pepolarity.jpg]]
+  - [[./img/s04-pepolarity.jpg]]
+  - [[./img/pepolarity-loc.jpg]]
+  - [[./img/pepolar0vs1.png]]
