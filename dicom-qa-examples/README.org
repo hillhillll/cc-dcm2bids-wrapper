@@ -12,7 +12,7 @@
 
 ** Slice Timing
 
-   Summary
+   Summary:
    - eight basic variants of fMRI acquisition planning (slice order × 2, acquisition regime × 2, planning cuboid geometry × 2)
    - six volumes per sequence, each with head movement around volume(s) =4=, =5= and =6=.
    - reconstruction matrix: =64×64=
@@ -20,24 +20,24 @@
    - =SliceThickness = 3 mm=
    - =SpacingBetweenSlices = 3.3=
 
-   Detailed description
+   Detailed description:
    - [[./ge-mr750-slice-timing]]
 
-   Raw DICOM data
+   Raw DICOM data:
    - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/dicom-qa-examples/ge-mr750-slice-timing/data/dicom---sub-human---6vols.tar.gz][dicom---sub-human---6vols.tar.gz]]
    - =md5sum: 8988299cd7a74b8f524a1f9c24e1bae6=
 
 ** Phase Encoding
 
-   Summary
+   Summary:
     - four acquisitions with
       - standard (=pepolar = 0=) and
       - flipped (=pepolar = 1=)
       /phase encoding polarity/ (=L➜R=, =R➜L=, =A➜P= and =P➜A=)
 
-   Detailed description
+   Detailed description:
    - [[./ge-mr750-pepolarity]]
 
-   Raw DICOM data
-   - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/dicom-qa-examples/ge-mr750-pepolarity/data/dicom---sub-human---pepolarity.tar.gz%0A][dicom---sub-human---pepolarity.tar.gz]]
+   Raw DICOM data:
+   - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/dicom-qa-examples/ge-mr750-pepolarity/data/dicom---sub-human---pepolarity.tar.gz][dicom---sub-human---pepolarity.tar.gz]]
    - =md5sum: a4abc98ac2be2f6a18653774d70ca742=
