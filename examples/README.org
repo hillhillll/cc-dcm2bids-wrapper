@@ -9,6 +9,9 @@
   - /slice timing/ validation and
   - /phase encoding/ validation.
 
+  Data acquired in the *Interdisciplinary Center for Modern
+  Technologies* of the *Nicolaus Copernicus University in Toruń*.
+
 ** Slice Timing
 *** Summary
 
