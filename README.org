@@ -7,7 +7,7 @@
 
 * TODO TODOs
 
-  - [ ] add *slice timing estimation* functionality based on ~TR~ and slice position/time
+  - [ ] +add *slice timing estimation* functionality based on ~TR~ and slice position/time+
   - [X] use the first 256 (or actually ~44) slices only (do not load whole series data)
     - [X] make example (dummy) EPI acquisitions for:
       - [X] sequential top/down (~sTD~)
@@ -18,13 +18,14 @@
   - [X] add =-v=, =-vv=, =-vvv= for increased verbosity instead of =-m= for messages (but keep the debug mode =-d=) possibly combine =-vvv= and =-d= (or provide =-dd= =-ddd=)
   - [ ] re-think the /"Origin"/ (as it was in the previous version resulting in =./= being added at sthe beginning of each of relative paths)
   - [ ] add files counter (for logging and printing)
-  - [ ] add checking if =*= is present at least (or exactly) once in each pattern (for patient, exam, series, files)
-  - [ ] consider checking if at any level at least one directoty/file exists (otherwise raise an error)
+  - [ ] Assertions
+    - [ ] add checking if =*= is present at least (or exactly) once in each pattern (for patient, exam, series, files)
+    - [ ] consider checking if at any level at least one directoty/file exists (otherwise raise an error)
 
 * DOIN Info
 
   Convert DICOM to NIFTI (BIDS). With or w/o defacing.
-  Provide basic info based on DICOM data.
+  Extract basic info from DICOM data and export it to ~org-mode~ file or ~CSV~ file.
 
   By default DICOM data is expected to reside in directories structured like:
   - =./dicom/sub-*/ses-*/s*/= (this behavior can me modified)
