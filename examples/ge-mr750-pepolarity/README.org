@@ -2,7 +2,12 @@
 
 
 * TODO Description
-* TODO Images
+* TODO Session overview
+** Raw data
+
+   - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/ge-mr750-pepolarity/data/dicom---sub-human---pepolarity.tar.gz][dicom---sub-human---pepolarity.tar.gz]]
+
+* TODO Screen-shot images
 
   - [[./img/s07-pepolarity.jpg]]
   - [[./img/s06-pepolarity.jpg]]
