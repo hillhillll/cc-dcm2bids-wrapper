@@ -6,12 +6,26 @@
 * Description
 
   DICOM QA mini dataset for GE Discovery MR750 3.0T
-  - [[./ge-mr750-slice-timing]]
-    - Eight basic variants of fMRI acquisition planning (slice order × 2, acquisition regime × 2, planning cuboid geometry × 2)
-    - Six volumes per sequence, each with head movement around volume(s) =4=, =5= and =6=.
-    - Reconstruction matrix: =64×64=
-    - =44= slices.
-    - =SliceThickness = 3 mm=
-    - =SpacingBetweenSlices = 3.3=
-  - [[./ge-mr750-pepolarity]]
-    - Four acquisitions with flipped phase encoding polarity (=L➜R=, =R➜L=, =A➜P= and =P➜A=)
+
+** Slice Timing
+
+   Summary:
+   - eight basic variants of fMRI acquisition planning (slice order × 2, acquisition regime × 2, planning cuboid geometry × 2)
+   - six volumes per sequence, each with head movement around volume(s) =4=, =5= and =6=.
+   - reconstruction matrix: =64×64=
+   - =44= slices.
+   - =SliceThickness = 3 mm=
+   - =SpacingBetweenSlices = 3.3=
+
+   Links:
+   - [[./ge-mr750-slice-timing]]
+   - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/ge-mr750-slice-timing/data/dicom---sub-human---6vols.tar.gz][data]] (=tar.gz=)
+
+** Phase Encoding
+
+   Summary:
+   - four acquisitions with flipped phase encoding polarity (=L➜R=, =R➜L=, =A➜P= and =P➜A=)
+
+   Links:
+   - [[./ge-mr750-pepolarity]]
+   - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/ge-mr750-slice-timing/data/dicom---sub-human---6vols.tar.gz][data]] (=tar.gz=)
