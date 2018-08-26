@@ -4,24 +4,7 @@
 #+SETUPFILE: theme-readtheorg-local.setup
 #+OPTIONS: prop:t
 
-* TODO TODOs
-
-  - [ ] +add *slice timing estimation* functionality based on ~TR~ and slice position/time+
-  - [X] use the first 256 (or actually ~44) slices only (do not load whole series data)
-    - [X] make example (dummy) EPI acquisitions for:
-      - [X] sequential top/down (~sTD~)
-      - [X] sequential bottom/up (~sBU~)
-      - [X] interleaved top/down (~iTD~)
-      - [X] interleaved bottom-up (~iBU~)
-    - [X] test the above mentioned code against the above mentioned data
-  - [X] add =-v=, =-vv=, =-vvv= for increased verbosity instead of =-m= for messages (but keep the debug mode =-d=) possibly combine =-vvv= and =-d= (or provide =-dd= =-ddd=)
-  - [ ] re-think the /"Origin"/ (as it was in the previous version resulting in =./= being added at sthe beginning of each of relative paths)
-  - [ ] add files counter (for logging and printing)
-  - [ ] Assertions
-    - [ ] add checking if =*= is present at least (or exactly) once in each pattern (for patient, exam, series, files)
-    - [ ] consider checking if at any level at least one directoty/file exists (otherwise raise an error)
-
-* DOIN Info
+* DONE Brief info
 
   Convert DICOM to NIFTI (BIDS). With or w/o defacing.
   Extract basic info from DICOM data and export it to ~org-mode~ file or ~CSV~ file.
@@ -171,6 +154,23 @@ cc-dcm2bids-wrapper.py -pes
 cc-dcm2bids-wrapper.py -lr
 
   #+END_EXAMPLE
+
+* TODO TODOs
+
+  - [ ] +add *slice timing estimation* functionality based on ~TR~ and slice position/time+
+  - [X] use the first 256 (or actually ~44) slices only (do not load whole series data)
+    - [X] make example (dummy) EPI acquisitions for:
+      - [X] sequential top/down (~sTD~)
+      - [X] sequential bottom/up (~sBU~)
+      - [X] interleaved top/down (~iTD~)
+      - [X] interleaved bottom-up (~iBU~)
+    - [X] test the above mentioned code against the above mentioned data
+  - [X] add =-v=, =-vv=, =-vvv= for increased verbosity instead of =-m= for messages (but keep the debug mode =-d=) possibly combine =-vvv= and =-d= (or provide =-dd= =-ddd=)
+  - [ ] re-think the /"Origin"/ (as it was in the previous version resulting in =./= being added at sthe beginning of each of relative paths)
+  - [ ] add files counter (for logging and printing)
+  - [ ] Assertions
+    - [ ] add checking if =*= is present at least (or exactly) once in each pattern (for patient, exam, series, files)
+    - [ ] consider checking if at any level at least one directoty/file exists (otherwise raise an error)
 
 * DONE DICOM QA Examples
 
