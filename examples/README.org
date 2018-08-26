@@ -5,7 +5,9 @@
 
 * Description
 
-  DICOM QA mini dataset for GE Discovery MR750 3.0T
+  DICOM QA for GE Discovery MR750 3.0T contains two mini data-sets intended for:
+  - /slice timing/ validation and
+  - /phase encoding/ validation.
 
 ** Slice Timing
 *** Summary
@@ -31,7 +33,7 @@
     - four acquisitions with
       - standard (=pepolar = 0=) and
       - flipped (=pepolar = 1=)
-      phase encoding polarity (=L➜R=, =R➜L=, =A➜P= and =P➜A=)
+      /phase encoding polarity/ (=L➜R=, =R➜L=, =A➜P= and =P➜A=)
 
 ***  Detailed description
 
