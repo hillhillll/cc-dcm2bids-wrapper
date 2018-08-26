@@ -745,17 +745,3 @@ mv -v s742.csv s743.csv s744.csv s745.csv s746.csv s747.csv s748.csv s749.csv ./
     | 47 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     4 |             48 |      -7.07206 |             |             3.0477 |
     | 48 | dicom/sub-human/ses-01vol6tests/s749 |      264 |           15 |                  44 |                     5 |             49 |      -3.83926 |             |             2.0932 |
 
-** Links and notes
-
-   - https://github.com/rordenlab/dcm2niix/issues/163
-   - https://en.wikibooks.org/wiki/SPM/Slice_Timing
-   - https://drive.google.com/file/d/1ULITxqJ5SPn3OMKO1oV0daHaY4DEah4r/view
-   - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5274797/
-   - https://cni.stanford.edu/wiki/GE_Processing
-   - https://neurostars.org/t/getting-missing-ge-information-required-by-bids-for-common-preprocessing/1357
-   - https://github.com/ScottHaileRobertson/GE-MRI-Tools/blob/master/GePackage/%2BGE/%2BPfile/%2BHeader/%2BRDB15/imagedb.h
-
-   | Attribute Name     | Tag         | Type | Notes                                       | Comments |
-   |--------------------+-------------+------+---------------------------------------------+----------|
-   | =Trigger Time=       | (0018,1060) | 2C   | Always Sent. (even if value is zero length) | WTF?     |
-   | =FloatSlopRTIATimer= | (0021,105E) |      | =RTIA_timer=                                  |          |
