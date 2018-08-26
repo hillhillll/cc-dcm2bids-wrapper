@@ -2,9 +2,10 @@
 #+AUTHOR: nikadon at gmail dot com
 
 * Session overview
-** Raw data
+** Raw DICOM data
 
    - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/examples/ge-mr750-slice-timing/data/dicom---sub-human---6vols.tar.gz][dicom---sub-human---6vols.tar.gz]]
+   - =md5sum: 8988299cd7a74b8f524a1f9c24e1bae6=
 
 ** Code
 
