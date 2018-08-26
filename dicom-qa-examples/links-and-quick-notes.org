@@ -3,7 +3,11 @@
 
 * Links
 
+  - https://github.com/rordenlab/dcm2niix/issues
+  - https://github.com/rordenlab/dcm2niix/releases/tag/v1.0.20180325
   - https://github.com/rordenlab/dcm2niix/issues/163
+  - https://www.mccauslandcenter.sc.edu/crnl/tools/stc
+  - https://www.nitrc.org/plugins/mwiki/index.php/dcm2nii:MainPage#Slice_timing_correction
   - https://drive.google.com/file/d/1ULITxqJ5SPn3OMKO1oV0daHaY4DEah4r/view
   - https://neurostars.org/t/getting-missing-ge-information-required-by-bids-for-common-preprocessing/1357
   - https://neurostars.org/t/dcm2nii-problem-with-slice-timing-metadata-extraction/1922
