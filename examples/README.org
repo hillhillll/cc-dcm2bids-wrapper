@@ -14,4 +14,4 @@
     - =SliceThickness = 3 mm=
     - =SpacingBetweenSlices = 3.3=
   - [[./ge-mr750-pepolarity]]
-    - Four acquisitions with flipped phase encoding polarity (=LR=, =RL=, =AP= and =PA=)
+    - Four acquisitions with flipped phase encoding polarity (=L➜R=, =R➜L=, =A➜P= and =P➜A=)
