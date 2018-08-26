@@ -1,7 +1,6 @@
 #+TITLE: GE MR750 =pepolarity=
 
 
-* TODO Description
 * TODO Session overview
 ** Raw DICOM data
 
