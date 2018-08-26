@@ -2,7 +2,6 @@
 #+AUTHOR: nikadon at gmail dot com
 
 #+SETUPFILE: theme-readtheorg-local.setup
-
 #+OPTIONS: prop:t
 
 * TODO TODOs
@@ -173,7 +172,7 @@ cc-dcm2bids-wrapper.py -lr
 
   #+END_EXAMPLE
 
-* DONE Examples
+* DONE DICOM QA Examples
 
   See
-  - [[./examples]]
+  - [[./dicom-qa-examples]]
