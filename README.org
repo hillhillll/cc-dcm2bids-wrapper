@@ -10,7 +10,7 @@
   Extract basic info from DICOM data and export it to ~org-mode~ file or ~CSV~ file.
 
   By default DICOM data is expected to reside in directories structured like:
-  - =./dicom/sub-*/ses-*/s*/= (this behavior can me modified)
+  - =./dicom/sub-*/ses-*/s*/= (this /expectation/ can me modified)
   The directory for the output defaults to:
   - =./nifti/=
 
