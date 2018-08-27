@@ -2,12 +2,13 @@
 
 
 * TODO Session overview
-** Raw DICOM data
+** Raw =DICOM= data
 
    - [[https://raw.githubusercontent.com/nikadon/cc-dcm2bids-wrapper/master/dicom-qa-examples/ge-mr750-pepolarity/data/dicom---sub-human---pepolarity.tar.gz][dicom---sub-human---pepolarity.tar.gz]]
    - =md5sum: a4abc98ac2be2f6a18653774d70ca742=
 
 * TODO Screen-shot images
+
 
   - [[./img/s07-pepolarity.jpg]]
   - [[./img/s06-pepolarity.jpg]]
