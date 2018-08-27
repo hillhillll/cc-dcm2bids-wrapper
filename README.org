@@ -1,4 +1,4 @@
-#+TITLE: cc-dcm2bids.py
+#+TITLE: cc-dcm2bids-wrapper.py
 #+AUTHOR: nikadon at gmail dot com
 
 #+SETUPFILE: theme-readtheorg-local.setup
